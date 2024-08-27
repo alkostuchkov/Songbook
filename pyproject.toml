@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "songs"
+version = "0.1.0"
+description = "Catalog of songs"
+authors = ["alkostuchkov <alkostuchkov@gmail.com>"]
+license = "GPL"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+pyside6 = "~6.7.2"
+pyinstaller = "^6.10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

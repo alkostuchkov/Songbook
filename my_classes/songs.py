@@ -36,19 +36,15 @@ class Songs:
     """
 
     def __init__(self):
-        # TODO: delete after tests
-        print("Songs' __init__")
-
-        self.songs = {}
-        # self.__path_to_db = os.path.abspath(".") + os.path.sep + "Database" + os.path.sep
-        self.__path_to_db = f"{os.path.abspath(".")}{os.path.sep}database{os.path.sep}"
+        self.songs: dict = {}
+        self.__path_to_db: str = f"{os.path.abspath(".")}{os.path.sep}database{os.path.sep}"
         print("__path_to_db", self.__path_to_db)
 
     # TODO: delete after ALL corrections.
     def __del__(self):
         print("Songs Class's destructor  called...")
 
-    def open_db_and_get_dict(self):
+    def open_db_and_get_dict(self) -> None:
         """
         Create database and tables if they not exist.
         Get data from sqlite3 db and transform it into dict self.songs.
@@ -101,7 +97,6 @@ class Songs:
               songs.song_text, songs.last_performed, songs.is_recently, songs.comment
             FROM songs, genres, categories, songs_genres
             WHERE songs.id_category=categories.id 
-              AND songs.id_category=categories.id
               AND songs_genres.id_song=songs.id
               AND songs_genres.id_genre=genres.id
             """
@@ -123,42 +118,115 @@ class Songs:
                 self.songs[title]["is_recently"] = is_recently
                 self.songs[title]["comment"] = comment
 
-            pprint(self.songs)
+            # print("self.songs:", self.songs)
         finally:
             cur.close()
             conn.close()
 
-#     def funInsertIntoDb(self, name, phonesList):
-#         """ Insert data to the database. """
-#         conn = sqlite3.connect(self.__path_to_db + "PhoneBook.sqlite3")
-#         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
-#         cur = conn.cursor()
-#         try:  # insert a new name into names.
-#             cur.execute("INSERT INTO names(name) VALUES(:name)", {"name": name})
-#         except sqlite3.DatabaseError as err:
-#             raise sqlite3.DatabaseError("funInsertIntoDb: INSERT INTO names(name) VALUES(:name)", err)
-#         else:
-#             # don't do conn.commit() because
-#             # if error will occur in the next inserting (for phoneNumbers)
-#             # name will be without any phoneNumber!!!
-#             try:  # get names_id by the name.
-#                 cur.execute("SELECT id FROM names WHERE name=:name", {"name": name})
-#             except sqlite3.DatabaseError as err:
-#                 raise sqlite3.DatabaseError("funInsertIntoDb: SELECT id FROM names WHERE name=:name", err)
-#             else:  # insert phoneNumbers into the PhoneBook's database.
-#                 # get names_id from the list[0]
-#                 names_id = cur.fetchone()[0]
-#                 for phoneNumber in phonesList:
-#                     try:
-#                         cur.execute("INSERT INTO phoneNumbers(phoneNumber, names_id) VALUES(:phoneNumber, :names_id)",
-#                                     {"phoneNumber": phoneNumber, "names_id": names_id})
-#                     except sqlite3.DatabaseError as err:
-#                         raise sqlite3.DatabaseError("funInsertIntoDb: INSERT INTO phoneNumbers(phoneNumber, names_id)", err)
-#                     else:
-#                         conn.commit()  # complete transactions for BOTH inserting: names and phoneNumbers.
-#         finally:
-#             cur.close()
-#             conn.close()
+    def insert_genre_into_db(self, genre: str) -> None:
+        """ Insert a genre into the table genres of DB. """
+
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute("INSERT INTO genres(genre) VALUES(:genre)",
+                        {"genre": genre})
+        except DatabaseError as err:
+            raise DatabaseError("insert_genre_into_db", err)
+        else:
+            conn.commit()  # complete transaction
+
+            print("Genre inserted...")
+        finally:
+            cur.close()
+            conn.close()
+
+    def insert_category_into_db(self, category: str) -> None:
+        """ Insert a category into the table categories of DB. """
+
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute("INSERT INTO categories(category) VALUES(:category)",
+                        {"category": category})
+        except DatabaseError as err:
+            raise DatabaseError("insert_category_into_db", err)
+        else:
+            conn.commit()  # complete transaction
+
+            print("Category inserted...")
+        finally:
+            cur.close()
+            conn.close()
+
+    # def _get_ids(self, ) -> tuple:
+    #     return ,
+
+    # def insert_song_into_db(
+    #     self, title: str, genres: str, category: str, song_image: str,
+    #     song_text: str, last_performed: str, is_recently: int, comment: str
+    # ) -> None:
+    #     """ Insert a song into the songs table of DB. """
+    #     conn = connect(self.__path_to_db + "songs.db")
+    #     conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+    #     cur = conn.cursor()
+    #
+    #     try:  # insert a new name into names.
+    #         cur.execute("INSERT INTO names(name) VALUES(:name)", {"name": name})
+    #     except sqlite3.DatabaseError as err:
+    #         raise sqlite3.DatabaseError("funInsertIntoDb: INSERT INTO names(name) VALUES(:name)", err)
+    #     else:
+    #         # don't do conn.commit() because
+    #         # if error will occur in the next inserting (for phoneNumbers)
+    #         # name will be without any phoneNumber!!!
+    #         try:  # get names_id by the name.
+    #             cur.execute("SELECT id FROM names WHERE name=:name", {"name": name})
+    #         except sqlite3.DatabaseError as err:
+    #             raise sqlite3.DatabaseError("funInsertIntoDb: SELECT id FROM names WHERE name=:name", err)
+    #         else:  # insert phoneNumbers into the PhoneBook's database.
+    #             # get names_id from the list[0]
+    #             names_id = cur.fetchone()[0]
+    #             for phoneNumber in phonesList:
+    #                 try:
+    #                     cur.execute("INSERT INTO phoneNumbers(phoneNumber, names_id) VALUES(:phoneNumber, :names_id)",
+    #                                 {"phoneNumber": phoneNumber, "names_id": names_id})
+    #                 except DatabaseError as err:
+    #                     raise DatabaseError("funInsertIntoDb: INSERT INTO phoneNumbers(phoneNumber, names_id)", err)
+    #                 else:
+    #                     conn.commit()  # complete transactions for BOTH inserting: names and phoneNumbers.
+    #     finally:
+    #         cur.close()
+    #         conn.close()
+
+
+        # try:  # insert a new name into names.
+        #     cur.execute("INSERT INTO names(name) VALUES(:name)", {"name": name})
+        # except sqlite3.DatabaseError as err:
+        #     raise sqlite3.DatabaseError("funInsertIntoDb: INSERT INTO names(name) VALUES(:name)", err)
+        # else:
+        #     # don't do conn.commit() because
+        #     # if error will occur in the next inserting (for phoneNumbers)
+        #     # name will be without any phoneNumber!!!
+        #     try:  # get names_id by the name.
+        #         cur.execute("SELECT id FROM names WHERE name=:name", {"name": name})
+        #     except sqlite3.DatabaseError as err:
+        #         raise sqlite3.DatabaseError("funInsertIntoDb: SELECT id FROM names WHERE name=:name", err)
+        #     else:  # insert phoneNumbers into the PhoneBook's database.
+        #         # get names_id from the list[0]
+        #         names_id = cur.fetchone()[0]
+        #         for phoneNumber in phonesList:
+        #             try:
+        #                 cur.execute("INSERT INTO phoneNumbers(phoneNumber, names_id) VALUES(:phoneNumber, :names_id)",
+        #                             {"phoneNumber": phoneNumber, "names_id": names_id})
+        #             except DatabaseError as err:
+        #                 raise DatabaseError("funInsertIntoDb: INSERT INTO phoneNumbers(phoneNumber, names_id)", err)
+        #             else:
+        #                 conn.commit()  # complete transactions for BOTH inserting: names and phoneNumbers.
+        # finally:
+        #     cur.close()
+        #     conn.close()
 #
 #     def funMultiRecordDeleting(self, namesList):
 #         """
@@ -215,23 +283,24 @@ class Songs:
 #             cur.close()
 #             conn.close()
 #
-#     def funClearDb(self):
-#         """ Delete all data from the database. """
-#         conn = sqlite3.connect(self.__path_to_db + "PhoneBook.sqlite3")
-#         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
-#         cur = conn.cursor()
-#         sql = """\
-#         DELETE FROM names;
-#         """
-#         try:
-#             cur.executescript(sql)
-#         except sqlite3.DatabaseError:
-#             raise sqlite3.DatabaseError  # ("Не удалось выполнить запрос.")
-#         else:
-#             conn.commit()  # complete transaction.
-#         finally:
-#             cur.close()
-#             conn.close()
+    def clear_db(self):
+        """ Delete all data from the database. """
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        sql = """\
+        DELETE FROM categories;
+        DELETE FROM genres;
+        """
+        try:
+            cur.executescript(sql)
+        except DatabaseError as exc:
+            raise exc  # ("Не удалось выполнить запрос.")
+        else:
+            conn.commit()  # complete transaction.
+        finally:
+            cur.close()
+            conn.close()
 #
 #     # def funDeleteSeveralPhonesFromRecord(self, name, phonesList):
 #     #     """ Delete several phones from the record. """

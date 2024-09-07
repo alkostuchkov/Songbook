@@ -161,8 +161,37 @@ class Songs:
             cur.close()
             conn.close()
 
-    # def _get_ids(self, ) -> tuple:
-    #     return ,
+    def _get_ids(self, title: str, genre: str, category: str) -> dict:
+        """ Get ids of song, genre, category by their UNIQUE names. """
+
+        ids: dict = {}
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute(
+                "SELECT songs.id, genres.id, categories.id "
+                "FROM songs, genres, categories "
+                "WHERE songs.title=:title AND "
+                "genres.genre=:genre AND "
+                "categories.category=:category",
+                {
+                  "title": title,
+                  "genre": genre,
+                  "category": category
+                }
+            )
+        except DatabaseError as err:
+            raise DatabaseError("_get_ids:", err)
+        else:
+            for song_id, genre_id, category_id in cur:
+                ids["song_id"] = song_id
+                ids["genre_id"] = genre_id
+                ids["category_id"] = category_id
+        finally:
+            cur.close()
+            conn.close()
+        return ids
 
     # def insert_song_into_db(
     #     self, title: str, genres: str, category: str, song_image: str,

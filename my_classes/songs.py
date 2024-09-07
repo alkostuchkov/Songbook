@@ -155,8 +155,8 @@ class Songs:
             cur.close()
             conn.close()
 
-    def _get_song_id(self, title: str) -> int:
-        """ Get song_id by its UNIQUE title. """
+    def _get_id_song(self, title: str) -> int:
+        """ Get id_song by its UNIQUE title. """
 
         conn = connect(self.__path_to_db + "songs.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
@@ -164,17 +164,17 @@ class Songs:
         try:
             cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
         except DatabaseError as err:
-            raise DatabaseError("_get_song_id:", err)
+            raise DatabaseError("_get_id_song:", err)
         else:
-            # get song_id from the list[0]
-            song_id = cur.fetchone()[0]
+            # get id_song from the list[0]
+            id_song: int = cur.fetchone()[0]
         finally:
             cur.close()
             conn.close()
-        return song_id
+        return id_song
 
-    def _get_category_id(self, category: str) -> int:
-        """ Get category_id by its UNIQUE category. """
+    def _get_id_category(self, category: str) -> int:
+        """ Get id_category by its UNIQUE category. """
 
         conn = connect(self.__path_to_db + "songs.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
@@ -183,129 +183,84 @@ class Songs:
             cur.execute("SELECT id FROM categories WHERE category=:category",
                         {"category": category})
         except DatabaseError as err:
-            raise DatabaseError("_get_category_id:", err)
+            raise DatabaseError("_get_id_category:", err)
         else:
-            # get category_id from the list[0]
-            category_id = cur.fetchone()[0]
+            # get id_category from the list[0]
+            id_category: int = cur.fetchone()[0]
         finally:
             cur.close()
             conn.close()
-        return category_id
+        return id_category
 
-    def _get_genres_ids(self, genres: list) -> list:
+    def _get_ids_genres(self, genres: list) -> list:
         """ Get genres ids by their UNIQUE genre. """
 
-        genres_ids: list = []
+        ids_genres: list = []
         conn = connect(self.__path_to_db + "songs.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
             for genre in genres:
                 cur.execute("SELECT id FROM genres WHERE genre=:genre", {"genre": genre})
-                genres_ids.append(cur.fetchone()[0])
+                ids_genres.append(cur.fetchone()[0])
         except DatabaseError as err:
             raise DatabaseError("_get_genres_ids:", err)
         finally:
             cur.close()
             conn.close()
-        return genres_ids
+        return ids_genres
 
-    # def insert_song_into_db(
-    #     self, title: str, genres: list, category: str, song_image: str,
-    #     song_text: str, last_performed: str, is_recently: int, comment: str
-    # ) -> None:
-    #     """ Insert a song into the songs table of DB. """
-    #     conn = connect(self.__path_to_db + "songs.db")
-    #     conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
-    #     cur = conn.cursor()
-    #
-    #     ids: dict = self._get_ids(title, genre, category)
-    #
-    #     try:
-    #         cur.execute(
-    #             "INSERT INTO songs(title, category_id, song_image, song_text, "
-    #                                "last_performed, is_recently, comment) "
-    #             "VALUES(:title, :category_id, :song_image, :song_text, "
-    #                    ":last_performed, :is_recently, :comment) ",
-    #             {
-    #                 "title": title,
-    #                 "category_id": ids["category_id"],
-    #                 "song_image": song_image,
-    #                 "song_text": song_text,
-    #                 "last_performed": last_performed,
-    #                 "is_recently": is_recently,
-    #                 "comment": comment,
-    #             }
-    #         )
-    #         # TODO: I need NEW song_id for just inserted song!!! todo SELECT
-    #         cur.execute(
-    #             "INSERT INTO songs_genres(song_id, genre_id) "
-    #             "VALUES(:song_id, :genre_id)",
-    #             {
-    #                 "song_id": ids["song_id"],
-    #                 "song_image": song_image,
-    #                 "song_text": song_text,
-    #                 "last_performed": last_performed,
-    #                 "is_recently": is_recently,
-    #                 "comment": comment,
-    #             }
-    #         )
-    #                         "songs_genres(song_id, genre_id) "
-    #
-    #         cur.execute("INSERT INTO names(name) VALUES(:name)", {"name": name})
-    #
-    #     except sqlite3.DatabaseError as err:
-    #         raise sqlite3.DatabaseError("funInsertIntoDb: INSERT INTO names(name) VALUES(:name)", err)
-    #     else:
-    #         # don't do conn.commit() because
-    #         # if error will occur in the next inserting (for phoneNumbers)
-    #         # name will be without any phoneNumber!!!
-    #         try:  # get names_id by the name.
-    #             cur.execute("SELECT id FROM names WHERE name=:name", {"name": name})
-    #         except sqlite3.DatabaseError as err:
-    #             raise sqlite3.DatabaseError("funInsertIntoDb: SELECT id FROM names WHERE name=:name", err)
-    #         else:  # insert phoneNumbers into the PhoneBook's database.
-    #             # get names_id from the list[0]
-    #             names_id = cur.fetchone()[0]
-    #             for phoneNumber in phonesList:
-    #                 try:
-    #                     cur.execute("INSERT INTO phoneNumbers(phoneNumber, names_id) VALUES(:phoneNumber, :names_id)",
-    #                                 {"phoneNumber": phoneNumber, "names_id": names_id})
-    #                 except DatabaseError as err:
-    #                     raise DatabaseError("funInsertIntoDb: INSERT INTO phoneNumbers(phoneNumber, names_id)", err)
-    #                 else:
-    #                     conn.commit()  # complete transactions for BOTH inserting: names and phoneNumbers.
-    #     finally:
-    #         cur.close()
-    #         conn.close()
+    def insert_song_into_db(
+        self, title: str, genres: list, category: str, song_image: str,
+        song_text: str, last_performed: str, is_recently: int, comment: str
+    ) -> None:
+        """ Insert a song into the songs table of DB. """
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        
+        id_category: int = self._get_id_category(category)
+        try:
+            cur.execute(
+                "INSERT INTO songs(title, id_category, song_image, song_text, "
+                                   "last_performed, is_recently, comment) "
+                "VALUES(:title, :id_category, :song_image, :song_text, "
+                       ":last_performed, :is_recently, :comment) ",
+                {
+                    "title": title,
+                    "id_category": id_category,
+                    "song_image": song_image,
+                    "song_text": song_text,
+                    "last_performed": last_performed,
+                    "is_recently": is_recently,
+                    "comment": comment,
+                }
+            )
+            # I need the NEW song_id for the just inserted song (and genres_ids)!
+            cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
+            id_song: int = cur.fetchone()[0]
+            # id_song: int = self._get_id_song(title)  # Doesn't work in this
+            # case because the conn.commit() will be executed after ALL
+            # transactions and cursor in new connect in the _get_id_song
+            # doesn't see id and title of the new inserting song because of
+            # incompletted transaction above.
+            # I need ALL inserts to be completted for ALL tables!!!
+            # And then I do conn.commit().
+            ids_genres: list = self._get_ids_genres(genres)
 
-
-        # try:  # insert a new name into names.
-        #     cur.execute("INSERT INTO names(name) VALUES(:name)", {"name": name})
-        # except sqlite3.DatabaseError as err:
-        #     raise sqlite3.DatabaseError("funInsertIntoDb: INSERT INTO names(name) VALUES(:name)", err)
-        # else:
-        #     # don't do conn.commit() because
-        #     # if error will occur in the next inserting (for phoneNumbers)
-        #     # name will be without any phoneNumber!!!
-        #     try:  # get names_id by the name.
-        #         cur.execute("SELECT id FROM names WHERE name=:name", {"name": name})
-        #     except sqlite3.DatabaseError as err:
-        #         raise sqlite3.DatabaseError("funInsertIntoDb: SELECT id FROM names WHERE name=:name", err)
-        #     else:  # insert phoneNumbers into the PhoneBook's database.
-        #         # get names_id from the list[0]
-        #         names_id = cur.fetchone()[0]
-        #         for phoneNumber in phonesList:
-        #             try:
-        #                 cur.execute("INSERT INTO phoneNumbers(phoneNumber, names_id) VALUES(:phoneNumber, :names_id)",
-        #                             {"phoneNumber": phoneNumber, "names_id": names_id})
-        #             except DatabaseError as err:
-        #                 raise DatabaseError("funInsertIntoDb: INSERT INTO phoneNumbers(phoneNumber, names_id)", err)
-        #             else:
-        #                 conn.commit()  # complete transactions for BOTH inserting: names and phoneNumbers.
-        # finally:
-        #     cur.close()
-        #     conn.close()
+            for id_genre in ids_genres:
+                cur.execute(
+                    "INSERT INTO songs_genres(id_song, id_genre) "
+                    "VALUES(:id_song, :id_genre)",
+                    {"id_song": id_song, "id_genre": id_genre}
+                )
+        except DatabaseError as err:
+            raise DatabaseError("insert_song_into_db", err)
+        else:
+            conn.commit()  # complete ALL transactions!
+        finally:
+            cur.close()
+            conn.close()
 #
 #     def funMultiRecordDeleting(self, namesList):
 #         """

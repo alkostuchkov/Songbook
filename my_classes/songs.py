@@ -117,8 +117,6 @@ class Songs:
                 self.songs[title]["last_performed"] = last_performed
                 self.songs[title]["is_recently"] = is_recently
                 self.songs[title]["comment"] = comment
-
-            # print("self.songs:", self.songs)
         finally:
             cur.close()
             conn.close()
@@ -136,8 +134,6 @@ class Songs:
             raise DatabaseError("insert_genre_into_db", err)
         else:
             conn.commit()  # complete transaction
-
-            print("Genre inserted...")
         finally:
             cur.close()
             conn.close()
@@ -155,46 +151,67 @@ class Songs:
             raise DatabaseError("insert_category_into_db", err)
         else:
             conn.commit()  # complete transaction
-
-            print("Category inserted...")
         finally:
             cur.close()
             conn.close()
 
-    def _get_ids(self, title: str, genre: str, category: str) -> dict:
-        """ Get ids of song, genre, category by their UNIQUE names. """
+    def _get_song_id(self, title: str) -> int:
+        """ Get song_id by its UNIQUE title. """
 
-        ids: dict = {}
         conn = connect(self.__path_to_db + "songs.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
-            cur.execute(
-                "SELECT songs.id, genres.id, categories.id "
-                "FROM songs, genres, categories "
-                "WHERE songs.title=:title AND "
-                "genres.genre=:genre AND "
-                "categories.category=:category",
-                {
-                  "title": title,
-                  "genre": genre,
-                  "category": category
-                }
-            )
+            cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
         except DatabaseError as err:
-            raise DatabaseError("_get_ids:", err)
+            raise DatabaseError("_get_song_id:", err)
         else:
-            for song_id, genre_id, category_id in cur:
-                ids["song_id"] = song_id
-                ids["genre_id"] = genre_id
-                ids["category_id"] = category_id
+            # get song_id from the list[0]
+            song_id = cur.fetchone()[0]
         finally:
             cur.close()
             conn.close()
-        return ids
+        return song_id
+
+    def _get_category_id(self, category: str) -> int:
+        """ Get category_id by its UNIQUE category. """
+
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT id FROM categories WHERE category=:category",
+                        {"category": category})
+        except DatabaseError as err:
+            raise DatabaseError("_get_category_id:", err)
+        else:
+            # get category_id from the list[0]
+            category_id = cur.fetchone()[0]
+        finally:
+            cur.close()
+            conn.close()
+        return category_id
+
+    def _get_genres_ids(self, genres: list) -> list:
+        """ Get genres ids by their UNIQUE genre. """
+
+        genres_ids: list = []
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            for genre in genres:
+                cur.execute("SELECT id FROM genres WHERE genre=:genre", {"genre": genre})
+                genres_ids.append(cur.fetchone()[0])
+        except DatabaseError as err:
+            raise DatabaseError("_get_genres_ids:", err)
+        finally:
+            cur.close()
+            conn.close()
+        return genres_ids
 
     # def insert_song_into_db(
-    #     self, title: str, genres: str, category: str, song_image: str,
+    #     self, title: str, genres: list, category: str, song_image: str,
     #     song_text: str, last_performed: str, is_recently: int, comment: str
     # ) -> None:
     #     """ Insert a song into the songs table of DB. """
@@ -202,8 +219,41 @@ class Songs:
     #     conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
     #     cur = conn.cursor()
     #
-    #     try:  # insert a new name into names.
+    #     ids: dict = self._get_ids(title, genre, category)
+    #
+    #     try:
+    #         cur.execute(
+    #             "INSERT INTO songs(title, category_id, song_image, song_text, "
+    #                                "last_performed, is_recently, comment) "
+    #             "VALUES(:title, :category_id, :song_image, :song_text, "
+    #                    ":last_performed, :is_recently, :comment) ",
+    #             {
+    #                 "title": title,
+    #                 "category_id": ids["category_id"],
+    #                 "song_image": song_image,
+    #                 "song_text": song_text,
+    #                 "last_performed": last_performed,
+    #                 "is_recently": is_recently,
+    #                 "comment": comment,
+    #             }
+    #         )
+    #         # TODO: I need NEW song_id for just inserted song!!! todo SELECT
+    #         cur.execute(
+    #             "INSERT INTO songs_genres(song_id, genre_id) "
+    #             "VALUES(:song_id, :genre_id)",
+    #             {
+    #                 "song_id": ids["song_id"],
+    #                 "song_image": song_image,
+    #                 "song_text": song_text,
+    #                 "last_performed": last_performed,
+    #                 "is_recently": is_recently,
+    #                 "comment": comment,
+    #             }
+    #         )
+    #                         "songs_genres(song_id, genre_id) "
+    #
     #         cur.execute("INSERT INTO names(name) VALUES(:name)", {"name": name})
+    #
     #     except sqlite3.DatabaseError as err:
     #         raise sqlite3.DatabaseError("funInsertIntoDb: INSERT INTO names(name) VALUES(:name)", err)
     #     else:

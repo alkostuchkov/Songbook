@@ -155,42 +155,6 @@ class Songs:
             cur.close()
             conn.close()
 
-    def _get_id_song(self, title: str) -> int:
-        """ Get id_song by its UNIQUE title. """
-
-        conn = connect(self.__path_to_db + "songs.db")
-        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
-        cur = conn.cursor()
-        try:
-            cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
-        except DatabaseError as err:
-            raise DatabaseError("_get_id_song:", err)
-        else:
-            # get id_song from the list[0]
-            id_song: int = cur.fetchone()[0]
-        finally:
-            cur.close()
-            conn.close()
-        return id_song
-
-    def _get_ids_songs(self, titles_list: list) -> list:
-        """ Get ids_songs by its UNIQUE title. """
-
-        ids_songs: list = []
-        conn = connect(self.__path_to_db + "songs.db")
-        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
-        cur = conn.cursor()
-        try:
-            for title in titles_list:
-                cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
-                ids_songs.append(cur.fetchone()[0])
-        except DatabaseError as err:
-            raise DatabaseError("_get_ids_songs:", err)
-        finally:
-            cur.close()
-            conn.close()
-        return ids_songs
-
     def _get_id_category(self, category: str) -> int:
         """ Get id_category by its UNIQUE category. """
 
@@ -228,6 +192,43 @@ class Songs:
             conn.close()
         return ids_genres
 
+    def _get_id_song(self, title: str) -> int:
+        """ Get id_song by its UNIQUE title. """
+
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
+        except DatabaseError as err:
+            raise DatabaseError("_get_id_song:", err)
+        else:
+            # get id_song from the list[0]
+            id_song: int = cur.fetchone()[0]
+        finally:
+            cur.close()
+            conn.close()
+        return id_song
+
+    def _get_ids_songs(self, titles_list: list) -> list:
+        """ Get ids_songs by its UNIQUE title. """
+
+        ids_songs: list = []
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            for title in titles_list:
+                cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
+                ids_songs.append(cur.fetchone()[0])
+        except DatabaseError as err:
+            raise DatabaseError("_get_ids_songs:", err)
+        finally:
+            cur.close()
+            conn.close()
+        return ids_songs
+
+    # TODO: change args for this method to dict!
     def insert_song_into_db(
         self, title: str, genres: list, category: str, song_image: str,
         song_text: str, last_performed: str, is_recently: int, comment: str
@@ -237,7 +238,7 @@ class Songs:
         conn = connect(self.__path_to_db + "songs.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
-        
+
         id_category: int = self._get_id_category(category)
         try:
             cur.execute(
@@ -281,7 +282,7 @@ class Songs:
             cur.close()
             conn.close()
 #
-    def multi_record_deleting(self, titles_list: list) -> None:
+    def delete_multi_records(self, titles_list: list) -> None:
         """
         Delete songs with all dependences in songs_genres from the database.
         """
@@ -297,17 +298,80 @@ class Songs:
                     cur.execute("DELETE FROM songs_genres WHERE id_song=:id_song",
                                 {"id_song": id_song})
                 except DatabaseError as err:
-                    raise DatabaseError("multi_record_deleting: deleting from songs_genres", err)
+                    raise DatabaseError("delete_multi_records: deleting from songs_genres", err)
             for id in ids_songs:
                 try:  # Deleting from songs table.
                     cur.execute("DELETE FROM songs WHERE id=:id", {"id": id})
                 except DatabaseError as err:
-                    raise DatabaseError("multi_record_deleting: deleting from songs", err)
+                    raise DatabaseError("delete_multi_records: deleting from songs", err)
             conn.commit()  # commit transactions after completion all deletings.
         finally:
             cur.close()
             conn.close()
-#
+
+    # TODO: change args for this method to dict!
+    # def update_record(self, old_song: dict, new_song: dict) -> None:
+    def update_record(
+        self, old_title: str, new_title: str, old_genres: list, new_genres: list,
+        old_category: str, new_category: str, song_image: str, song_text: str,
+        last_performed: str, is_recently: int, comment: str
+    ) -> None:
+        """ Update record in DB. """
+
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            # Update songs
+            cur.execute(
+                "UPDATE songs "
+                "SET "
+                  "title=:title, "
+                  "song_image=:song_image, "
+                  "song_text=:song_text, "
+                  "last_performed=:last_performed, "
+                  "is_recently=:is_recently, "
+                  "comment=:comment "
+                "WHERE title=:old_title",
+                {
+                    "title": new_title,
+                    "old_title": old_title,
+                    "song_image": song_image,
+                    "song_text": song_text,
+                    "last_performed": last_performed,
+                    "is_recently": is_recently,
+                    "comment": comment,
+                }
+            )
+            # Update genres
+            for old_genre, new_genre in zip(old_genres, new_genres):
+                cur.execute(
+                    "UPDATE genres "
+                    "SET genre=:genre "
+                    "WHERE genre=:old_genre",
+                    {
+                        "genre": new_genre,
+                        "old_genre": old_genre,
+                    }
+                )
+            # Update categories
+            cur.execute(
+                "UPDATE categories "
+                "SET category=:category "
+                "WHERE category=:old_category",
+                {
+                    "category": new_category,
+                    "old_category": old_category,
+                }
+            )
+        except DatabaseError as err:
+            raise DatabaseError("update_record:", err)
+        else:
+            conn.commit()  # complete ALL transactions!
+        finally:
+            cur.close()
+            conn.close()
+
 #     def funDeleteOldThenInsertNewRecord(self, oldName, newName, phonesList):
 #         """
 #         Delete and then insert data.

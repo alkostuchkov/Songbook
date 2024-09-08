@@ -173,6 +173,24 @@ class Songs:
             conn.close()
         return id_song
 
+    def _get_ids_songs(self, titles_list: list) -> list:
+        """ Get ids_songs by its UNIQUE title. """
+
+        ids_songs: list = []
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            for title in titles_list:
+                cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
+                ids_songs.append(cur.fetchone()[0])
+        except DatabaseError as err:
+            raise DatabaseError("_get_ids_songs:", err)
+        finally:
+            cur.close()
+            conn.close()
+        return ids_songs
+
     def _get_id_category(self, category: str) -> int:
         """ Get id_category by its UNIQUE category. """
 
@@ -215,6 +233,7 @@ class Songs:
         song_text: str, last_performed: str, is_recently: int, comment: str
     ) -> None:
         """ Insert a song into the songs table of DB. """
+
         conn = connect(self.__path_to_db + "songs.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
@@ -241,7 +260,7 @@ class Songs:
             id_song: int = cur.fetchone()[0]
             # id_song: int = self._get_id_song(title)  # Doesn't work in this
             # case because the conn.commit() will be executed after ALL
-            # transactions and cursor in new connect in the _get_id_song
+            # transactions and a NEW CURSOR in a NEW CONNECT in the _get_id_song
             # doesn't see id and title of the new inserting song because of
             # incompletted transaction above.
             # I need ALL inserts to be completted for ALL tables!!!
@@ -262,24 +281,32 @@ class Songs:
             cur.close()
             conn.close()
 #
-#     def funMultiRecordDeleting(self, namesList):
-#         """
-#         Delete records with all phone numbers from the database.
-#         :param namesList:
-#         """
-#         conn = sqlite3.connect(self.__path_to_db + "PhoneBook.sqlite3")
-#         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
-#         cur = conn.cursor()
-#         try:
-#             for name in namesList:
-#                 try:  # cascade deleting all records from names and phoneNumbers for THIS name.
-#                     cur.execute("DELETE FROM names WHERE name=:name", {"name": name})
-#                 except sqlite3.DatabaseError as err:
-#                     raise sqlite3.DatabaseError("funDeleteOneRecord: DELETE FROM names WHERE name=:name", err)
-#             conn.commit()  # commit transactions after completion all deleting.
-#         finally:
-#             cur.close()
-#             conn.close()
+    def multi_record_deleting(self, titles_list: list) -> None:
+        """
+        Delete songs with all dependences in songs_genres from the database.
+        """
+
+        # Get ids all deleting songs by their titles.
+        ids_songs: list = self._get_ids_songs(titles_list)
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            for id_song in ids_songs:
+                try:  # Deleting from songs_genres table.
+                    cur.execute("DELETE FROM songs_genres WHERE id_song=:id_song",
+                                {"id_song": id_song})
+                except DatabaseError as err:
+                    raise DatabaseError("multi_record_deleting: deleting from songs_genres", err)
+            for id in ids_songs:
+                try:  # Deleting from songs table.
+                    cur.execute("DELETE FROM songs WHERE id=:id", {"id": id})
+                except DatabaseError as err:
+                    raise DatabaseError("multi_record_deleting: deleting from songs", err)
+            conn.commit()  # commit transactions after completion all deletings.
+        finally:
+            cur.close()
+            conn.close()
 #
 #     def funDeleteOldThenInsertNewRecord(self, oldName, newName, phonesList):
 #         """
@@ -317,25 +344,6 @@ class Songs:
 #             cur.close()
 #             conn.close()
 #
-    def clear_db(self):
-        """ Delete all data from the database. """
-        conn = connect(self.__path_to_db + "songs.db")
-        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
-        cur = conn.cursor()
-        sql = """\
-        DELETE FROM categories;
-        DELETE FROM genres;
-        """
-        try:
-            cur.executescript(sql)
-        except DatabaseError as exc:
-            raise exc  # ("Не удалось выполнить запрос.")
-        else:
-            conn.commit()  # complete transaction.
-        finally:
-            cur.close()
-            conn.close()
-#
 #     # def funDeleteSeveralPhonesFromRecord(self, name, phonesList):
 #     #     """ Delete several phones from the record. """
 #     #     conn = sqlite3.connect(self.__path_to_db + "PhoneBook.sqlite3")
@@ -359,3 +367,22 @@ class Songs:
 #     #     finally:
 #     #         cur.close()
 #     #         conn.close()
+
+    def clear_db(self):
+        """ Delete all data from the database. """
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        sql = """\
+        DELETE FROM categories;
+        DELETE FROM genres;
+        """
+        try:
+            cur.executescript(sql)
+        except DatabaseError as exc:
+            raise exc  # ("Не удалось выполнить запрос.")
+        else:
+            conn.commit()  # complete transaction.
+        finally:
+            cur.close()
+            conn.close()

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>904</width>
+    <height>612</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_7">
+    <item>
+     <widget class="QSplitter" name="splitter_3">
+      <property name="orientation">
+       <enum>Qt::Orientation::Vertical</enum>
+      </property>
+      <widget class="QSplitter" name="splitter_2">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <widget class="QWidget" name="">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="lbl_categories">
+           <property name="text">
+            <string>Категории:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="lw_categories">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+           </property>
+           <property name="selectionRectVisible">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Все</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Быстрые</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Средние</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Медленные</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="lbl_genrs">
+           <property name="text">
+            <string>Жанры:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="lw_genres">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+           </property>
+           <property name="selectionRectVisible">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Все</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Из песенника</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Современные</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>На Хлебопреломление</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="lbl_sort">
+           <property name="text">
+            <string>Сортировать:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cb_sort">
+           <item>
+            <property name="text">
+             <string>По названию</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>По дате исполнения</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Недавно исполнявшиеся</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QSplitter" name="splitter">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <widget class="QWidget" name="">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QLabel" name="lbl_songs">
+           <property name="text">
+            <string>Песни:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="llw_songs">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+           </property>
+           <property name="selectionRectVisible">
+            <bool>true</bool>
+           </property>
+           <property name="currentRow">
+            <number>0</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>New Item</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>New Item</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>New Item</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>New Item</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QLabel" name="lbl_song_image_2">
+           <property name="text">
+            <string>Текст-изображение</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_song_image">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap>song_image_test.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QLabel" name="lbl_song_text">
+           <property name="text">
+            <string>Текст песни</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="te_song_text"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QLineEdit" name="le_search">
+       <property name="text">
+        <string>Поиск...</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>904</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_add">
+    <property name="title">
+     <string>Добавить</string>
+    </property>
+    <addaction name="act_add_category"/>
+    <addaction name="act_add_genre"/>
+    <addaction name="act_add_song"/>
+   </widget>
+   <widget class="QMenu" name="menu_edit">
+    <property name="title">
+     <string>Редактировать</string>
+    </property>
+    <addaction name="act_edit_category"/>
+    <addaction name="act_edit_genre"/>
+    <addaction name="act_edit_song"/>
+   </widget>
+   <widget class="QMenu" name="menu_delete">
+    <property name="title">
+     <string>Удалить</string>
+    </property>
+    <addaction name="act_delete_category"/>
+    <addaction name="act_delete_genre"/>
+    <addaction name="act_delete_song"/>
+    <addaction name="separator"/>
+    <addaction name="act_clear_db"/>
+   </widget>
+   <widget class="QMenu" name="menu_help">
+    <property name="title">
+     <string>Помощь</string>
+    </property>
+    <addaction name="act_abput_program"/>
+    <addaction name="act_about_author"/>
+    <addaction name="act_about_qt"/>
+   </widget>
+   <addaction name="menu_add"/>
+   <addaction name="menu_edit"/>
+   <addaction name="menu_delete"/>
+   <addaction name="menu_help"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="act_add_category">
+   <property name="text">
+    <string>Категорию</string>
+   </property>
+  </action>
+  <action name="act_add_genre">
+   <property name="text">
+    <string>Жанр</string>
+   </property>
+  </action>
+  <action name="act_add_song">
+   <property name="text">
+    <string>Песню</string>
+   </property>
+  </action>
+  <action name="act_edit_category">
+   <property name="text">
+    <string>Категорию</string>
+   </property>
+  </action>
+  <action name="act_edit_genre">
+   <property name="text">
+    <string>Жанр</string>
+   </property>
+  </action>
+  <action name="act_edit_song">
+   <property name="text">
+    <string>Песню</string>
+   </property>
+  </action>
+  <action name="act_delete_category">
+   <property name="text">
+    <string>Категорию</string>
+   </property>
+  </action>
+  <action name="act_delete_genre">
+   <property name="text">
+    <string>Жанр</string>
+   </property>
+  </action>
+  <action name="act_delete_song">
+   <property name="text">
+    <string>Песню</string>
+   </property>
+  </action>
+  <action name="act_clear_db">
+   <property name="text">
+    <string>Все данные</string>
+   </property>
+  </action>
+  <action name="act_abput_program">
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
+  <action name="act_about_author">
+   <property name="text">
+    <string>Об авторе</string>
+   </property>
+  </action>
+  <action name="act_about_qt">
+   <property name="text">
+    <string>О Qt</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

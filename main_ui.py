@@ -160,16 +160,16 @@ class Ui_MainWindow(object):
         self.spl_songs = QSplitter(self.splitter)
         self.spl_songs.setObjectName(u"spl_songs")
         self.spl_songs.setOrientation(Qt.Orientation.Horizontal)
-        self.llw_songs = QListWidget(self.spl_songs)
-        QListWidgetItem(self.llw_songs)
-        QListWidgetItem(self.llw_songs)
-        QListWidgetItem(self.llw_songs)
-        QListWidgetItem(self.llw_songs)
-        self.llw_songs.setObjectName(u"llw_songs")
-        self.llw_songs.setFont(font)
-        self.llw_songs.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
-        self.llw_songs.setSelectionRectVisible(True)
-        self.spl_songs.addWidget(self.llw_songs)
+        self.lw_songs = QListWidget(self.spl_songs)
+        QListWidgetItem(self.lw_songs)
+        QListWidgetItem(self.lw_songs)
+        QListWidgetItem(self.lw_songs)
+        QListWidgetItem(self.lw_songs)
+        self.lw_songs.setObjectName(u"lw_songs")
+        self.lw_songs.setFont(font)
+        self.lw_songs.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+        self.lw_songs.setSelectionRectVisible(True)
+        self.spl_songs.addWidget(self.lw_songs)
         self.lbl_song_image = QLabel(self.spl_songs)
         self.lbl_song_image.setObjectName(u"lbl_song_image")
         self.lbl_song_image.setFont(font1)
@@ -230,7 +230,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.llw_songs.setCurrentRow(0)
+        self.lw_songs.setCurrentRow(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -285,17 +285,17 @@ class Ui_MainWindow(object):
         self.cb_sort.setItemText(2, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0434\u0430\u0432\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u043d\u044f\u0432\u0448\u0438\u0435\u0441\u044f", None))
 
 
-        __sortingEnabled2 = self.llw_songs.isSortingEnabled()
-        self.llw_songs.setSortingEnabled(False)
-        ___qlistwidgetitem8 = self.llw_songs.item(0)
+        __sortingEnabled2 = self.lw_songs.isSortingEnabled()
+        self.lw_songs.setSortingEnabled(False)
+        ___qlistwidgetitem8 = self.lw_songs.item(0)
         ___qlistwidgetitem8.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
-        ___qlistwidgetitem9 = self.llw_songs.item(1)
+        ___qlistwidgetitem9 = self.lw_songs.item(1)
         ___qlistwidgetitem9.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
-        ___qlistwidgetitem10 = self.llw_songs.item(2)
+        ___qlistwidgetitem10 = self.lw_songs.item(2)
         ___qlistwidgetitem10.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
-        ___qlistwidgetitem11 = self.llw_songs.item(3)
+        ___qlistwidgetitem11 = self.lw_songs.item(3)
         ___qlistwidgetitem11.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
-        self.llw_songs.setSortingEnabled(__sortingEnabled2)
+        self.lw_songs.setSortingEnabled(__sortingEnabled2)
 
         self.lbl_song_image.setText("")
         self.te_song_text.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"

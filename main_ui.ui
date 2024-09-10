@@ -193,7 +193,7 @@
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
-       <widget class="QListWidget" name="llw_songs">
+       <widget class="QListWidget" name="lw_songs">
         <property name="font">
          <font>
           <pointsize>12</pointsize>

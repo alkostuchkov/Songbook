@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" Module contains class Songs. """
 # ====== Songs for my own using ======
 # = Example how my Songs looks like. =
 # songs = {
@@ -122,6 +123,46 @@ class Songs:
         finally:
             cur.close()
             conn.close()
+
+    def get_categories_from_db(self) -> list:
+        """ Get categories from DB. """
+
+        categories: list = []
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT category FROM categories")
+        except DatabaseError as err:
+            raise DatabaseError("get_categories_from_db", err)
+        else:
+            for category in cur:
+                categories.append(category)
+        finally:
+            cur.close()
+            conn.close()
+
+        return categories
+
+    def get_genres_from_db(self) -> list:
+        """ Get genres from DB. """
+
+        genres: list = []
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT genre FROM genres")
+        except DatabaseError as err:
+            raise DatabaseError("get_genres_from_db", err)
+        else:
+            for genre in cur:
+                genres.append(genre)
+        finally:
+            cur.close()
+            conn.close()
+
+        return genres
 
     def insert_genre_into_db(self, genre: str) -> None:
         """ Insert a genre into the table genres of DB. """

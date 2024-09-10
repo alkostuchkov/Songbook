@@ -16,11 +16,11 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QLabel,
-    QLineEdit, QListWidget, QListWidgetItem, QMainWindow,
-    QMenu, QMenuBar, QSizePolicy, QSpacerItem,
-    QSplitter, QStatusBar, QTextEdit, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QFrame,
+    QLabel, QLineEdit, QListWidget, QListWidgetItem,
+    QMainWindow, QMenu, QMenuBar, QSizePolicy,
+    QSpacerItem, QSplitter, QStatusBar, QTextEdit,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -29,102 +29,125 @@ class Ui_MainWindow(object):
         MainWindow.resize(904, 612)
         self.act_add_category = QAction(MainWindow)
         self.act_add_category.setObjectName(u"act_add_category")
+        font = QFont()
+        font.setPointSize(12)
+        self.act_add_category.setFont(font)
         self.act_add_genre = QAction(MainWindow)
         self.act_add_genre.setObjectName(u"act_add_genre")
+        self.act_add_genre.setFont(font)
         self.act_add_song = QAction(MainWindow)
         self.act_add_song.setObjectName(u"act_add_song")
+        self.act_add_song.setFont(font)
         self.act_edit_category = QAction(MainWindow)
         self.act_edit_category.setObjectName(u"act_edit_category")
+        self.act_edit_category.setFont(font)
         self.act_edit_genre = QAction(MainWindow)
         self.act_edit_genre.setObjectName(u"act_edit_genre")
+        self.act_edit_genre.setFont(font)
         self.act_edit_song = QAction(MainWindow)
         self.act_edit_song.setObjectName(u"act_edit_song")
+        self.act_edit_song.setFont(font)
         self.act_delete_category = QAction(MainWindow)
         self.act_delete_category.setObjectName(u"act_delete_category")
+        self.act_delete_category.setFont(font)
         self.act_delete_genre = QAction(MainWindow)
         self.act_delete_genre.setObjectName(u"act_delete_genre")
+        self.act_delete_genre.setFont(font)
         self.act_delete_song = QAction(MainWindow)
         self.act_delete_song.setObjectName(u"act_delete_song")
+        self.act_delete_song.setFont(font)
         self.act_clear_db = QAction(MainWindow)
         self.act_clear_db.setObjectName(u"act_clear_db")
+        self.act_clear_db.setFont(font)
         self.act_abput_program = QAction(MainWindow)
         self.act_abput_program.setObjectName(u"act_abput_program")
+        self.act_abput_program.setFont(font)
         self.act_about_author = QAction(MainWindow)
         self.act_about_author.setObjectName(u"act_about_author")
+        self.act_about_author.setFont(font)
         self.act_about_qt = QAction(MainWindow)
         self.act_about_qt.setObjectName(u"act_about_qt")
+        self.act_about_qt.setFont(font)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout_7 = QVBoxLayout(self.centralwidget)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.splitter_3 = QSplitter(self.centralwidget)
-        self.splitter_3.setObjectName(u"splitter_3")
-        self.splitter_3.setOrientation(Qt.Orientation.Vertical)
-        self.splitter_2 = QSplitter(self.splitter_3)
-        self.splitter_2.setObjectName(u"splitter_2")
-        self.splitter_2.setOrientation(Qt.Orientation.Horizontal)
-        self.widget = QWidget(self.splitter_2)
-        self.widget.setObjectName(u"widget")
-        self.verticalLayout = QVBoxLayout(self.widget)
+        self.verticalLayout_4 = QVBoxLayout(self.centralwidget)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.splitter = QSplitter(self.centralwidget)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setOrientation(Qt.Orientation.Vertical)
+        self.spl_filter_sort = QSplitter(self.splitter)
+        self.spl_filter_sort.setObjectName(u"spl_filter_sort")
+        self.spl_filter_sort.setOrientation(Qt.Orientation.Horizontal)
+        self.layoutWidget = QWidget(self.spl_filter_sort)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.verticalLayout = QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.lbl_categories = QLabel(self.widget)
+        self.lbl_categories = QLabel(self.layoutWidget)
         self.lbl_categories.setObjectName(u"lbl_categories")
+        font1 = QFont()
+        font1.setPointSize(14)
+        self.lbl_categories.setFont(font1)
         self.lbl_categories.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout.addWidget(self.lbl_categories)
 
-        self.lw_categories = QListWidget(self.widget)
+        self.lw_categories = QListWidget(self.layoutWidget)
         QListWidgetItem(self.lw_categories)
         QListWidgetItem(self.lw_categories)
         QListWidgetItem(self.lw_categories)
         QListWidgetItem(self.lw_categories)
         self.lw_categories.setObjectName(u"lw_categories")
+        self.lw_categories.setFont(font)
         self.lw_categories.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.lw_categories.setSelectionRectVisible(True)
 
         self.verticalLayout.addWidget(self.lw_categories)
 
-        self.splitter_2.addWidget(self.widget)
-        self.widget1 = QWidget(self.splitter_2)
-        self.widget1.setObjectName(u"widget1")
-        self.verticalLayout_2 = QVBoxLayout(self.widget1)
+        self.spl_filter_sort.addWidget(self.layoutWidget)
+        self.layoutWidget1 = QWidget(self.spl_filter_sort)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.verticalLayout_2 = QVBoxLayout(self.layoutWidget1)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.lbl_genrs = QLabel(self.widget1)
+        self.lbl_genrs = QLabel(self.layoutWidget1)
         self.lbl_genrs.setObjectName(u"lbl_genrs")
+        self.lbl_genrs.setFont(font1)
         self.lbl_genrs.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_2.addWidget(self.lbl_genrs)
 
-        self.lw_genres = QListWidget(self.widget1)
+        self.lw_genres = QListWidget(self.layoutWidget1)
         QListWidgetItem(self.lw_genres)
         QListWidgetItem(self.lw_genres)
         QListWidgetItem(self.lw_genres)
         QListWidgetItem(self.lw_genres)
         self.lw_genres.setObjectName(u"lw_genres")
+        self.lw_genres.setFont(font)
         self.lw_genres.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.lw_genres.setSelectionRectVisible(True)
 
         self.verticalLayout_2.addWidget(self.lw_genres)
 
-        self.splitter_2.addWidget(self.widget1)
-        self.widget2 = QWidget(self.splitter_2)
-        self.widget2.setObjectName(u"widget2")
-        self.verticalLayout_3 = QVBoxLayout(self.widget2)
+        self.spl_filter_sort.addWidget(self.layoutWidget1)
+        self.layoutWidget2 = QWidget(self.spl_filter_sort)
+        self.layoutWidget2.setObjectName(u"layoutWidget2")
+        self.verticalLayout_3 = QVBoxLayout(self.layoutWidget2)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.lbl_sort = QLabel(self.widget2)
+        self.lbl_sort = QLabel(self.layoutWidget2)
         self.lbl_sort.setObjectName(u"lbl_sort")
+        self.lbl_sort.setFont(font1)
         self.lbl_sort.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_3.addWidget(self.lbl_sort)
 
-        self.cb_sort = QComboBox(self.widget2)
+        self.cb_sort = QComboBox(self.layoutWidget2)
         self.cb_sort.addItem("")
         self.cb_sort.addItem("")
         self.cb_sort.addItem("")
         self.cb_sort.setObjectName(u"cb_sort")
+        self.cb_sort.setFont(font1)
 
         self.verticalLayout_3.addWidget(self.cb_sort)
 
@@ -132,86 +155,47 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addItem(self.verticalSpacer)
 
-        self.splitter_2.addWidget(self.widget2)
-        self.splitter_3.addWidget(self.splitter_2)
-        self.splitter = QSplitter(self.splitter_3)
-        self.splitter.setObjectName(u"splitter")
-        self.splitter.setOrientation(Qt.Orientation.Horizontal)
-        self.widget3 = QWidget(self.splitter)
-        self.widget3.setObjectName(u"widget3")
-        self.verticalLayout_4 = QVBoxLayout(self.widget3)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.lbl_songs = QLabel(self.widget3)
-        self.lbl_songs.setObjectName(u"lbl_songs")
-        self.lbl_songs.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.verticalLayout_4.addWidget(self.lbl_songs)
-
-        self.llw_songs = QListWidget(self.widget3)
+        self.spl_filter_sort.addWidget(self.layoutWidget2)
+        self.splitter.addWidget(self.spl_filter_sort)
+        self.spl_songs = QSplitter(self.splitter)
+        self.spl_songs.setObjectName(u"spl_songs")
+        self.spl_songs.setOrientation(Qt.Orientation.Horizontal)
+        self.llw_songs = QListWidget(self.spl_songs)
         QListWidgetItem(self.llw_songs)
         QListWidgetItem(self.llw_songs)
         QListWidgetItem(self.llw_songs)
         QListWidgetItem(self.llw_songs)
         self.llw_songs.setObjectName(u"llw_songs")
+        self.llw_songs.setFont(font)
         self.llw_songs.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.llw_songs.setSelectionRectVisible(True)
-
-        self.verticalLayout_4.addWidget(self.llw_songs)
-
-        self.splitter.addWidget(self.widget3)
-        self.widget4 = QWidget(self.splitter)
-        self.widget4.setObjectName(u"widget4")
-        self.verticalLayout_5 = QVBoxLayout(self.widget4)
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.lbl_song_image_2 = QLabel(self.widget4)
-        self.lbl_song_image_2.setObjectName(u"lbl_song_image_2")
-        self.lbl_song_image_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.verticalLayout_5.addWidget(self.lbl_song_image_2)
-
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_5.addItem(self.verticalSpacer_2)
-
-        self.lbl_song_image = QLabel(self.widget4)
+        self.spl_songs.addWidget(self.llw_songs)
+        self.lbl_song_image = QLabel(self.spl_songs)
         self.lbl_song_image.setObjectName(u"lbl_song_image")
+        self.lbl_song_image.setFont(font1)
+        self.lbl_song_image.setFrameShape(QFrame.Shape.StyledPanel)
         self.lbl_song_image.setPixmap(QPixmap(u"song_image_test.png"))
         self.lbl_song_image.setScaledContents(True)
         self.lbl_song_image.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.verticalLayout_5.addWidget(self.lbl_song_image)
-
-        self.splitter.addWidget(self.widget4)
-        self.widget5 = QWidget(self.splitter)
-        self.widget5.setObjectName(u"widget5")
-        self.verticalLayout_6 = QVBoxLayout(self.widget5)
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.lbl_song_text = QLabel(self.widget5)
-        self.lbl_song_text.setObjectName(u"lbl_song_text")
-        self.lbl_song_text.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.verticalLayout_6.addWidget(self.lbl_song_text)
-
-        self.te_song_text = QTextEdit(self.widget5)
+        self.spl_songs.addWidget(self.lbl_song_image)
+        self.te_song_text = QTextEdit(self.spl_songs)
         self.te_song_text.setObjectName(u"te_song_text")
-
-        self.verticalLayout_6.addWidget(self.te_song_text)
-
-        self.splitter.addWidget(self.widget5)
-        self.splitter_3.addWidget(self.splitter)
-        self.le_search = QLineEdit(self.splitter_3)
+        self.te_song_text.setFont(font)
+        self.te_song_text.setReadOnly(True)
+        self.spl_songs.addWidget(self.te_song_text)
+        self.splitter.addWidget(self.spl_songs)
+        self.le_search = QLineEdit(self.splitter)
         self.le_search.setObjectName(u"le_search")
-        self.splitter_3.addWidget(self.le_search)
+        self.le_search.setFont(font)
+        self.splitter.addWidget(self.le_search)
 
-        self.verticalLayout_7.addWidget(self.splitter_3)
+        self.verticalLayout_4.addWidget(self.splitter)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 904, 19))
+        self.menubar.setGeometry(QRect(0, 0, 904, 23))
+        self.menubar.setFont(font)
         self.menu_add = QMenu(self.menubar)
         self.menu_add.setObjectName(u"menu_add")
         self.menu_edit = QMenu(self.menubar)
@@ -253,7 +237,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0441\u043d\u0438", None))
         self.act_add_category.setText(QCoreApplication.translate("MainWindow", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044e", None))
         self.act_add_genre.setText(QCoreApplication.translate("MainWindow", u"\u0416\u0430\u043d\u0440", None))
         self.act_add_song.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0441\u043d\u044e", None))
@@ -300,7 +284,6 @@ class Ui_MainWindow(object):
         self.cb_sort.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041f\u043e \u0434\u0430\u0442\u0435 \u0438\u0441\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f", None))
         self.cb_sort.setItemText(2, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0434\u0430\u0432\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u043d\u044f\u0432\u0448\u0438\u0435\u0441\u044f", None))
 
-        self.lbl_songs.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0441\u043d\u0438:", None))
 
         __sortingEnabled2 = self.llw_songs.isSortingEnabled()
         self.llw_songs.setSortingEnabled(False)
@@ -314,9 +297,15 @@ class Ui_MainWindow(object):
         ___qlistwidgetitem11.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
         self.llw_songs.setSortingEnabled(__sortingEnabled2)
 
-        self.lbl_song_image_2.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0441\u0442-\u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435", None))
         self.lbl_song_image.setText("")
-        self.lbl_song_text.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438", None))
+        self.te_song_text.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438 </p></body></html>", None))
         self.le_search.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0438\u0441\u043a...", None))
         self.menu_add.setTitle(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
         self.menu_edit.setTitle(QCoreApplication.translate("MainWindow", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c", None))

@@ -21,12 +21,11 @@ from PySide6.QtCore import (
 )
 from PySide6.QtGui import QFont
 from my_classes.songs import Songs
-import main_ui
+from gui import main_ui
 
 
 class MainWindow(QMainWindow):
     """ Class MainWindow. """
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = main_ui.Ui_MainWindow()
@@ -50,7 +49,6 @@ class MainWindow(QMainWindow):
 
     def do_connections(self):
         """ Do connections. """
-
         self.btn_close.clicked.connect(self.close)
         self.ui.act_add_category.triggered.connect(self.act_add_category_triggered)
         self.ui.act_add_genre.triggered.connect(self.act_add_genre_triggered)
@@ -58,7 +56,6 @@ class MainWindow(QMainWindow):
 
     def create_statusbar(self):
         """ Creates statusbar and components for its. """
-
         self.stbar = self.ui.statusbar
         self.lbl_total_records = QLabel(" Количество записей: ")
         self.lbl_total_records.setFont(QFont(self.font_family, self.font_size))

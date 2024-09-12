@@ -30,7 +30,7 @@ class Ui_dlg_add_categories(object):
         font.setPointSize(12)
         font.setBold(False)
         dlg_add_categories.setFont(font)
-        dlg_add_categories.setModal(True)
+        dlg_add_categories.setModal(False)
         self.verticalLayout_3 = QVBoxLayout(dlg_add_categories)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.horizontalLayout = QHBoxLayout()

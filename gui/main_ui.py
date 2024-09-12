@@ -30,6 +30,7 @@ class Ui_MainWindow(object):
         self.act_add_category = QAction(MainWindow)
         self.act_add_category.setObjectName(u"act_add_category")
         font = QFont()
+        font.setFamilies([u"Lucida Console"])
         font.setPointSize(12)
         self.act_add_category.setFont(font)
         self.act_add_genre = QAction(MainWindow)
@@ -86,6 +87,7 @@ class Ui_MainWindow(object):
         self.lbl_categories = QLabel(self.layoutWidget)
         self.lbl_categories.setObjectName(u"lbl_categories")
         font1 = QFont()
+        font1.setFamilies([u"Lucida Console"])
         font1.setPointSize(14)
         self.lbl_categories.setFont(font1)
         self.lbl_categories.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -174,7 +176,7 @@ class Ui_MainWindow(object):
         self.lbl_song_image.setObjectName(u"lbl_song_image")
         self.lbl_song_image.setFont(font1)
         self.lbl_song_image.setFrameShape(QFrame.Shape.StyledPanel)
-        self.lbl_song_image.setPixmap(QPixmap(u"/home/alexander/Projects/Python/Songs/songs_images/song_image_test.png"))
+        self.lbl_song_image.setPixmap(QPixmap(u"../songs_images/song_image_test.png"))
         self.lbl_song_image.setScaledContents(True)
         self.lbl_song_image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.spl_songs.addWidget(self.lbl_song_image)
@@ -194,7 +196,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 904, 23))
+        self.menubar.setGeometry(QRect(0, 0, 904, 22))
         self.menubar.setFont(font)
         self.menu_add = QMenu(self.menubar)
         self.menu_add.setObjectName(u"menu_add")
@@ -304,8 +306,8 @@ class Ui_MainWindow(object):
 "hr { height: 1px; border-width: 0; }\n"
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Sans Serif'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438 </p></body></html>", None))
+"</style></head><body style=\" font-family:'Lucida Console'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Sans Serif';\">\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438 </span></p></body></html>", None))
         self.le_search.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0438\u0441\u043a...", None))
         self.menu_add.setTitle(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
         self.menu_edit.setTitle(QCoreApplication.translate("MainWindow", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c", None))

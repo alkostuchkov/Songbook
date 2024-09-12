@@ -247,7 +247,24 @@ class Songs:
         finally:
             cur.close()
             conn.close()
-#
+
+    def delete_categories_from_db(self, categories: list) -> None:
+        """ Delete categories from the DB. """
+        conn = connect(self.__path_to_db + "songs.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            for category in categories:
+                cur.execute("DELETE FROM categories WHERE category=:category",
+                            {"category": category})
+        except DatabaseError as exc:
+            raise exc  # ("Не удалось выполнить запрос.")
+        else:
+            conn.commit()  # complete transaction.
+        finally:
+            cur.close()
+            conn.close()
+
     # TODO: change args for this method to dict!
     # def update_record(self, old_song: dict, new_song: dict) -> None:
     def update_record(

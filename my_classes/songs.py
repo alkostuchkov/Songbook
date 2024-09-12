@@ -131,7 +131,7 @@ class Songs:
             raise DatabaseError("get_categories_from_db", err)
         else:
             for category in cur:
-                categories.append(category)
+                categories.append(category[0])
         finally:
             cur.close()
             conn.close()
@@ -151,7 +151,7 @@ class Songs:
             raise DatabaseError("get_genres_from_db", err)
         else:
             for genre in cur:
-                genres.append(genre)
+                genres.append(genre[0])
         finally:
             cur.close()
             conn.close()

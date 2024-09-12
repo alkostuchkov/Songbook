@@ -25,6 +25,8 @@ from PySide6.QtGui import (
 )
 from my_classes.songs import Songs
 from gui import main_ui
+from dlg_add_categories import DlgAddCategory
+from dlg_add_genres import DlgAddGenre
 
 
         # import os
@@ -53,7 +55,7 @@ class MainWindow(QMainWindow):
 
         self.fill_in_genres()
         self.fill_in_categories()
-        self.show_records()
+        self.show_songs()
 
 
     def do_connections(self):
@@ -62,6 +64,13 @@ class MainWindow(QMainWindow):
         self.ui.act_add_category.triggered.connect(self.act_add_category_triggered)
         self.ui.act_add_genre.triggered.connect(self.act_add_genre_triggered)
         self.ui.act_add_song.triggered.connect(self.act_add_song_triggered)
+        self.ui.act_delete_category.triggered.connect(
+            self.act_delete_category_triggered)
+        self.ui.act_delete_genre.triggered.connect(
+            self.act_delete_genre_triggered)
+        self.ui.act_delete_song.triggered.connect(
+            self.act_delete_song_triggered)
+        self.ui.act_about_qt.triggered.connect(lambda: QMessageBox.aboutQt(self))
 
     def create_statusbar(self):
         """ Creates statusbar and components for its. """
@@ -106,7 +115,7 @@ class MainWindow(QMainWindow):
             else:
                 self.ui.lw_categories.clear()
                 for category in categories:
-                    self.ui.lw_categories.addItems(category)
+                    self.ui.lw_categories.addItem(category)
 
     def fill_in_genres(self):
         """ Fill in lw_genres from DB. """
@@ -127,10 +136,10 @@ class MainWindow(QMainWindow):
             else:
                 self.ui.lw_genres.clear()
                 for genre in genres:
-                    self.ui.lw_genres.addItems(genre)
+                    self.ui.lw_genres.addItem(genre)
 
-    def show_records(self):
-        """ Show all records. """
+    def show_songs(self):
+        """ Show all songs records. """
         # Create Songs INSTANCE and load data from the db.
         my_songs: Songs = Songs()
         try:
@@ -160,10 +169,10 @@ class MainWindow(QMainWindow):
                     desc_str: str = ""
                     output_str = str(key) + ":\n"
                     genres_str: str = ", ".join(my_songs.songs[key]["genres"])
-                    desc_str = " " * (len(output_str) + 1) + genres_str + "\n"
-                    desc_str += " " * (len(output_str) + 1) + my_songs.songs[key]["category"] + "\n"
-                    desc_str += " " * (len(output_str) + 1) + my_songs.songs[key]["last_performed"] + "\n"
-                    desc_str += " " * (len(output_str) + 1) + my_songs.songs[key]["comment"]
+                    desc_str = " " * (len(output_str) - 1) + genres_str + "\n"
+                    desc_str += " " * (len(output_str) - 1) + my_songs.songs[key]["category"] + "\n"
+                    desc_str += " " * (len(output_str) - 1) + my_songs.songs[key]["last_performed"] + "\n"
+                    desc_str += " " * (len(output_str) - 1) + my_songs.songs[key]["comment"]
                     output_str += desc_str  # [:-1]  # Delete last "\n"
                     self.ui.lw_songs.addItem(output_str)
 
@@ -179,15 +188,74 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def act_add_category_triggered(self):
-        """ Add category. """
+        """  Create the instance of DlgAddCategory Class and show it. """
+        dlg_add_category: DlgAddCategory = DlgAddCategory()
+        dlg_add_category.exec()
+        self.fill_in_categories()
 
     @Slot()
     def act_add_genre_triggered(self):
-        """ Add genre. """
+        """  Create the instance of DlgAddGenre Class and show it. """
+        dlg_add_genre: DlgAddGenre = DlgAddGenre()
+        dlg_add_genre.exec()
+        self.fill_in_genres()
 
     @Slot()
     def act_add_song_triggered(self):
         """ Add song. """
+
+    @Slot()
+    def act_delete_category_triggered(self):
+        """ Delete category(ies). """
+        total_categories = self.ui.lw_categories.count()
+        categories: list = []
+        if total_categories == 0:  # lw_categories is empty.
+            QMessageBox.warning(
+                self,
+                "Удаление категории(ий)",
+                "Нечего удалять.\nСписок категорий пуст.")
+        elif self.ui.lw_categories.currentRow() == -1:  #  or no selection.
+            QMessageBox.warning(
+                self,
+                "Удаление категории(й)",
+                "Для удаления выберите категорию(ии) в списке.")
+        else:  # not empty.
+            btn_reply = QMessageBox.critical(
+                self,
+                "Удаление категории(ий)",
+                "Данное действие удалит выбранные КАТЕГОРИИ и\n"
+                "ПЕСНИ с данными категориями из песенника безвозвратно.\n"
+                "Вы точно уверены, что хотите этого?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No)
+            if btn_reply == QMessageBox.Yes:
+                for item in self.ui.lw_categories.selectedItems():
+                    categories.append(
+                        self.ui.lw_categories.takeItem(
+                            self.ui.lw_categories.row(item)).text())
+                # Create Songs INSTANCE and load data from the db.
+                my_songs: Songs = Songs()
+                try:
+                    my_songs.delete_categories_from_db(categories)
+                except DatabaseError:
+                    QMessageBox.critical(self, "Открытие базы данных", 
+                                         "Ошибка при обращении к базе данных.")
+                else:
+                    QMessageBox.information(
+                        self,
+                        "Добавление записи",
+                        "Категории успешно удалены из песенника.")
+
+                    self.fill_in_categories()
+                    self.show_songs()
+
+    @Slot()
+    def act_delete_genre_triggered(self):
+        """ Delete genre(s). """
+
+    @Slot()
+    def act_delete_song_triggered(self):
+        """ Delete song(s). """
 
     @Slot()
     def act_edit_category_triggered(self):

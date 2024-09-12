@@ -150,7 +150,7 @@ class DlgAddGenre(QDialog):
                             QMessageBox.information(
                                 self,
                                 "Добавление записи",
-                                "Жанры успешно добалены в справочник.")
+                                "Жанры успешно добалены в песенник.")
                             self.ui.lw_adding_genres.clear()
                             self.ui.le_genre.clear()
                             self.ui.le_genre.setFocus()

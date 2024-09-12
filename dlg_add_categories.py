@@ -150,7 +150,7 @@ class DlgAddCategory(QDialog):
                             QMessageBox.information(
                                 self,
                                 "Добавление записи",
-                                "Категории успешно добалены в справочник.")
+                                "Категории успешно добалены в песенник.")
                             self.ui.lw_adding_categiries.clear()
                             self.ui.le_category.clear()
                             self.ui.le_category.setFocus()

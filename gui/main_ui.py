@@ -239,7 +239,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0441\u043d\u0438", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0441\u0435\u043d\u043d\u0438\u043a", None))
         self.act_add_category.setText(QCoreApplication.translate("MainWindow", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044e(\u0438\u0438)", None))
         self.act_add_genre.setText(QCoreApplication.translate("MainWindow", u"\u0416\u0430\u043d\u0440(\u044b)", None))
         self.act_add_song.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0441\u043d\u044e", None))

@@ -158,34 +158,36 @@ class Songs:
 
         return genres
 
-    def insert_genre_into_db(self, genre: str) -> None:
-        """ Insert a genre into the table genres of DB. """
+    def insert_genres_into_db(self, genres: list) -> None:
+        """ Insert genres into the table genres of DB. """
 
         conn = connect(self.__path_to_db + "songs.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
-            cur.execute("INSERT INTO genres(genre) VALUES(:genre)",
+            for genre in genres:
+                cur.execute("INSERT INTO genres(genre) VALUES(:genre)",
                         {"genre": genre})
         except DatabaseError as err:
-            raise DatabaseError("insert_genre_into_db", err)
+            raise DatabaseError("insert_genres_into_db", err)
         else:
             conn.commit()  # complete transaction
         finally:
             cur.close()
             conn.close()
 
-    def insert_category_into_db(self, category: str) -> None:
-        """ Insert a category into the table categories of DB. """
+    def insert_categories_into_db(self, categories: list) -> None:
+        """ Insert categories into the table categories of DB. """
 
         conn = connect(self.__path_to_db + "songs.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
-            cur.execute("INSERT INTO categories(category) VALUES(:category)",
+            for category in categories:
+                cur.execute("INSERT INTO categories(category) VALUES(:category)",
                         {"category": category})
         except DatabaseError as err:
-            raise DatabaseError("insert_category_into_db", err)
+            raise DatabaseError("insert_categories_into_db", err)
         else:
             conn.commit()  # complete transaction
         finally:

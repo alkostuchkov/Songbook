@@ -242,7 +242,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>song_image_test.png</pixmap>
+          <pixmap>/home/alexander/Projects/Python/Songs/songs_images/song_image_test.png</pixmap>
         </property>
         <property name="scaledContents">
          <bool>true</bool>

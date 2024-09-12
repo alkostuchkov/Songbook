@@ -25,8 +25,8 @@
 
 import os
 from sqlite3 import (
-    DatabaseError,
     connect,
+    DatabaseError,
 )
 
 
@@ -39,13 +39,7 @@ class Songs:
         self.songs: dict = {}
         self.__path_to_db: str = f"{os.path.abspath(".")}{os.path.sep}database{os.path.sep}"
 
-        # TODO: delete after ALL tests.
-        print("Constructor called...")
-        print("__path_to_db", self.__path_to_db)
-
-    # TODO: delete after ALL corrections.
-    def __del__(self):
-        print("Destructor called...")
+    # def __del__(self):
 
     def open_db_and_get_dict(self) -> None:
         """

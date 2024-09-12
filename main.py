@@ -19,9 +19,18 @@ from PySide6.QtCore import (
     Signal,
     Slot,
 )
-from PySide6.QtGui import QFont
+from PySide6.QtGui import (
+    QFont,
+    QPixmap,
+)
 from my_classes.songs import Songs
 from gui import main_ui
+
+
+        # import os
+        # path_to_exe = os.path.abspath(".")
+        # path_to_songs_images = path_to_exe + os.path.sep + "songs_images" + os.path.sep
+        # self.ui.lbl_song_image.setPixmap(QPixmap(path_to_songs_images + "song_image_test.png"))
 
 
 class MainWindow(QMainWindow):

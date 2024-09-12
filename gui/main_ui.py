@@ -174,7 +174,7 @@ class Ui_MainWindow(object):
         self.lbl_song_image.setObjectName(u"lbl_song_image")
         self.lbl_song_image.setFont(font1)
         self.lbl_song_image.setFrameShape(QFrame.Shape.StyledPanel)
-        self.lbl_song_image.setPixmap(QPixmap(u"song_image_test.png"))
+        self.lbl_song_image.setPixmap(QPixmap(u"/home/alexander/Projects/Python/Songs/songs_images/song_image_test.png"))
         self.lbl_song_image.setScaledContents(True)
         self.lbl_song_image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.spl_songs.addWidget(self.lbl_song_image)

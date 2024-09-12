@@ -353,7 +353,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="QStatusBar" name="statusbar"/>
   <action name="act_add_category">
    <property name="text">
-    <string>Категорию</string>
+    <string>Категорию(ии)</string>
    </property>
    <property name="font">
     <font>
@@ -364,7 +364,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </action>
   <action name="act_add_genre">
    <property name="text">
-    <string>Жанр</string>
+    <string>Жанр(ы)</string>
    </property>
    <property name="font">
     <font>
@@ -419,7 +419,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </action>
   <action name="act_delete_category">
    <property name="text">
-    <string>Категорию</string>
+    <string>Категорию(ии)</string>
    </property>
    <property name="font">
     <font>
@@ -430,7 +430,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </action>
   <action name="act_delete_genre">
    <property name="text">
-    <string>Жанр</string>
+    <string>Жанр(ы)</string>
    </property>
    <property name="font">
     <font>
@@ -441,7 +441,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </action>
   <action name="act_delete_song">
    <property name="text">
-    <string>Песню</string>
+    <string>Песню(и)</string>
    </property>
    <property name="font">
     <font>

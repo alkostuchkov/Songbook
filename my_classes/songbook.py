@@ -265,6 +265,23 @@ class Songbook:
             cur.close()
             conn.close()
 
+    def delete_genres_from_db(self, genres: list) -> None:
+        """ Delete genres from the DB. """
+        conn = connect(self.__path_to_db + "songbook.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            for genre in genres:
+                cur.execute("DELETE FROM genres WHERE genre=:genre",
+                            {"genre": genre})
+        except DatabaseError as exc:
+            raise exc  # ("Не удалось выполнить запрос.")
+        else:
+            conn.commit()  # complete transaction.
+        finally:
+            cur.close()
+            conn.close()
+
     # TODO: change args for this method to dict!
     # def update_record(self, old_song: dict, new_song: dict) -> None:
     def update_record(

@@ -23,7 +23,7 @@ from PySide6.QtGui import (
     QFont,
     QPixmap,
 )
-from my_classes.songs import Songs
+from my_classes.songbook import Songbook
 from gui import main_ui
 from dlg_add_categories import DlgAddCategory
 from dlg_add_genres import DlgAddGenre
@@ -98,10 +98,10 @@ class MainWindow(QMainWindow):
 
     def fill_in_categories(self):
         """ Fill in lw_categories from DB. """
-        # Create Songs INSTANCE and load data from the db.
-        my_songs: Songs = Songs()
+        # Create Songbook INSTANCE and load data from the db.
+        my_songbook: Songbook = Songbook()
         try:
-            categories: list = my_songs.get_categories_from_db()
+            categories: list = my_songbook.get_categories_from_db()
         except DatabaseError:
             QMessageBox.critical(self, "Открытие базы данных", 
                                  "Ошибка при чтении категорий из базы данных.")
@@ -113,16 +113,16 @@ class MainWindow(QMainWindow):
                     "Ваш список категорий пуст.\n"
                     "Выберите 'Добавить категорию' в главном окне.")
             else:
-                self.ui.lw_categories.clear()
+                self.ui.lw_genres.clear()
                 for category in categories:
-                    self.ui.lw_categories.addItem(category)
+                    self.ui.lw_genres.addItem(category)
 
     def fill_in_genres(self):
         """ Fill in lw_genres from DB. """
-        # Create Songs INSTANCE and load data from the db.
-        my_songs: Songs = Songs()
+        # Create Songbook INSTANCE and load data from the db.
+        my_songbook: Songbook = Songbook()
         try:
-            genres: list = my_songs.get_genres_from_db()
+            genres: list = my_songbook.get_genres_from_db()
         except DatabaseError:
             QMessageBox.critical(self, "Открытие базы данных", 
                                  "Ошибка при чтении жанров из базы данных.")
@@ -140,22 +140,22 @@ class MainWindow(QMainWindow):
 
     def show_songs(self):
         """ Show all songs records. """
-        # Create Songs INSTANCE and load data from the db.
-        my_songs: Songs = Songs()
+        # Create Songbook INSTANCE and load data from the db.
+        my_songbook: Songbook = Songbook()
         try:
-            my_songs.open_db_and_get_dict()
+            my_songbook.open_db_and_get_dict()
         except DatabaseError:
             QMessageBox.critical(self, "Открытие базы данных", 
                                  "Ошибка при обращении к базе данных.")
         else:
-            self.total_records = len(my_songs.songs)
+            self.total_records = len(my_songbook.songbook)
             self.lbl_total_records.setText(
                 f"{self.lbl_total_records.text()}{str(self.total_records)}")
             self.found_records = 0
             self.lbl_found_records.setText(
                 f"{self.lbl_found_records.text()}{str(self.found_records)}")
-            # check if the my_songs.songs is empty.
-            if len(my_songs.songs) == 0:
+            # check if the my_songbook.songbook is empty.
+            if len(my_songbook.songbook) == 0:
                 QMessageBox.warning(
                     self,
                     "Показать все записи",
@@ -165,25 +165,25 @@ class MainWindow(QMainWindow):
                 self.ui.lw_songs.clear()
                 current_row: int = 0
                 output_str: str = ""
-                for key in sorted(my_songs.songs):
+                for key in sorted(my_songbook.songbook):
                     desc_str: str = ""
                     output_str = str(key) + ":\n"
-                    genres_str: str = ", ".join(my_songs.songs[key]["genres"])
+                    genres_str: str = ", ".join(my_songbook.songbook[key]["genres"])
                     desc_str = " " * (len(output_str) - 1) + genres_str + "\n"
-                    desc_str += " " * (len(output_str) - 1) + my_songs.songs[key]["category"] + "\n"
-                    desc_str += " " * (len(output_str) - 1) + my_songs.songs[key]["last_performed"] + "\n"
-                    desc_str += " " * (len(output_str) - 1) + my_songs.songs[key]["comment"]
+                    desc_str += " " * (len(output_str) - 1) + my_songbook.songbook[key]["category"] + "\n"
+                    desc_str += " " * (len(output_str) - 1) + my_songbook.songbook[key]["last_performed"] + "\n"
+                    desc_str += " " * (len(output_str) - 1) + my_songbook.songbook[key]["comment"]
                     output_str += desc_str  # [:-1]  # Delete last "\n"
                     self.ui.lw_songs.addItem(output_str)
 
                     self.ui.lw_songs.setCurrentRow(current_row)
-                    if my_songs.songs[key]["is_recently"] == 1:
+                    if my_songbook.songbook[key]["is_recently"] == 1:
                         self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Checked)
                     else:
                         self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Unchecked)
                     current_row += 1
                     self.ui.lw_songs.clearSelection()
-            # The INSTANCE of my_songs, created in the beginning
+            # The INSTANCE of my_songbook, created in the beginning
             # of this method is destroying here!!!
 
     @Slot()
@@ -207,14 +207,14 @@ class MainWindow(QMainWindow):
     @Slot()
     def act_delete_category_triggered(self):
         """ Delete category(ies). """
-        total_categories = self.ui.lw_categories.count()
+        total_categories = self.ui.lw_genres.count()
         categories: list = []
         if total_categories == 0:  # lw_categories is empty.
             QMessageBox.warning(
                 self,
                 "Удаление категории(ий)",
                 "Нечего удалять.\nСписок категорий пуст.")
-        elif self.ui.lw_categories.currentRow() == -1:  #  or no selection.
+        elif self.ui.lw_genres.currentRow() == -1:  #  or no selection.
             QMessageBox.warning(
                 self,
                 "Удаление категории(й)",
@@ -229,14 +229,14 @@ class MainWindow(QMainWindow):
                 QMessageBox.Yes | QMessageBox.No,
                 QMessageBox.No)
             if btn_reply == QMessageBox.Yes:
-                for item in self.ui.lw_categories.selectedItems():
+                for item in self.ui.lw_genres.selectedItems():
                     categories.append(
-                        self.ui.lw_categories.takeItem(
-                            self.ui.lw_categories.row(item)).text())
-                # Create Songs INSTANCE and load data from the db.
-                my_songs: Songs = Songs()
+                        self.ui.lw_genres.takeItem(
+                            self.ui.lw_genres.row(item)).text())
+                # Create Songbook INSTANCE and load data from the db.
+                my_songbook: Songbook = Songbook()
                 try:
-                    my_songs.delete_categories_from_db(categories)
+                    my_songbook.delete_categories_from_db(categories)
                 except DatabaseError:
                     QMessageBox.critical(self, "Открытие базы данных", 
                                          "Ошибка при обращении к базе данных.")
@@ -252,6 +252,49 @@ class MainWindow(QMainWindow):
     @Slot()
     def act_delete_genre_triggered(self):
         """ Delete genre(s). """
+        total_genres = self.ui.lw_genres.count()
+        genres: list = []
+        if total_genres == 0:  # lw_categories is empty.
+            QMessageBox.warning(
+                self,
+                "Удаление жанра(ов)",
+                "Нечего удалять.\nСписок жанров пуст.")
+        elif self.ui.lw_genres.currentRow() == -1:  #  or no selection.
+            QMessageBox.warning(
+                self,
+                "Удаление жанра(ов)",
+                "Для удаления выберите жанр(ы) в списке.")
+        else:  # not empty.
+            btn_reply = QMessageBox.critical(
+                self,
+                "Удаление жанра(ов)",
+# TODO: check deleting and fix description!!!
+                "Данное действие удалит выбранные ЖАНРЫ и\n"
+                "ПЕСНИ с данными жанрами из песенника безвозвратно.\n"
+                "Вы точно уверены, что хотите этого?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No)
+            if btn_reply == QMessageBox.Yes:
+                for item in self.ui.lw_genres.selectedItems():
+                    genres.append(
+                        self.ui.lw_genres.takeItem(
+                            self.ui.lw_genres.row(item)).text())
+                # Create Songbook INSTANCE and load data from the db.
+                my_songbook: Songbook = Songbook()
+                try:
+                    my_songbook.delete_categories_from_db(genres)
+                except DatabaseError:
+                    QMessageBox.critical(self, "Открытие базы данных", 
+                                         "Ошибка при обращении к базе данных.")
+                else:
+                    QMessageBox.information(
+                        self,
+                        "Добавление записи",
+                        "Категории успешно удалены из песенника.")
+
+                    self.fill_in_categories()
+                    self.show_songs()
+
 
     @Slot()
     def act_delete_song_triggered(self):

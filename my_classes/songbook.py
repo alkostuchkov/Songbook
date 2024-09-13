@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-""" Module contains class Songs. """
-# ====== Songs for my own using ======
-# = Example how my Songs looks like. =
-# songs = {
+""" Module contains class Songbook. """
+# ====== Songbook for my own using ======
+# = Example how my Songbook looks like. =
+# songbook = {
 #     "Song 1": {
 #         genre: "genre 1",
 #         categories: ["category 1", "category 2"],
@@ -30,13 +30,13 @@ from sqlite3 import (
 )
 
 
-class Songs:
+class Songbook:
     """
-    Class Songs.
+    Class Songbook.
     """
 
     def __init__(self):
-        self.songs: dict = {}
+        self.songbook: dict = {}
         self.__path_to_db: str = f"{os.path.abspath(".")}{os.path.sep}database{os.path.sep}"
 
     # def __del__(self):
@@ -44,13 +44,13 @@ class Songs:
     def open_db_and_get_dict(self) -> None:
         """
         Create database and tables if they not exist.
-        Get data from sqlite3 db and transform it into dict self.songs.
+        Get data from sqlite3 db and transform it into dict self.songbook.
         """
         # if dir 'database' not exists or not a dir, create this.
         if not os.path.exists(self.__path_to_db) or not os.path.isdir(self.__path_to_db):
             os.makedirs(self.__path_to_db)
 
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         sql = """\
@@ -105,15 +105,15 @@ class Songs:
                 title, genre, category, song_image, song_text,
                 last_performed, is_recently, comment
             ) in cur:
-                self.songs.setdefault(title, {"genres": []})
+                self.songbook.setdefault(title, {"genres": []})
 
-                self.songs[title]["genres"].append(genre)
-                self.songs[title]["category"] = category
-                self.songs[title]["song_image"] = song_image
-                self.songs[title]["song_text"] = song_text
-                self.songs[title]["last_performed"] = last_performed
-                self.songs[title]["is_recently"] = is_recently
-                self.songs[title]["comment"] = comment
+                self.songbook[title]["genres"].append(genre)
+                self.songbook[title]["category"] = category
+                self.songbook[title]["song_image"] = song_image
+                self.songbook[title]["song_text"] = song_text
+                self.songbook[title]["last_performed"] = last_performed
+                self.songbook[title]["is_recently"] = is_recently
+                self.songbook[title]["comment"] = comment
         finally:
             cur.close()
             conn.close()
@@ -122,7 +122,7 @@ class Songs:
         """ Get categories from DB. """
 
         categories: list = []
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -142,7 +142,7 @@ class Songs:
         """ Get genres from DB. """
 
         genres: list = []
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -161,7 +161,7 @@ class Songs:
     def insert_genres_into_db(self, genres: list) -> None:
         """ Insert genres into the table genres of DB. """
 
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -179,7 +179,7 @@ class Songs:
     def insert_categories_into_db(self, categories: list) -> None:
         """ Insert categories into the table categories of DB. """
 
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -201,7 +201,7 @@ class Songs:
     ) -> None:
         """ Insert a song into the songs table of DB. """
 
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
 
@@ -250,7 +250,7 @@ class Songs:
 
     def delete_categories_from_db(self, categories: list) -> None:
         """ Delete categories from the DB. """
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -274,7 +274,7 @@ class Songs:
     ) -> None:
         """ Update record in DB. """
 
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -335,7 +335,7 @@ class Songs:
 
         # Get ids all deleting songs by their titles.
         ids_songs: list = self._get_ids_songs(titles_list)
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -378,7 +378,7 @@ class Songs:
 
     def clear_db(self):
         """ Delete all data from the database. """
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         sql = """\
@@ -398,7 +398,7 @@ class Songs:
     def _get_id_category(self, category: str) -> int:
         """ Get id_category by its UNIQUE category. """
 
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -418,7 +418,7 @@ class Songs:
         """ Get genres ids by their UNIQUE genre. """
 
         ids_genres: list = []
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:
@@ -435,7 +435,7 @@ class Songs:
     def _get_id_song(self, title: str) -> int:
         """ Get id_song by its UNIQUE title. """
 
-        conn = connect(self.__path_to_db + "songs.db")
+        conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
         try:

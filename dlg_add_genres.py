@@ -5,7 +5,7 @@ from PySide6.QtWidgets import (
     QDialog,
     QMessageBox,
 )
-from my_classes.songs import Songs
+from my_classes.songbook import Songbook
 from gui import dlg_add_genres_ui
 
 
@@ -86,11 +86,11 @@ class DlgAddGenre(QDialog):
 
     def btn_finish_and_save_clicked(self):
         """ Save added genres into DB. """
-        # Create my_songs INSTANCE and load data from the db.
-        my_songs: Songs = Songs()
+        # Create my_songbook INSTANCE and load data from the db.
+        my_songbook: Songbook = Songbook()
         try:  # open db and get dict.
-            my_songs.open_db_and_get_dict()
-            my_genres: list = my_songs.get_genres_from_db()
+            my_songbook.open_db_and_get_dict()
+            my_genres: list = my_songbook.get_genres_from_db()
         except DatabaseError:
             QMessageBox.critical(
                 self,
@@ -140,7 +140,7 @@ class DlgAddGenre(QDialog):
                             genres.append(
                                 self.ui.lw_adding_genres.item(idx).text())
                         try:
-                            my_songs.insert_genres_into_db(genres)
+                            my_songbook.insert_genres_into_db(genres)
                         except DatabaseError:
                             QMessageBox.critical(
                                 self,

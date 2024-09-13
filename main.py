@@ -103,8 +103,10 @@ class MainWindow(QMainWindow):
         try:
             categories: list = my_songbook.get_categories_from_db()
         except DatabaseError:
-            QMessageBox.critical(self, "Открытие базы данных", 
-                                 "Ошибка при чтении категорий из базы данных.")
+            QMessageBox.critical(
+                self,
+                "Открытие базы данных", 
+                "Ошибка при чтении категорий из базы данных.")
         else:
             if len(categories) == 0:
                 QMessageBox.warning(
@@ -113,9 +115,9 @@ class MainWindow(QMainWindow):
                     "Ваш список категорий пуст.\n"
                     "Выберите 'Добавить категорию' в главном окне.")
             else:
-                self.ui.lw_genres.clear()
+                self.ui.lw_categories.clear()
                 for category in categories:
-                    self.ui.lw_genres.addItem(category)
+                    self.ui.lw_categories.addItem(category)
 
     def fill_in_genres(self):
         """ Fill in lw_genres from DB. """
@@ -124,8 +126,9 @@ class MainWindow(QMainWindow):
         try:
             genres: list = my_songbook.get_genres_from_db()
         except DatabaseError:
-            QMessageBox.critical(self, "Открытие базы данных", 
-                                 "Ошибка при чтении жанров из базы данных.")
+            QMessageBox.critical(
+                self, "Открытие базы данных", 
+                "Ошибка при чтении жанров из базы данных.")
         else:
             if len(genres) == 0:
                 QMessageBox.warning(
@@ -145,8 +148,10 @@ class MainWindow(QMainWindow):
         try:
             my_songbook.open_db_and_get_dict()
         except DatabaseError:
-            QMessageBox.critical(self, "Открытие базы данных", 
-                                 "Ошибка при обращении к базе данных.")
+            QMessageBox.critical(
+                self,
+                "Открытие базы данных", 
+                "Ошибка при обращении к базе данных.")
         else:
             self.total_records = len(my_songbook.songbook)
             self.lbl_total_records.setText(
@@ -238,12 +243,14 @@ class MainWindow(QMainWindow):
                 try:
                     my_songbook.delete_categories_from_db(categories)
                 except DatabaseError:
-                    QMessageBox.critical(self, "Открытие базы данных", 
-                                         "Ошибка при обращении к базе данных.")
+                    QMessageBox.critical(
+                        self,
+                        "Открытие базы данных", 
+                        "Ошибка при обращении к базе данных.")
                 else:
                     QMessageBox.information(
                         self,
-                        "Добавление записи",
+                        "Удаление категории(ий)",
                         "Категории успешно удалены из песенника.")
 
                     self.fill_in_categories()
@@ -282,17 +289,19 @@ class MainWindow(QMainWindow):
                 # Create Songbook INSTANCE and load data from the db.
                 my_songbook: Songbook = Songbook()
                 try:
-                    my_songbook.delete_categories_from_db(genres)
+                    my_songbook.delete_genres_from_db(genres)
                 except DatabaseError:
-                    QMessageBox.critical(self, "Открытие базы данных", 
-                                         "Ошибка при обращении к базе данных.")
+                    QMessageBox.critical(
+                        self,
+                        "Открытие базы данных", 
+                        "Ошибка при обращении к базе данных.")
                 else:
                     QMessageBox.information(
                         self,
-                        "Добавление записи",
-                        "Категории успешно удалены из песенника.")
+                        "Удаление жанра(ов)",
+                        "Жанры успешно удалены из песенника.")
 
-                    self.fill_in_categories()
+                    self.fill_in_genres()
                     self.show_songs()
 
 

@@ -118,7 +118,7 @@ class Songbook:
             cur.close()
             conn.close()
 
-    def get_categories_from_db(self) -> list:
+    def get_categories_from_db(self) -> list[str]:
         """ Get categories from DB. """
 
         categories: list = []
@@ -138,7 +138,7 @@ class Songbook:
 
         return categories
 
-    def get_genres_from_db(self) -> list:
+    def get_genres_from_db(self) -> list[str]:
         """ Get genres from DB. """
 
         genres: list = []
@@ -158,7 +158,7 @@ class Songbook:
 
         return genres
 
-    def insert_genres_into_db(self, genres: list) -> None:
+    def insert_genres_into_db(self, genres: list[str]) -> None:
         """ Insert genres into the table genres of DB. """
 
         conn = connect(self.__path_to_db + "songbook.db")
@@ -176,7 +176,7 @@ class Songbook:
             cur.close()
             conn.close()
 
-    def insert_categories_into_db(self, categories: list) -> None:
+    def insert_categories_into_db(self, categories: list[str]) -> None:
         """ Insert categories into the table categories of DB. """
 
         conn = connect(self.__path_to_db + "songbook.db")
@@ -196,7 +196,7 @@ class Songbook:
 
     # TODO: change args for this method to dict!
     def insert_song_into_db(
-        self, title: str, genres: list, category: str, song_image: str,
+        self, title: str, genres: list[str], category: str, song_image: str,
         song_text: str, last_performed: str, is_recently: int, comment: str
     ) -> None:
         """ Insert a song into the songs table of DB. """
@@ -248,7 +248,7 @@ class Songbook:
             cur.close()
             conn.close()
 
-    def delete_categories_from_db(self, categories: list) -> None:
+    def delete_categories_from_db(self, categories: list[str]) -> None:
         """ Delete categories from the DB. """
         conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
@@ -265,7 +265,7 @@ class Songbook:
             cur.close()
             conn.close()
 
-    def delete_genres_from_db(self, genres: list) -> None:
+    def delete_genres_from_db(self, genres: list[str]) -> None:
         """ Delete genres from the DB. """
         conn = connect(self.__path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
@@ -285,9 +285,10 @@ class Songbook:
     # TODO: change args for this method to dict!
     # def update_record(self, old_song: dict, new_song: dict) -> None:
     def update_record(
-        self, old_title: str, new_title: str, old_genres: list, new_genres: list,
-        old_category: str, new_category: str, song_image: str, song_text: str,
-        last_performed: str, is_recently: int, comment: str
+        self, old_title: str, new_title: str, old_genres: list[str],
+        new_genres: list[str], old_category: str, new_category: str,
+        song_image: str, song_text: str, last_performed: str,
+        is_recently: int, comment: str
     ) -> None:
         """ Update record in DB. """
 
@@ -345,7 +346,7 @@ class Songbook:
             cur.close()
             conn.close()
 
-    def delete_multi_records(self, titles_list: list) -> None:
+    def delete_multi_records(self, titles_list: list[str]) -> None:
         """
         Delete songs with all dependences in songs_genres from the database.
         """
@@ -431,7 +432,7 @@ class Songbook:
             conn.close()
         return id_category
 
-    def _get_ids_genres(self, genres: list) -> list:
+    def _get_ids_genres(self, genres: list[str]) -> list[int]:
         """ Get genres ids by their UNIQUE genre. """
 
         ids_genres: list = []
@@ -467,7 +468,7 @@ class Songbook:
             conn.close()
         return id_song
 
-    def _get_ids_songs(self, titles_list: list) -> list:
+    def _get_ids_songs(self, titles_list: list[str]) -> list[int]:
         """ Get ids_songs by its UNIQUE title. """
 
         ids_songs: list = []

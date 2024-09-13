@@ -26,7 +26,9 @@ from PySide6.QtGui import (
 from my_classes.songbook import Songbook
 from gui import main_ui
 from dlg_add_categories import DlgAddCategory
+from dlg_edit_categories import DlgEditCategory
 from dlg_add_genres import DlgAddGenre
+# from dlg_add_genres import DlgEditGenre
 
 
         # import os
@@ -37,6 +39,15 @@ from dlg_add_genres import DlgAddGenre
 
 class MainWindow(QMainWindow):
     """ Class MainWindow. """
+# TODO: DELETE this Signal
+    # my SIGNAL when act_add_category tiggered for passing list of
+    # of names of old_categories.
+    # edit_category_called = Signal(list[str])
+
+    # # my SIGNALs when lblZoomIn and lblZoomOut clicked.
+    # lblZoomInClicked = QtCore.pyqtSignal()
+    # lblZoomOutClicked = QtCore.pyqtSignal()
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = main_ui.Ui_MainWindow()
@@ -70,6 +81,12 @@ class MainWindow(QMainWindow):
             self.act_delete_genre_triggered)
         self.ui.act_delete_song.triggered.connect(
             self.act_delete_song_triggered)
+        self.ui.act_edit_category.triggered.connect(
+            self.act_edit_category_triggered)
+        self.ui.act_edit_genre.triggered.connect(
+            self.act_edit_genre_triggered)
+        self.ui.act_edit_song.triggered.connect(
+            self.act_edit_song_triggered)
         self.ui.act_about_qt.triggered.connect(lambda: QMessageBox.aboutQt(self))
 
     def create_statusbar(self):
@@ -275,7 +292,6 @@ class MainWindow(QMainWindow):
             btn_reply = QMessageBox.critical(
                 self,
                 "Удаление жанра(ов)",
-# TODO: check deleting and fix description!!!
                 "Данное действие удалит выбранные ЖАНРЫ и\n"
                 "ПЕСНИ с данными жанрами из песенника безвозвратно.\n"
                 "Вы точно уверены, что хотите этого?",
@@ -312,10 +328,24 @@ class MainWindow(QMainWindow):
     @Slot()
     def act_edit_category_triggered(self):
         """ Edit category. """
+        total_categories = self.ui.lw_categories.count()
+        if total_categories == 0:  # lw_categories is empty.
+            QMessageBox.warning(
+                self,
+                "Редактирование категории",
+                "Нечего редактировать\n"
+                "Список категорий пуст.")
+        else:
+            dlg_edit_category = DlgEditCategory()
+            dlg_edit_category.exec()
 
     @Slot()
     def act_edit_genre_triggered(self):
         """ Edit genre. """
+
+    @Slot()
+    def act_edit_song_triggered(self):
+        """ Edit song. """
 
 
 if __name__ == "__main__":

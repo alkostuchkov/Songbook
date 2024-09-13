@@ -43,7 +43,7 @@ class DlgAddGenre(QDialog):
         if genre == "":
             QMessageBox.information(
                 self,
-                "Добавление записи",
+                "Добавление жанра",
                 "Необходимо ввести жанр.")
             self.ui.le_genre.setFocus()
         else:  # add the genre to the lw_adding_genres
@@ -55,7 +55,7 @@ class DlgAddGenre(QDialog):
                     is_genre_exists = True
                     QMessageBox.warning(
                         self,
-                        "Добавление записи",
+                        "Добавление жанра",
                         f"Жанр '{genre}' уже есть в списке.")
                     self.ui.le_genre.setFocus()
                     break
@@ -70,13 +70,13 @@ class DlgAddGenre(QDialog):
         if total_genres == 0:  # lw_adding_genres is empty.
             QMessageBox.warning(
                 self,
-                "Добавление записи",
+                "Добавление жанра",
                 "Нечего удалять.\nСписок добавляемых жанров пуст.")
             self.ui.le_genre.setFocus()
         elif self.ui.lw_adding_genres.currentRow() == -1:  #  or no selection.
             QMessageBox.warning(
                 self,
-                "Добавление записи",
+                "Добавление жанра",
                 "Для удаления выберите жанр в списке.")
         else:  # not empty.
             for item in self.ui.lw_adding_genres.selectedItems():
@@ -105,7 +105,7 @@ class DlgAddGenre(QDialog):
             if genre == "":
                 QMessageBox.warning(
                     self,
-                    "Добавление записи",
+                    "Добавление жанра",
                     "Необходимо ввести жанр.")
                 self.ui.le_genre.setFocus()
             else:  # != ""
@@ -119,7 +119,7 @@ class DlgAddGenre(QDialog):
                 if is_genre_equal:
                     QMessageBox.warning(
                         self,
-                        "Добавление записи",
+                        "Добавление жанра",
                         f"Жанр '{genre}' уже есть в базе данных.\n"
                         "Для редактирования нажмите 'Отмена'\nи"
                         " выберите в главном окне "
@@ -131,7 +131,7 @@ class DlgAddGenre(QDialog):
                     if total_genres == 0:
                         QMessageBox.warning(
                             self,
-                            "Добавление записи",
+                            "Добавление жанра",
                             "Список добавляемых жанров пуст.\n"
                             "Добавьте хотя бы один жанр.")
                         self.ui.le_genre.setFocus()
@@ -144,12 +144,12 @@ class DlgAddGenre(QDialog):
                         except DatabaseError:
                             QMessageBox.critical(
                                 self,
-                                "Добавление записи",
-                                "Ошибка при добавлении записи.")
+                                "Добавление жанра",
+                                "Ошибка при добавлении жанра.")
                         else:
                             QMessageBox.information(
                                 self,
-                                "Добавление записи",
+                                "Добавление жанра",
                                 "Жанры успешно добалены в песенник.")
                             self.ui.lw_adding_genres.clear()
                             self.ui.le_genre.clear()

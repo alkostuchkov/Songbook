@@ -43,7 +43,7 @@ class DlgAddCategory(QDialog):
         if category == "":
             QMessageBox.information(
                 self,
-                "Добавление записи",
+                "Добавление категории",
                 "Необходимо ввести категорию.")
             self.ui.le_category.setFocus()
         else:  # add the category to the lw_adding_categiries
@@ -55,7 +55,7 @@ class DlgAddCategory(QDialog):
                     is_category_exists = True
                     QMessageBox.warning(
                         self,
-                        "Добавление записи",
+                        "Добавление категории",
                         f"Категория '{category}' уже есть в списке.")
                     self.ui.le_category.setFocus()
                     break
@@ -70,13 +70,13 @@ class DlgAddCategory(QDialog):
         if total_categories == 0:  # lw_adding_categiries is empty.
             QMessageBox.warning(
                 self,
-                "Добавление записи",
+                "Добавление категории",
                 "Нечего удалять.\nСписок добавляемых категорий пуст.")
             self.ui.le_category.setFocus()
         elif self.ui.lw_adding_categiries.currentRow() == -1:  #  or no selection.
             QMessageBox.warning(
                 self,
-                "Добавление записи",
+                "Добавление категории",
                 "Для удаления выберите категорию в списке.")
         else:  # not empty.
             for item in self.ui.lw_adding_categiries.selectedItems():
@@ -105,7 +105,7 @@ class DlgAddCategory(QDialog):
             if category == "":
                 QMessageBox.warning(
                     self,
-                    "Добавление записи",
+                    "Добавление категории",
                     "Необходимо ввести категорию.")
                 self.ui.le_category.setFocus()
             else:  # != ""
@@ -119,7 +119,7 @@ class DlgAddCategory(QDialog):
                 if is_category_equal:
                     QMessageBox.warning(
                         self,
-                        "Добавление записи",
+                        "Добавление категории",
                         f"Категория '{category}' уже есть в базе данных.\n"
                         "Для редактирования нажмите 'Отмена'\nи"
                         " выберите в главном окне "
@@ -131,7 +131,7 @@ class DlgAddCategory(QDialog):
                     if total_categories == 0:
                         QMessageBox.warning(
                             self,
-                            "Добавление записи",
+                            "Добавление категории",
                             "Список добавляемых категорий пуст.\n"
                             "Добавьте хотя бы одину категорию.")
                         self.ui.le_category.setFocus()
@@ -144,12 +144,12 @@ class DlgAddCategory(QDialog):
                         except DatabaseError:
                             QMessageBox.critical(
                                 self,
-                                "Добавление записи",
-                                "Ошибка при добавлении записи.")
+                                "Добавление категории",
+                                "Ошибка при добавлении категории.")
                         else:
                             QMessageBox.information(
                                 self,
-                                "Добавление записи",
+                                "Добавление категории",
                                 "Категории успешно добалены в песенник.")
                             self.ui.lw_adding_categiries.clear()
                             self.ui.le_category.clear()

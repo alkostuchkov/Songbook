@@ -51,7 +51,8 @@ class DlgAddCategory(QDialog):
             is_category_exists = False
             for i in range(total_categories):
                 self.ui.lw_adding_categiries.setCurrentRow(i)
-                if self.ui.lw_adding_categiries.currentItem().text() == category:
+                if (self.ui.lw_adding_categiries.currentItem().text().lower()
+                        == category.lower()):
                     is_category_exists = True
                     QMessageBox.warning(
                         self,
@@ -88,8 +89,7 @@ class DlgAddCategory(QDialog):
         """ Save added categories into DB. """
         # Create my_songbook INSTANCE and load data from the db.
         my_songbook: Songbook = Songbook()
-        try:  # open db and get dict.
-            my_songbook.open_db_and_get_dict()
+        try:
             my_categories: list = my_songbook.get_categories_from_db()
         except DatabaseError:
             QMessageBox.critical(
@@ -97,60 +97,50 @@ class DlgAddCategory(QDialog):
                 "Открытие базы данных",
                 "Ошибка при обращении к базе данных.")
         else:
-            # Getting the category and check it.
-            category = self.ui.le_category.text().strip()
-            # replace ' to " if entered. For sql requests.
-            if "'" in category:
-                category = category.replace("'", '"')
-            if category == "":
+            new_categories: list[str] = []  # list of adding categories to pass to the DB.
+            # Checking if the lw_adding_categiries is not empty.
+            total_categories = self.ui.lw_adding_categiries.count()
+            if total_categories == 0:
                 QMessageBox.warning(
                     self,
                     "Добавление категории",
-                    "Необходимо ввести категорию.")
+                    "Список добавляемых категорий пуст.\n"
+                    "Добавьте хотя бы одину категорию.")
                 self.ui.le_category.setFocus()
-            else:  # != ""
+            else:  # not empty.
+                for idx in range(total_categories):
+                    new_categories.append(
+                        self.ui.lw_adding_categiries.item(idx).text())
                 # to avoid duplicates of categories in the different case such
                 # as Category_1 and category_1.
-                is_category_equal = False
-                for category_db in my_categories:
-                    if category.lower() == category_db.lower():
-                        is_category_equal = True
+                is_category_equal: bool = False
+                checking_category: str = ""  # for QMessageBox
+                for new_category in new_categories:
+                    for category_db in my_categories:
+                        if new_category.lower() == category_db.lower():
+                            is_category_equal = True
+                            checking_category = new_category
+                            break
+                    if is_category_equal:
                         break
                 if is_category_equal:
                     QMessageBox.warning(
                         self,
                         "Добавление категории",
-                        f"Категория '{category}' уже есть в базе данных.\n"
-                        "Для редактирования нажмите 'Отмена'\nи"
-                        " выберите в главном окне "
-                        "'Редактировать категорию'.")
+                        f"Категория '{checking_category}' уже есть в базе данных.")
                 else:  # category not in DB
-                    categories = []  # list of adding categories to pass to the DB.
-                    # Checking if the lw_adding_categiries is not empty.
-                    total_categories = self.ui.lw_adding_categiries.count()
-                    if total_categories == 0:
-                        QMessageBox.warning(
+                    try:
+                        my_songbook.insert_categories_into_db(new_categories)
+                    except DatabaseError:
+                        QMessageBox.critical(
                             self,
                             "Добавление категории",
-                            "Список добавляемых категорий пуст.\n"
-                            "Добавьте хотя бы одину категорию.")
+                            "Ошибка при добавлении категории.")
+                    else:
+                        QMessageBox.information(
+                            self,
+                            "Добавление категории",
+                            "Категории успешно добалены в песенник.")
+                        self.ui.lw_adding_categiries.clear()
+                        self.ui.le_category.clear()
                         self.ui.le_category.setFocus()
-                    else:  # not empty.
-                        for idx in range(total_categories):
-                            categories.append(
-                                self.ui.lw_adding_categiries.item(idx).text())
-                        try:
-                            my_songbook.insert_categories_into_db(categories)
-                        except DatabaseError:
-                            QMessageBox.critical(
-                                self,
-                                "Добавление категории",
-                                "Ошибка при добавлении категории.")
-                        else:
-                            QMessageBox.information(
-                                self,
-                                "Добавление категории",
-                                "Категории успешно добалены в песенник.")
-                            self.ui.lw_adding_categiries.clear()
-                            self.ui.le_category.clear()
-                            self.ui.le_category.setFocus()

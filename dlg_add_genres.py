@@ -87,9 +87,9 @@ class DlgAddGenre(QDialog):
 
     def btn_finish_and_save_clicked(self):
         """ Save added genres into DB. """
-        # Create my_songbook INSTANCE and load data from the db.
-        my_songbook: Songbook = Songbook()
-        try:  # open db and get dict.
+        try:
+            # Create my_songbook INSTANCE and load data from the db.
+            my_songbook: Songbook = Songbook()
             current_genres: list = my_songbook.get_genres_from_db()
         except DatabaseError:
             QMessageBox.critical(

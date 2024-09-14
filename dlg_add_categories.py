@@ -87,9 +87,8 @@ class DlgAddCategory(QDialog):
 
     def btn_finish_and_save_clicked(self):
         """ Save added categories into DB. """
-        # Create my_songbook INSTANCE and load data from the db.
-        my_songbook: Songbook = Songbook()
-        try:
+        try:  # Create my_songbook INSTANCE and load data from the db.
+            my_songbook: Songbook = Songbook()
             current_categories: list = my_songbook.get_categories_from_db()
         except DatabaseError:
             QMessageBox.critical(

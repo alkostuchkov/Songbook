@@ -386,7 +386,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </action>
   <action name="act_edit_category">
    <property name="text">
-    <string>Категорию(ии)</string>
+    <string>Категорию</string>
    </property>
    <property name="font">
     <font>
@@ -397,7 +397,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </action>
   <action name="act_edit_genre">
    <property name="text">
-    <string>Жанр(ы)</string>
+    <string>Жанр</string>
    </property>
    <property name="font">
     <font>

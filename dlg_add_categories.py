@@ -35,7 +35,7 @@ class DlgAddCategory(QDialog):
     def btn_add_category_to_list_clicked(self):
         """ Add category to list. """
         total_categories = self.ui.lw_adding_categiries.count()
-        # Getting the category from le_ and check it.
+        # Getting the category from le_category and check it.
         category = self.ui.le_category.text().strip()
         # replace ' to " if entered. For sql requests.
         if "'" in category:
@@ -90,7 +90,7 @@ class DlgAddCategory(QDialog):
         # Create my_songbook INSTANCE and load data from the db.
         my_songbook: Songbook = Songbook()
         try:
-            my_categories: list = my_songbook.get_categories_from_db()
+            current_categories: list = my_songbook.get_categories_from_db()
         except DatabaseError:
             QMessageBox.critical(
                 self,
@@ -113,17 +113,17 @@ class DlgAddCategory(QDialog):
                         self.ui.lw_adding_categiries.item(idx).text())
                 # to avoid duplicates of categories in the different case such
                 # as Category_1 and category_1.
-                is_category_equal: bool = False
+                is_category_exists: bool = False
                 checking_category: str = ""  # for QMessageBox
                 for new_category in new_categories:
-                    for category_db in my_categories:
-                        if new_category.lower() == category_db.lower():
-                            is_category_equal = True
+                    for current_category in current_categories:
+                        if new_category.lower() == current_category.lower():
+                            is_category_exists = True
                             checking_category = new_category
                             break
-                    if is_category_equal:
+                    if is_category_exists:
                         break
-                if is_category_equal:
+                if is_category_exists:
                     QMessageBox.warning(
                         self,
                         "Добавление категории",

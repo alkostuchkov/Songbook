@@ -28,7 +28,7 @@ from gui import main_ui
 from dlg_add_categories import DlgAddCategory
 from dlg_edit_categories import DlgEditCategory
 from dlg_add_genres import DlgAddGenre
-# from dlg_add_genres import DlgEditGenre
+from dlg_edit_genres import DlgEditGenre
 
 
         # import os
@@ -39,10 +39,10 @@ from dlg_add_genres import DlgAddGenre
 
 class MainWindow(QMainWindow):
     """ Class MainWindow. """
-# TODO: DELETE this Signal
-    # my SIGNAL when act_add_category tiggered for passing list of
-    # of names of old_categories.
-    # edit_category_called = Signal(list[str])
+    # my SIGNALs when act_edit_(category, genre) tiggered
+    # to pass current (category, genre).
+    edit_category_called = Signal(str)
+    edit_genre_called = Signal(str)
 
     # # my SIGNALs when lblZoomIn and lblZoomOut clicked.
     # lblZoomInClicked = QtCore.pyqtSignal()
@@ -53,23 +53,23 @@ class MainWindow(QMainWindow):
         self.ui = main_ui.Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.font_size = 14
-        self.font_family = self.ui.lw_genres.font().family()
+        self._font_size = 14
+        self._font_family = self.ui.lw_genres.font().family()  # Lucida Console
 
-        self.total_records: int = 0
-        self.selected_records: int = 0
-        self.found_records: int = 0
+        self._total_records: int = 0
+        self._selected_records: int = 0
+        self._found_records: int = 0
         # self.__isLedSearchConnected = False
 
-        self.create_statusbar()
-        self.do_connections()
+        self._create_statusbar()
+        self._do_connections()
 
-        self.fill_in_genres()
-        self.fill_in_categories()
-        self.show_songs()
+        self._fill_in_genres()
+        self._fill_in_categories()
+        self._show_songs()
 
 
-    def do_connections(self):
+    def _do_connections(self):
         """ Do connections. """
         self.btn_close.clicked.connect(self.close)
         self.ui.act_add_category.triggered.connect(self.act_add_category_triggered)
@@ -89,17 +89,17 @@ class MainWindow(QMainWindow):
             self.act_edit_song_triggered)
         self.ui.act_about_qt.triggered.connect(lambda: QMessageBox.aboutQt(self))
 
-    def create_statusbar(self):
+    def _create_statusbar(self):
         """ Creates statusbar and components for its. """
         self.stbar = self.ui.statusbar
         self.lbl_total_records = QLabel(" Количество записей: ")
-        self.lbl_total_records.setFont(QFont(self.font_family, self.font_size))
+        self.lbl_total_records.setFont(QFont(self._font_family, self._font_size))
         self.lbl_selected_records = QLabel(" Выбрано: ")
-        self.lbl_selected_records.setFont(QFont(self.font_family, self.font_size))
+        self.lbl_selected_records.setFont(QFont(self._font_family, self._font_size))
         self.lbl_found_records = QLabel(" Найдено: ")
-        self.lbl_found_records.setFont(QFont(self.font_family, self.font_size))
+        self.lbl_found_records.setFont(QFont(self._font_family, self._font_size))
         self.btn_close = QPushButton("Закрыть")
-        self.btn_close.setFont(QFont(self.font_family, self.font_size))
+        self.btn_close.setFont(QFont(self._font_family, self._font_size))
 
         widget = QWidget(self)
         widget.setLayout(QHBoxLayout())
@@ -113,11 +113,10 @@ class MainWindow(QMainWindow):
         self.stbar.addPermanentWidget(widget, 3)
         self.stbar.addPermanentWidget(self.btn_close, 1)
 
-    def fill_in_categories(self):
+    def _fill_in_categories(self):
         """ Fill in lw_categories from DB. """
-        # Create Songbook INSTANCE and load data from the db.
-        my_songbook: Songbook = Songbook()
         try:
+            my_songbook: Songbook = Songbook()  # Create Songbook INSTANCE.
             categories: list = my_songbook.get_categories_from_db()
         except DatabaseError:
             QMessageBox.critical(
@@ -136,11 +135,10 @@ class MainWindow(QMainWindow):
                 for category in categories:
                     self.ui.lw_categories.addItem(category)
 
-    def fill_in_genres(self):
+    def _fill_in_genres(self):
         """ Fill in lw_genres from DB. """
-        # Create Songbook INSTANCE and load data from the db.
-        my_songbook: Songbook = Songbook()
         try:
+            my_songbook: Songbook = Songbook()
             genres: list = my_songbook.get_genres_from_db()
         except DatabaseError:
             QMessageBox.critical(
@@ -158,26 +156,26 @@ class MainWindow(QMainWindow):
                 for genre in genres:
                     self.ui.lw_genres.addItem(genre)
 
-    def show_songs(self):
+    def _show_songs(self):
         """ Show all songs records. """
-        # Create Songbook INSTANCE and load data from the db.
-        my_songbook: Songbook = Songbook()
         try:
-            my_songbook.open_db_and_get_dict()
+            # Create Songbook INSTANCE and load data from the db.
+            my_songbook: Songbook = Songbook()
+            my_songbook_dict: dict = my_songbook.get_data_as_dict()
         except DatabaseError:
             QMessageBox.critical(
                 self,
                 "Открытие базы данных", 
                 "Ошибка при обращении к базе данных.")
         else:
-            self.total_records = len(my_songbook.songbook)
+            self._total_records = len(my_songbook_dict)
             self.lbl_total_records.setText(
-                f"{self.lbl_total_records.text()}{str(self.total_records)}")
-            self.found_records = 0
+                f"{self.lbl_total_records.text()}{str(self._total_records)}")
+            self._found_records = 0
             self.lbl_found_records.setText(
-                f"{self.lbl_found_records.text()}{str(self.found_records)}")
+                f"{self.lbl_found_records.text()}{str(self._found_records)}")
             # check if the my_songbook.songbook is empty.
-            if len(my_songbook.songbook) == 0:
+            if len(my_songbook_dict) == 0:
                 QMessageBox.warning(
                     self,
                     "Показать все записи",
@@ -187,19 +185,19 @@ class MainWindow(QMainWindow):
                 self.ui.lw_songs.clear()
                 current_row: int = 0
                 output_str: str = ""
-                for key in sorted(my_songbook.songbook):
+                for key in sorted(my_songbook_dict):
                     desc_str: str = ""
                     output_str = str(key) + ":\n"
-                    genres_str: str = ", ".join(my_songbook.songbook[key]["genres"])
+                    genres_str: str = ", ".join(my_songbook_dict[key]["genres"])
                     desc_str = " " * (len(output_str) - 1) + genres_str + "\n"
-                    desc_str += " " * (len(output_str) - 1) + my_songbook.songbook[key]["category"] + "\n"
-                    desc_str += " " * (len(output_str) - 1) + my_songbook.songbook[key]["last_performed"] + "\n"
-                    desc_str += " " * (len(output_str) - 1) + my_songbook.songbook[key]["comment"]
+                    desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["category"] + "\n"
+                    desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["last_performed"] + "\n"
+                    desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["comment"]
                     output_str += desc_str  # [:-1]  # Delete last "\n"
                     self.ui.lw_songs.addItem(output_str)
 
                     self.ui.lw_songs.setCurrentRow(current_row)
-                    if my_songbook.songbook[key]["is_recently"] == 1:
+                    if my_songbook_dict[key]["is_recently"] == 1:
                         self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Checked)
                     else:
                         self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Unchecked)
@@ -213,14 +211,14 @@ class MainWindow(QMainWindow):
         """  Create the instance of DlgAddCategory Class and show it. """
         dlg_add_category: DlgAddCategory = DlgAddCategory()
         dlg_add_category.exec()
-        self.fill_in_categories()
+        self._fill_in_categories()
 
     @Slot()
     def act_add_genre_triggered(self):
         """  Create the instance of DlgAddGenre Class and show it. """
         dlg_add_genre: DlgAddGenre = DlgAddGenre()
         dlg_add_genre.exec()
-        self.fill_in_genres()
+        self._fill_in_genres()
 
     @Slot()
     def act_add_song_triggered(self):
@@ -255,9 +253,9 @@ class MainWindow(QMainWindow):
                     categories.append(
                         self.ui.lw_genres.takeItem(
                             self.ui.lw_genres.row(item)).text())
-                # Create Songbook INSTANCE and load data from the db.
-                my_songbook: Songbook = Songbook()
                 try:
+                    # Create Songbook INSTANCE and load data from the db.
+                    my_songbook: Songbook = Songbook()
                     my_songbook.delete_categories_from_db(categories)
                 except DatabaseError:
                     QMessageBox.critical(
@@ -270,8 +268,8 @@ class MainWindow(QMainWindow):
                         "Удаление категории(ий)",
                         "Категории успешно удалены из песенника.")
 
-                    self.fill_in_categories()
-                    self.show_songs()
+                    self._fill_in_categories()
+                    self._show_songs()
 
     @Slot()
     def act_delete_genre_triggered(self):
@@ -302,9 +300,9 @@ class MainWindow(QMainWindow):
                     genres.append(
                         self.ui.lw_genres.takeItem(
                             self.ui.lw_genres.row(item)).text())
-                # Create Songbook INSTANCE and load data from the db.
-                my_songbook: Songbook = Songbook()
                 try:
+                    # Create Songbook INSTANCE and load data from the db.
+                    my_songbook: Songbook = Songbook()
                     my_songbook.delete_genres_from_db(genres)
                 except DatabaseError:
                     QMessageBox.critical(
@@ -317,8 +315,8 @@ class MainWindow(QMainWindow):
                         "Удаление жанра(ов)",
                         "Жанры успешно удалены из песенника.")
 
-                    self.fill_in_genres()
-                    self.show_songs()
+                    self._fill_in_genres()
+                    self._show_songs()
 
 
     @Slot()
@@ -328,20 +326,78 @@ class MainWindow(QMainWindow):
     @Slot()
     def act_edit_category_triggered(self):
         """ Edit category. """
-        total_categories = self.ui.lw_categories.count()
-        if total_categories == 0:  # lw_categories is empty.
+        # check if there is multiselection in the lw_categories
+        if len(self.ui.lw_categories.selectedItems()) > 1:
             QMessageBox.warning(
                 self,
                 "Редактирование категории",
-                "Нечего редактировать\n"
-                "Список категорий пуст.")
+                "Вы не можете редактировать несколько категорий одновременно.\n"
+                "Выберите одну категорию.")
         else:
-            dlg_edit_category = DlgEditCategory()
-            dlg_edit_category.exec()
+            total_categories = self.ui.lw_categories.count()
+            if total_categories == 0:  # lw_categories is empty.
+                QMessageBox.warning(
+                    self,
+                    "Редактирование категории",
+                    "Нечего редактировать\n"
+                    "Список категорий пуст.")
+            elif self.ui.lw_categories.currentRow() == -1:  # or no selection.
+                QMessageBox.warning(
+                    self,
+                    "Редактирование категории",
+                    "Нечего редактировать.\n"
+                    "Для редактирования выберите категорию в списке.")
+                self.ui.lw_categories.setFocus()
+            else:  # is selected.
+                # create instance of DlgEditCategory.
+                dlg_edit_category = DlgEditCategory()
+                # connect edit_category_called (my SIGNAL).
+                self.edit_category_called.connect(dlg_edit_category.get_current_category)
+                # emit SIGNAL edit_category_called (pass: current category).
+                self.edit_category_called.emit(
+                    self.ui.lw_categories.currentItem().text())
+                dlg_edit_category.exec()
+                # update categories and songs in the MainWindow.
+                self._fill_in_categories()
+                self._show_songs()
 
     @Slot()
     def act_edit_genre_triggered(self):
         """ Edit genre. """
+        # check if there is multiselection in the lw_genres
+        if len(self.ui.lw_genres.selectedItems()) > 1:
+            QMessageBox.warning(
+                self,
+                "Редактирование жанра",
+                "Вы не можете редактировать несколько жанров одновременно.\n"
+                "Выберите один жанр.")
+        else:
+            total_genres = self.ui.lw_genres.count()
+            if total_genres == 0:  # lw_categories is empty.
+                QMessageBox.warning(
+                    self,
+                    "Редактирование жанра",
+                    "Нечего редактировать\n"
+                    "Список жанров пуст.")
+            elif self.ui.lw_genres.currentRow() == -1:  # or no selection.
+                QMessageBox.warning(
+                    self,
+                    "Редактирование жанра",
+                    "Нечего редактировать.\n"
+                    "Для редактирования выберите жанр в списке.")
+                self.ui.lw_genres.setFocus()
+            else:  # is selected.
+                # create instance of DlgEditGenre.
+                dlg_edit_genre = DlgEditGenre()
+                # connect edit_genre_called (my SIGNAL).
+                self.edit_genre_called.connect(dlg_edit_genre.get_current_genre)
+                # emit SIGNAL edit_genre_called (pass: current genre).
+                self.edit_genre_called.emit(
+                    self.ui.lw_genres.currentItem().text())
+                dlg_edit_genre.exec()
+                # update genres and songs in the MainWindow.
+                self._fill_in_genres()
+                self._show_songs()
 
     @Slot()
     def act_edit_song_triggered(self):

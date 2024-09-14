@@ -31,10 +31,7 @@ from sqlite3 import (
 
 
 class Songbook:
-    """
-    Class Songbook.
-    """
-
+    """ Class Songbook to manipulate DB data. """
     def __init__(self):
         self._songbook: dict = {}
         self._path_to_db: str = f"{os.path.abspath(".")}{os.path.sep}database{os.path.sep}"
@@ -83,8 +80,8 @@ class Songbook:
         """
         try:
             cur.executescript(sql)
-        except DatabaseError:
-            raise DatabaseError  # ("Не удалось создать DB.")
+        except DatabaseError as err:
+            raise DatabaseError("_create_db", err)
         finally:
             cur.close()
             conn.close()
@@ -107,8 +104,8 @@ class Songbook:
         """
         try:
             cur.execute(sql)
-        except DatabaseError as exc:
-            raise exc  # ("Не удалось выполнить запрос.")
+        except DatabaseError as err:
+            raise DatabaseError("get_data_as_dict", err)
         else:
             for (
                 title, genre, category, song_image, song_text,
@@ -126,12 +123,10 @@ class Songbook:
         finally:
             cur.close()
             conn.close()
-
         return self._songbook
 
     def get_categories_from_db(self) -> list[str]:
         """ Get categories from DB. """
-
         categories: list = []
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
@@ -151,7 +146,6 @@ class Songbook:
 
     def get_genres_from_db(self) -> list[str]:
         """ Get genres from DB. """
-
         genres: list = []
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
@@ -171,7 +165,6 @@ class Songbook:
 
     def insert_genres_into_db(self, genres: list[str]) -> None:
         """ Insert genres into the table genres of DB. """
-
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
@@ -189,7 +182,6 @@ class Songbook:
 
     def insert_categories_into_db(self, categories: list[str]) -> None:
         """ Insert categories into the table categories of DB. """
-
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
@@ -211,7 +203,6 @@ class Songbook:
         song_text: str, last_performed: str, is_recently: int, comment: str
     ) -> None:
         """ Insert a song into the songs table of DB. """
-
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
@@ -268,8 +259,8 @@ class Songbook:
             for category in categories:
                 cur.execute("DELETE FROM categories WHERE category=:category",
                             {"category": category})
-        except DatabaseError as exc:
-            raise exc  # ("Не удалось выполнить запрос.")
+        except DatabaseError as err:
+            raise DatabaseError("delete_categories_from_db", err)
         else:
             conn.commit()  # complete transaction.
         finally:
@@ -285,24 +276,95 @@ class Songbook:
             for genre in genres:
                 cur.execute("DELETE FROM genres WHERE genre=:genre",
                             {"genre": genre})
-        except DatabaseError as exc:
-            raise exc  # ("Не удалось выполнить запрос.")
+        except DatabaseError as err:
+            raise DatabaseError("delete_genres_from_db", err)
         else:
             conn.commit()  # complete transaction.
         finally:
             cur.close()
             conn.close()
 
+    def update_genres(self, current_genre: str, new_genre: str) -> None:
+        """ Update genres in DB. """
+        conn = connect(self._path_to_db + "songbook.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute(
+                "UPDATE genres "
+                "SET genre=:new_genre "
+                "WHERE genre=:current_genre",
+                {
+                    "new_genre": new_genre,
+                    "current_genre": current_genre,
+                }
+            )
+        except DatabaseError as err:
+            raise DatabaseError("update_genres", err)
+        else:
+            conn.commit()  # complete transaction
+        finally:
+            cur.close()
+            conn.close()
+
+    def update_categories(self, current_category: str, new_category: str) -> None:
+        """ Update categories in DB. """
+        conn = connect(self._path_to_db + "songbook.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute(
+                "UPDATE categories "
+                "SET category=:new_category "
+                "WHERE category=:current_category",
+                {
+                    "new_category": new_category,
+                    "current_category": current_category,
+                }
+            )
+        except DatabaseError as err:
+            raise DatabaseError("update_categories", err)
+        else:
+            conn.commit()  # complete transaction
+        finally:
+            cur.close()
+            conn.close()
+
+    # def update_categories(
+    #         self, current_categories: list[str], new_categories: list[str]) -> None:
+    #     """ Update categories in DB. """
+    #     conn = connect(self._path_to_db + "songbook.db")
+    #     conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+    #     cur = conn.cursor()
+    #     try:
+    #         for current_category, new_category in zip(
+    #                                     current_categories, new_categories):
+    #             cur.execute(
+    #                 "UPDATE categories "
+    #                 "SET category=:new_category "
+    #                 "WHERE category=:current_category",
+    #                 {
+    #                     "new_category": new_category,
+    #                     "current_category": current_category,
+    #                 }
+    #             )
+    #     except DatabaseError as err:
+    #         raise DatabaseError("update_categories", err)
+    #     else:
+    #         conn.commit()  # complete transaction
+    #     finally:
+    #         cur.close()
+    #         conn.close()
+
     # TODO: change args for this method to dict!
     # def update_record(self, old_song: dict, new_song: dict) -> None:
-    def update_record(
-        self, old_title: str, new_title: str, old_genres: list[str],
-        new_genres: list[str], old_category: str, new_category: str,
+    def update_song(
+        self, current_title: str, new_title: str, current_genres: list[str],
+        new_genres: list[str], current_category: str, new_category: str,
         song_image: str, song_text: str, last_performed: str,
         is_recently: int, comment: str
     ) -> None:
-        """ Update record in DB. """
-
+        """ Update song in DB. """
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
@@ -311,16 +373,16 @@ class Songbook:
             cur.execute(
                 "UPDATE songs "
                 "SET "
-                  "title=:title, "
+                  "title=:new_title, "
                   "song_image=:song_image, "
                   "song_text=:song_text, "
                   "last_performed=:last_performed, "
                   "is_recently=:is_recently, "
                   "comment=:comment "
-                "WHERE title=:old_title",
+                "WHERE title=:current_title",
                 {
-                    "title": new_title,
-                    "old_title": old_title,
+                    "new_title": new_title,
+                    "current_title": current_title,
                     "song_image": song_image,
                     "song_text": song_text,
                     "last_performed": last_performed,
@@ -329,28 +391,28 @@ class Songbook:
                 }
             )
             # Update genres
-            for old_genre, new_genre in zip(old_genres, new_genres):
+            for current_genre, new_genre in zip(current_genres, new_genres):
                 cur.execute(
                     "UPDATE genres "
-                    "SET genre=:genre "
-                    "WHERE genre=:old_genre",
+                    "SET genre=:new_genre "
+                    "WHERE genre=:current_genre",
                     {
-                        "genre": new_genre,
-                        "old_genre": old_genre,
+                        "new_genre": new_genre,
+                        "current_genre": current_genre,
                     }
                 )
             # Update categories
             cur.execute(
                 "UPDATE categories "
-                "SET category=:category "
-                "WHERE category=:old_category",
+                "SET category=:new_category "
+                "WHERE category=:current_category",
                 {
-                    "category": new_category,
-                    "old_category": old_category,
+                    "new_category": new_category,
+                    "current_category": current_category,
                 }
             )
         except DatabaseError as err:
-            raise DatabaseError("update_record:", err)
+            raise DatabaseError("update_song", err)
         else:
             conn.commit()  # complete ALL transactions!
         finally:
@@ -361,7 +423,6 @@ class Songbook:
         """
         Delete songs with all dependences in songs_genres from the database.
         """
-
         # Get ids all deleting songs by their titles.
         ids_songs: list = self._get_ids_songs(titles_list)
         conn = connect(self._path_to_db + "songbook.db")
@@ -416,8 +477,8 @@ class Songbook:
         """
         try:
             cur.executescript(sql)
-        except DatabaseError as exc:
-            raise exc  # ("Не удалось выполнить запрос.")
+        except DatabaseError as err:
+            raise DatabaseError("clear_db", err)
         else:
             conn.commit()  # complete transaction.
         finally:
@@ -426,7 +487,6 @@ class Songbook:
 
     def _get_id_category(self, category: str) -> int:
         """ Get id_category by its UNIQUE category. """
-
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
@@ -441,11 +501,11 @@ class Songbook:
         finally:
             cur.close()
             conn.close()
+
         return id_category
 
     def _get_ids_genres(self, genres: list[str]) -> list[int]:
         """ Get genres ids by their UNIQUE genre. """
-
         ids_genres: list = []
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
@@ -455,15 +515,15 @@ class Songbook:
                 cur.execute("SELECT id FROM genres WHERE genre=:genre", {"genre": genre})
                 ids_genres.append(cur.fetchone()[0])
         except DatabaseError as err:
-            raise DatabaseError("_get_genres_ids:", err)
+            raise DatabaseError("_get_ids_genres", err)
         finally:
             cur.close()
             conn.close()
+
         return ids_genres
 
     def _get_id_song(self, title: str) -> int:
         """ Get id_song by its UNIQUE title. """
-
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
         cur = conn.cursor()
@@ -477,11 +537,11 @@ class Songbook:
         finally:
             cur.close()
             conn.close()
+
         return id_song
 
     def _get_ids_songs(self, titles_list: list[str]) -> list[int]:
         """ Get ids_songs by its UNIQUE title. """
-
         ids_songs: list = []
         for title in titles_list:
             ids_songs.append(self._get_id_song(title))

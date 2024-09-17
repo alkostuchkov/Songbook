@@ -125,6 +125,25 @@ class Songbook:
             conn.close()
         return self._songbook
 
+    def get_titles_from_db(self) -> list[str]:
+        """ Get songs titles from DB. """
+        titles: list = []
+        conn = connect(self._path_to_db + "songbook.db")
+        conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT title FROM songs")
+        except DatabaseError as err:
+            raise DatabaseError("get_titles_from_db", err)
+        else:
+            for title in cur:
+                titles.append(title[0])
+        finally:
+            cur.close()
+            conn.close()
+
+        return titles
+
     def get_categories_from_db(self) -> list[str]:
         """ Get categories from DB. """
         categories: list = []

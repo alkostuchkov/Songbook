@@ -50,6 +50,9 @@
              <pointsize>12</pointsize>
             </font>
            </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
            </property>
@@ -105,6 +108,9 @@
              <family>Lucida Console</family>
              <pointsize>12</pointsize>
             </font>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
            </property>
            <property name="selectionMode">
             <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
@@ -205,6 +211,9 @@
           <family>Lucida Console</family>
           <pointsize>12</pointsize>
          </font>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
         </property>
         <property name="selectionMode">
          <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>

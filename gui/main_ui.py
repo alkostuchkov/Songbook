@@ -101,6 +101,7 @@ class Ui_MainWindow(object):
         QListWidgetItem(self.lw_categories)
         self.lw_categories.setObjectName(u"lw_categories")
         self.lw_categories.setFont(font)
+        self.lw_categories.setAlternatingRowColors(True)
         self.lw_categories.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.lw_categories.setSelectionRectVisible(True)
 
@@ -126,6 +127,7 @@ class Ui_MainWindow(object):
         QListWidgetItem(self.lw_genres)
         self.lw_genres.setObjectName(u"lw_genres")
         self.lw_genres.setFont(font)
+        self.lw_genres.setAlternatingRowColors(True)
         self.lw_genres.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.lw_genres.setSelectionRectVisible(True)
 
@@ -169,6 +171,7 @@ class Ui_MainWindow(object):
         QListWidgetItem(self.lw_songs)
         self.lw_songs.setObjectName(u"lw_songs")
         self.lw_songs.setFont(font)
+        self.lw_songs.setAlternatingRowColors(True)
         self.lw_songs.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.lw_songs.setSelectionRectVisible(True)
         self.spl_songs.addWidget(self.lw_songs)

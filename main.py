@@ -23,12 +23,12 @@ from PySide6.QtGui import (
     QFont,
     QPixmap,
 )
-from my_classes.songbook import Songbook
 from gui import main_ui
 from dlg_add_categories import DlgAddCategory
 from dlg_edit_categories import DlgEditCategory
 from dlg_add_genres import DlgAddGenre
 from dlg_edit_genres import DlgEditGenre
+from my_classes.songbook import Songbook
 
 
         # import os

@@ -268,59 +268,6 @@ class Songbook:
             cur.close()
             conn.close()
 
-    # TODO: change args for this method to dict!
-    # def insert_song_into_db(
-    #     self, title: str, genres: list[str], category: str, song_image: str,
-    #     song_text: str, last_performed: str, is_recently: int, comment: str
-    # ) -> None:
-    #     """ Insert a song into the songs table of DB. """
-    #     conn = connect(self._path_to_db + "songbook.db")
-    #     conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.
-    #     cur = conn.cursor()
-    #
-    #     id_category: int = self._get_id_category(category)
-    #     try:
-    #         cur.execute(
-    #             "INSERT INTO songs(title, id_category, song_image, song_text, "
-    #                                "last_performed, is_recently, comment) "
-    #             "VALUES(:title, :id_category, :song_image, :song_text, "
-    #                    ":last_performed, :is_recently, :comment) ",
-    #             {
-    #                 "title": title,
-    #                 "id_category": id_category,
-    #                 "song_image": song_image,
-    #                 "song_text": song_text,
-    #                 "last_performed": last_performed,
-    #                 "is_recently": is_recently,
-    #                 "comment": comment,
-    #             }
-    #         )
-    #         # I need the NEW song_id for the just inserted song (and genres_ids)!
-    #         cur.execute("SELECT id FROM songs WHERE title=:title", {"title": title})
-    #         id_song: int = cur.fetchone()[0]
-    #         # id_song: int = self._get_id_song(title)  # Doesn't work in this
-    #         # case because the conn.commit() will be executed after ALL
-    #         # transactions and a NEW CURSOR in a NEW CONNECT in the _get_id_song
-    #         # doesn't see id and title of the new inserting song because of
-    #         # incompletted transaction above.
-    #         # I need ALL inserts to be completted for ALL tables!!!
-    #         # And then I do conn.commit().
-    #         ids_genres: list = self._get_ids_genres(genres)
-    #
-    #         for id_genre in ids_genres:
-    #             cur.execute(
-    #                 "INSERT INTO songs_genres(id_song, id_genre) "
-    #                 "VALUES(:id_song, :id_genre)",
-    #                 {"id_song": id_song, "id_genre": id_genre}
-    #             )
-    #     except DatabaseError as err:
-    #         raise DatabaseError("insert_song_into_db", err)
-    #     else:
-    #         conn.commit()  # complete ALL transactions!
-    #     finally:
-    #         cur.close()
-    #         conn.close()
-
     def delete_categories_from_db(self, categories: list[str]) -> None:
         """ Delete categories from the DB. """
         conn = connect(self._path_to_db + "songbook.db")

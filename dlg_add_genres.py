@@ -11,7 +11,6 @@ from gui import dlg_add_genres_ui
 
 class DlgAddGenre(QDialog):
     """ Class DlgAddGenre. """
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = dlg_add_genres_ui.Ui_dlg_add_genres()
@@ -103,9 +102,9 @@ class DlgAddGenre(QDialog):
             if total_genres == 0:
                 QMessageBox.warning(
                     self,
-                    "Добавление категории",
-                    "Список добавляемых категорий пуст.\n"
-                    "Добавьте хотя бы одину категорию.")
+                    "Добавление жанра",
+                    "Список добавляемых жанров пуст.\n"
+                    "Добавьте хотя бы один жанр.")
                 self.ui.le_genre.setFocus()
             else:  # not empty.
                 for idx in range(total_genres):
@@ -126,21 +125,21 @@ class DlgAddGenre(QDialog):
                 if is_genre_exists:
                     QMessageBox.warning(
                         self,
-                        "Добавление категории",
-                        f"Категория '{checking_genre}' уже есть в базе данных.")
+                        "Добавление жанра",
+                        f"Жанр '{checking_genre}' уже есть в базе данных.")
                 else:  # category not in DB
                     try:
                         my_songbook.insert_genres_into_db(new_genres)
                     except DatabaseError:
                         QMessageBox.critical(
                             self,
-                            "Добавление категории",
-                            "Ошибка при добавлении категории.")
+                            "Добавление жанра",
+                            "Ошибка при добавлении жанра.")
                     else:
                         QMessageBox.information(
                             self,
-                            "Добавление категории",
-                            "Категории успешно добалены в песенник.")
+                            "Добавление жанра",
+                            "Жанры успешно добалены в песенник.")
                         self.ui.lw_adding_genres.clear()
                         self.ui.le_genre.clear()
                         self.ui.le_genre.setFocus()

@@ -91,6 +91,7 @@ class Ui_dlg_edit_genres(object):
     def retranslateUi(self, dlg_edit_genres):
         dlg_edit_genres.setWindowTitle(QCoreApplication.translate("dlg_edit_genres", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0436\u0430\u043d\u0440\u0430", None))
         self.lbl_genre.setText(QCoreApplication.translate("dlg_edit_genres", u"\u0416\u0430\u043d\u0440: ", None))
+        self.le_genre.setPlaceholderText(QCoreApplication.translate("dlg_edit_genres", u"\u0416\u0430\u043d\u0440", None))
         self.btn_finish_and_save.setText(QCoreApplication.translate("dlg_edit_genres", u"  \u0417\u0430\u043a\u043e\u043d\u0447\u0438\u0442\u044c\n"
 " \u0438 \u0441\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.btn_cancel.setText(QCoreApplication.translate("dlg_edit_genres", u" \u041e\u0442\u043c\u0435\u043d\u0430\n"

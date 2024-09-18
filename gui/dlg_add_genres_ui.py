@@ -78,6 +78,7 @@ class Ui_dlg_add_genres(object):
         self.lw_adding_genres.setFont(font1)
         self.lw_adding_genres.viewport().setProperty("cursor", QCursor(Qt.CursorShape.PointingHandCursor))
         self.lw_adding_genres.setStyleSheet(u"")
+        self.lw_adding_genres.setAlternatingRowColors(True)
         self.lw_adding_genres.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
 
         self.verticalLayout_2.addWidget(self.lw_adding_genres)
@@ -147,6 +148,7 @@ class Ui_dlg_add_genres(object):
     def retranslateUi(self, dlg_add_genres):
         dlg_add_genres.setWindowTitle(QCoreApplication.translate("dlg_add_genres", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0436\u0430\u043d\u0440\u0430", None))
         self.lbl_genre.setText(QCoreApplication.translate("dlg_add_genres", u"\u0416\u0430\u043d\u0440: ", None))
+        self.le_genre.setPlaceholderText(QCoreApplication.translate("dlg_add_genres", u"\u0416\u0430\u043d\u0440", None))
         self.lbl_adding_genres.setText(QCoreApplication.translate("dlg_add_genres", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0434\u043e\u0431\u0430\u0432\u043b\u044f\u0435\u043c\u044b\u0445 \u0436\u0430\u043d\u0440\u043e\u0432:", None))
         self.btn_add_genre_to_list.setText(QCoreApplication.translate("dlg_add_genres", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c\n"
 "\u0436\u0430\u043d\u0440", None))

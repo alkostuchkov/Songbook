@@ -91,6 +91,7 @@ class Ui_dlg_edit_categories(object):
     def retranslateUi(self, dlg_edit_categories):
         dlg_edit_categories.setWindowTitle(QCoreApplication.translate("dlg_edit_categories", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438", None))
         self.lbl_category.setText(QCoreApplication.translate("dlg_edit_categories", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044f: ", None))
+        self.le_category.setPlaceholderText(QCoreApplication.translate("dlg_edit_categories", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044f", None))
         self.btn_finish_and_save.setText(QCoreApplication.translate("dlg_edit_categories", u"  \u0417\u0430\u043a\u043e\u043d\u0447\u0438\u0442\u044c\n"
 " \u0438 \u0441\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.btn_cancel.setText(QCoreApplication.translate("dlg_edit_categories", u" \u041e\u0442\u043c\u0435\u043d\u0430\n"

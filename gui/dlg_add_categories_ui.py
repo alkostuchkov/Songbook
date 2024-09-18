@@ -78,6 +78,7 @@ class Ui_dlg_add_categories(object):
         self.lw_adding_categiries.setFont(font1)
         self.lw_adding_categiries.viewport().setProperty("cursor", QCursor(Qt.CursorShape.PointingHandCursor))
         self.lw_adding_categiries.setStyleSheet(u"")
+        self.lw_adding_categiries.setAlternatingRowColors(True)
         self.lw_adding_categiries.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
 
         self.verticalLayout_2.addWidget(self.lw_adding_categiries)
@@ -147,6 +148,7 @@ class Ui_dlg_add_categories(object):
     def retranslateUi(self, dlg_add_categories):
         dlg_add_categories.setWindowTitle(QCoreApplication.translate("dlg_add_categories", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438", None))
         self.lbl_category.setText(QCoreApplication.translate("dlg_add_categories", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044f: ", None))
+        self.le_category.setPlaceholderText(QCoreApplication.translate("dlg_add_categories", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044f", None))
         self.lbl_adding_categiries.setText(QCoreApplication.translate("dlg_add_categories", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0434\u043e\u0431\u0430\u0432\u043b\u044f\u0435\u043c\u044b\u0445 \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0439:", None))
         self.btn_add_category_to_list.setText(QCoreApplication.translate("dlg_add_categories", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c\n"
 "\u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044e", None))

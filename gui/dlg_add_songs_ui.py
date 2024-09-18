@@ -25,15 +25,14 @@ class Ui_dlg_add_songs(object):
     def setupUi(self, dlg_add_songs):
         if not dlg_add_songs.objectName():
             dlg_add_songs.setObjectName(u"dlg_add_songs")
-        dlg_add_songs.resize(783, 632)
+        dlg_add_songs.resize(843, 632)
         font = QFont()
         font.setFamilies([u"Lucida Console"])
         font.setPointSize(12)
         font.setBold(False)
         dlg_add_songs.setFont(font)
-        dlg_add_songs.setModal(False)
-        self.horizontalLayout_2 = QHBoxLayout(dlg_add_songs)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.horizontalLayout_3 = QHBoxLayout(dlg_add_songs)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.splitter_2 = QSplitter(dlg_add_songs)
         self.splitter_2.setObjectName(u"splitter_2")
         self.splitter_2.setOrientation(Qt.Orientation.Horizontal)
@@ -80,9 +79,6 @@ class Ui_dlg_add_songs(object):
         self.vl_genres.addWidget(self.lbl_genres)
 
         self.lw_genres = QListWidget(self.layoutWidget1)
-        QListWidgetItem(self.lw_genres)
-        QListWidgetItem(self.lw_genres)
-        QListWidgetItem(self.lw_genres)
         self.lw_genres.setObjectName(u"lw_genres")
         font1 = QFont()
         font1.setFamilies([u"Lucida Console"])
@@ -101,9 +97,11 @@ class Ui_dlg_add_songs(object):
         self.splitter.addWidget(self.layoutWidget1)
         self.layoutWidget2 = QWidget(self.splitter)
         self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.verticalLayout = QVBoxLayout(self.layoutWidget2)
+        self.verticalLayout_2 = QVBoxLayout(self.layoutWidget2)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_5)
@@ -122,14 +120,22 @@ class Ui_dlg_add_songs(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
+
+        self.verticalLayout_2.addLayout(self.verticalLayout)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.cb_categories = QComboBox(self.layoutWidget2)
-        self.cb_categories.addItem("")
-        self.cb_categories.addItem("")
-        self.cb_categories.addItem("")
-        self.cb_categories.addItem("")
         self.cb_categories.setObjectName(u"cb_categories")
 
-        self.verticalLayout.addWidget(self.cb_categories)
+        self.horizontalLayout_2.addWidget(self.cb_categories)
+
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_2.addItem(self.horizontalSpacer_5)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
 
         self.splitter.addWidget(self.layoutWidget2)
         self.layoutWidget3 = QWidget(self.splitter)
@@ -164,27 +170,6 @@ class Ui_dlg_add_songs(object):
         self.hl_song_image.addWidget(self.lbl_song_image)
 
         self.splitter.addWidget(self.layoutWidget3)
-        self.layoutWidget4 = QWidget(self.splitter)
-        self.layoutWidget4.setObjectName(u"layoutWidget4")
-        self.hl_recently = QHBoxLayout(self.layoutWidget4)
-        self.hl_recently.setObjectName(u"hl_recently")
-        self.hl_recently.setContentsMargins(0, 0, 0, 0)
-        self.chb_last_performed = QCheckBox(self.layoutWidget4)
-        self.chb_last_performed.setObjectName(u"chb_last_performed")
-        self.chb_last_performed.setEnabled(True)
-        sizePolicy.setHeightForWidth(self.chb_last_performed.sizePolicy().hasHeightForWidth())
-        self.chb_last_performed.setSizePolicy(sizePolicy)
-        self.chb_last_performed.setBaseSize(QSize(0, 0))
-        self.chb_last_performed.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
-        self.chb_last_performed.setChecked(False)
-
-        self.hl_recently.addWidget(self.chb_last_performed)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.hl_recently.addItem(self.horizontalSpacer)
-
-        self.splitter.addWidget(self.layoutWidget4)
         self.layoutWidget_2 = QWidget(self.splitter)
         self.layoutWidget_2.setObjectName(u"layoutWidget_2")
         self.vl_song_text = QVBoxLayout(self.layoutWidget_2)
@@ -205,6 +190,27 @@ class Ui_dlg_add_songs(object):
         self.vl_song_text.addWidget(self.te_song_text)
 
         self.splitter.addWidget(self.layoutWidget_2)
+        self.layoutWidget4 = QWidget(self.splitter)
+        self.layoutWidget4.setObjectName(u"layoutWidget4")
+        self.hl_recently = QHBoxLayout(self.layoutWidget4)
+        self.hl_recently.setObjectName(u"hl_recently")
+        self.hl_recently.setContentsMargins(0, 0, 0, 0)
+        self.chb_last_performed = QCheckBox(self.layoutWidget4)
+        self.chb_last_performed.setObjectName(u"chb_last_performed")
+        self.chb_last_performed.setEnabled(True)
+        sizePolicy.setHeightForWidth(self.chb_last_performed.sizePolicy().hasHeightForWidth())
+        self.chb_last_performed.setSizePolicy(sizePolicy)
+        self.chb_last_performed.setBaseSize(QSize(0, 0))
+        self.chb_last_performed.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.chb_last_performed.setChecked(False)
+
+        self.hl_recently.addWidget(self.chb_last_performed)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.hl_recently.addItem(self.horizontalSpacer)
+
+        self.splitter.addWidget(self.layoutWidget4)
         self.layoutWidget5 = QWidget(self.splitter)
         self.layoutWidget5.setObjectName(u"layoutWidget5")
         self.hl_date = QHBoxLayout(self.layoutWidget5)
@@ -227,10 +233,9 @@ class Ui_dlg_add_songs(object):
         self.de_last_performed.setReadOnly(False)
         self.de_last_performed.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
         self.de_last_performed.setProperty("showGroupSeparator", False)
-        self.de_last_performed.setDateTime(QDateTime(QDate(2024, 1, 1), QTime(0, 0, 0)))
+        self.de_last_performed.setDateTime(QDateTime(QDate(1999, 12, 31), QTime(0, 0, 0)))
         self.de_last_performed.setCurrentSection(QDateTimeEdit.Section.DaySection)
         self.de_last_performed.setCalendarPopup(True)
-        self.de_last_performed.setDate(QDate(2024, 1, 1))
 
         self.verticalLayout_3.addWidget(self.de_last_performed)
 
@@ -272,13 +277,13 @@ class Ui_dlg_add_songs(object):
 
         self.vl_buttons.addItem(self.verticalSpacer_2)
 
-        self.btn_add_category_to_list = QPushButton(self.layoutWidget7)
-        self.btn_add_category_to_list.setObjectName(u"btn_add_category_to_list")
-        self.btn_add_category_to_list.setFont(font)
-        self.btn_add_category_to_list.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-        self.btn_add_category_to_list.setIconSize(QSize(32, 32))
+        self.btn_add_song = QPushButton(self.layoutWidget7)
+        self.btn_add_song.setObjectName(u"btn_add_song")
+        self.btn_add_song.setFont(font)
+        self.btn_add_song.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.btn_add_song.setIconSize(QSize(32, 32))
 
-        self.vl_buttons.addWidget(self.btn_add_category_to_list)
+        self.vl_buttons.addWidget(self.btn_add_song)
 
         self.btn_cancel = QPushButton(self.layoutWidget7)
         self.btn_cancel.setObjectName(u"btn_cancel")
@@ -294,10 +299,10 @@ class Ui_dlg_add_songs(object):
 
         self.splitter_2.addWidget(self.layoutWidget7)
 
-        self.horizontalLayout_2.addWidget(self.splitter_2)
+        self.horizontalLayout_3.addWidget(self.splitter_2)
 
-        QWidget.setTabOrder(self.le_song, self.btn_add_category_to_list)
-        QWidget.setTabOrder(self.btn_add_category_to_list, self.btn_cancel)
+        QWidget.setTabOrder(self.le_song, self.btn_add_song)
+        QWidget.setTabOrder(self.btn_add_song, self.btn_cancel)
         QWidget.setTabOrder(self.btn_cancel, self.lw_genres)
 
         self.retranslateUi(dlg_add_songs)
@@ -308,33 +313,20 @@ class Ui_dlg_add_songs(object):
     def retranslateUi(self, dlg_add_songs):
         dlg_add_songs.setWindowTitle(QCoreApplication.translate("dlg_add_songs", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u0435\u0441\u043d\u0438", None))
         self.lbl_song.setText(QCoreApplication.translate("dlg_add_songs", u"\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u043f\u0435\u0441\u043d\u0438: ", None))
+        self.le_song.setPlaceholderText(QCoreApplication.translate("dlg_add_songs", u"\u041d\u0430\u0437\u0432\u0430\u043d\u0438\u0435 \u043f\u0435\u0441\u043d\u0438", None))
         self.lbl_genres.setText(QCoreApplication.translate("dlg_add_songs", u"\u0416\u0430\u043d\u0440\u044b:", None))
-
-        __sortingEnabled = self.lw_genres.isSortingEnabled()
-        self.lw_genres.setSortingEnabled(False)
-        ___qlistwidgetitem = self.lw_genres.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("dlg_add_songs", u"\u0418\u0437 \u043f\u0435\u0441\u0435\u043d\u043d\u0438\u043a\u0430", None));
-        ___qlistwidgetitem1 = self.lw_genres.item(1)
-        ___qlistwidgetitem1.setText(QCoreApplication.translate("dlg_add_songs", u"\u0421\u043e\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0435", None));
-        ___qlistwidgetitem2 = self.lw_genres.item(2)
-        ___qlistwidgetitem2.setText(QCoreApplication.translate("dlg_add_songs", u"\u041d\u0430 \u0425\u043b\u0435\u0431\u043e\u043f\u0440\u0435\u043b\u043e\u043c\u043b\u0435\u043d\u0438\u0435", None));
-        self.lw_genres.setSortingEnabled(__sortingEnabled)
-
         self.lbl_category.setText(QCoreApplication.translate("dlg_add_songs", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044f:", None))
-        self.cb_categories.setItemText(0, QCoreApplication.translate("dlg_add_songs", u"\u0411\u044b\u0441\u0442\u0440\u044b\u0435", None))
-        self.cb_categories.setItemText(1, QCoreApplication.translate("dlg_add_songs", u"\u0421\u0440\u0435\u0434\u043d\u0438\u0435", None))
-        self.cb_categories.setItemText(2, QCoreApplication.translate("dlg_add_songs", u"\u041c\u0435\u0434\u043b\u0435\u043d\u043d\u044b\u0435", None))
-        self.cb_categories.setItemText(3, QCoreApplication.translate("dlg_add_songs", u"\u0421\u0443\u043f\u0435\u0440\u0440\u0440\u0440\u0440\u0440\u0440\u0440\u0440 \u0434\u043b\u0438\u0438\u0438\u0438\u0438\u0438\u0438\u0438\u043d\u043d\u0430\u044f \u043a\u0430\u0442\u0435\u0433\u0440\u0438\u044f", None))
-
         self.btn_choose_image_file.setText(QCoreApplication.translate("dlg_add_songs", u"...", None))
         self.lbl_song_image.setText(QCoreApplication.translate("dlg_add_songs", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c\n"
 "\u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435", None))
-        self.chb_last_performed.setText(QCoreApplication.translate("dlg_add_songs", u"\u041d\u0435\u0434\u0430\u0432\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u043d\u044f\u043b\u0430\u0441\u044c:", None))
         self.lbl_song_text.setText(QCoreApplication.translate("dlg_add_songs", u"\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438:", None))
+        self.te_song_text.setPlaceholderText(QCoreApplication.translate("dlg_add_songs", u"\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438", None))
+        self.chb_last_performed.setText(QCoreApplication.translate("dlg_add_songs", u"\u041d\u0435\u0434\u0430\u0432\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u043d\u044f\u043b\u0430\u0441\u044c", None))
         self.lbl_performed_date.setText(QCoreApplication.translate("dlg_add_songs", u"\u0414\u0430\u0442\u0430 \u0438\u0441\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f:", None))
         self.de_last_performed.setDisplayFormat(QCoreApplication.translate("dlg_add_songs", u"dd MMMM yyyy", None))
         self.lbl_comment.setText(QCoreApplication.translate("dlg_add_songs", u"\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439:", None))
-        self.btn_add_category_to_list.setText(QCoreApplication.translate("dlg_add_songs", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c\n"
+        self.te_comment.setPlaceholderText(QCoreApplication.translate("dlg_add_songs", u"\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439", None))
+        self.btn_add_song.setText(QCoreApplication.translate("dlg_add_songs", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c\n"
 "\u043f\u0435\u0441\u043d\u044e", None))
         self.btn_cancel.setText(QCoreApplication.translate("dlg_add_songs", u" \u041e\u0442\u043c\u0435\u043d\u0430\n"
 " (\u0412\u044b\u0445\u043e\u0434)", None))

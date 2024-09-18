@@ -52,6 +52,9 @@
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
+       <property name="placeholderText">
+        <string>Жанр</string>
+       </property>
       </widget>
      </item>
     </layout>

@@ -298,6 +298,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </font>
        </property>
        <property name="text">
+        <string/>
+       </property>
+       <property name="placeholderText">
         <string>Поиск...</string>
        </property>
       </widget>

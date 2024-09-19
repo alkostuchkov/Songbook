@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 """ Dialog add songs """
+import os
 from sqlite3 import DatabaseError
 from PySide6.QtWidgets import (
     QDialog,
     QMessageBox,
+    QFileDialog,
 )
+from PySide6.QtCore import Slot
+from PySide6.QtGui import QPixmap
 from my_classes.songbook import Songbook
 from gui import dlg_add_songs_ui
 
@@ -16,6 +20,10 @@ class DlgAddSong(QDialog):
         self.ui = dlg_add_songs_ui.Ui_dlg_add_songs()
         self.ui.setupUi(self)
 
+        self.path_to_src_image: str = ""
+        self.src_image_ext: str = ""
+        self.path_to_images: str = f"{os.path.abspath(".")}{os.path.sep}images{os.path.sep}"
+        # self.path_to_texts: str = f"{os.path.abspath(".")}{os.path.sep}texts{os.path.sep}"
         self.new_song: dict = {}
         self.title: str = ""
         self.genres: list[str] = []
@@ -35,6 +43,8 @@ class DlgAddSong(QDialog):
         """ Do connections. """
         self.ui.btn_add_song.clicked.connect(
             self.btn_add_song_clicked)
+        self.ui.btn_choose_image_file.clicked.connect(
+            self.btn_choose_image_file_clicked)
         self.ui.btn_cancel.clicked.connect(self.close)
 
     def fill_in_genres(self):
@@ -83,7 +93,44 @@ class DlgAddSong(QDialog):
                     self.ui.cb_categories.addItem(category)
             self.ui.cb_categories.setCurrentIndex(-1)
 
-    def btn_add_song_clicked(self):
+    @Slot()
+    def btn_choose_image_file_clicked(self) -> None:
+        """
+        Choose an image file and get:
+        path_to_src_image: str,
+        src_image_basename: str,
+        src_image_dirname: str,
+        src_image_ext: str
+        """
+        image_file_tuple: tuple = QFileDialog.getOpenFileName(
+            caption="Открыть файл",
+            filter="Images (*.png *.jpg)")
+
+        self.path_to_src_image = image_file_tuple[0]
+        src_image_basename: str = os.path.basename(self.path_to_src_image)
+        self.src_image_ext = src_image_basename.split(".")[-1:][0]
+        # preview an image
+        self.ui.lbl_song_image.setPixmap(QPixmap(self.path_to_src_image))
+
+    def save_image(self, new_image_name: str) -> str:
+        """ Save chosen image into images dir. """
+        if self.path_to_src_image != "":
+            if (not os.path.exists(self.path_to_images) or
+                not os.path.isdir(self.path_to_images)):
+                os.makedirs(self.path_to_images)
+            if " " in new_image_name:
+                new_image_name = new_image_name.replace(" ", "_")
+            path_to_dst_image: str = f"{self.path_to_images}{new_image_name}.{self.src_image_ext}"
+            with open(self.path_to_src_image, "rb") as f:
+                src_image = f.read()
+                with open(path_to_dst_image, "wb") as f:
+                    f.write(src_image)
+        else:
+            return ""
+        return path_to_dst_image
+    
+    @Slot()
+    def btn_add_song_clicked(self) -> None:
         """ Save song into DB. """
         # Getting the song from le_song and check it.
         self.title = self.ui.le_song.text().strip()
@@ -136,11 +183,7 @@ class DlgAddSong(QDialog):
                         self.genres.append(item.text())
 
                     self.category = self.ui.cb_categories.currentText()
-
-                    # TODO:
-                    self.song_image = "song_image"
-                    # TODO:
-
+                    self.song_image = self.save_image(self.title)
                     self.song_text = self.ui.te_song_text.toPlainText()
                     self.last_performed = self.ui.de_last_performed.date().toString(
                         "dd MMMM yyyy")
@@ -174,5 +217,8 @@ class DlgAddSong(QDialog):
                         self.ui.chb_last_performed.setChecked(False)
                         self.ui.te_song_text.clear()
                         self.ui.te_comment.clear()
+                        self.ui.lbl_song_image.clear()
                         self.ui.le_song.clear()
                         self.ui.le_song.setFocus()
+                        # for save_image method to check if an image is chosen.
+                        self.path_to_src_image = ""

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """ Main window """
+import os
 from sqlite3 import DatabaseError
 from PySide6.QtWidgets import (
     QMainWindow,
@@ -11,11 +12,9 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QPushButton,
-    QListWidgetItem,
 )
 from PySide6.QtCore import (
     Qt,
-    QDate,
     Signal,
     Slot,
 )
@@ -31,12 +30,6 @@ from dlg_edit_genres import DlgEditGenre
 from dlg_add_songs import DlgAddSong
 # from dlg_add_songs import DlgEditSong
 from my_classes.songbook import Songbook
-
-
-        # import os
-        # path_to_exe = os.path.abspath(".")
-        # path_to_songs_images = path_to_exe + os.path.sep + "songs_images" + os.path.sep
-        # self.ui.lbl_song_image.setPixmap(QPixmap(path_to_songs_images + "song_image_test.png"))
 
 
 class MainWindow(QMainWindow):
@@ -55,6 +48,15 @@ class MainWindow(QMainWindow):
         self.ui = main_ui.Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.path_to_images: str = f"{os.path.abspath(".")}{os.path.sep}images{os.path.sep}"
+        # self.path_to_texts: str = f"{os.path.abspath(".")}{os.path.sep}texts{os.path.sep}"
+
+        # to get access to Songbook's dict
+        # and not to create an instance of Songbook 
+        # every click on lw_songs_item_clicked.
+        self.songs_dict: dict = {}
+        self.title: str = ""
+
         self.font_size = 14
         self.font_family = self.ui.lw_genres.font().family()  # Lucida Console
 
@@ -70,8 +72,7 @@ class MainWindow(QMainWindow):
         self.fill_in_categories()
         self.show_songs()
 
-
-    def do_connections(self):
+    def do_connections(self) -> None:
         """ Do connections. """
         self.btn_close.clicked.connect(self.close)
         self.ui.act_add_category.triggered.connect(self.act_add_category_triggered)
@@ -89,9 +90,11 @@ class MainWindow(QMainWindow):
             self.act_edit_genre_triggered)
         self.ui.act_edit_song.triggered.connect(
             self.act_edit_song_triggered)
+        self.ui.lw_songs.currentRowChanged.connect(
+            self.lw_songs_currentrow_changed)
         self.ui.act_about_qt.triggered.connect(lambda: QMessageBox.aboutQt(self))
 
-    def create_statusbar(self):
+    def create_statusbar(self) -> None:
         """ Creates statusbar and components for its. """
         self.stbar = self.ui.statusbar
         self.lbl_total_records = QLabel(" Количество записей: ")
@@ -115,7 +118,7 @@ class MainWindow(QMainWindow):
         self.stbar.addPermanentWidget(widget, 3)
         self.stbar.addPermanentWidget(self.btn_close, 1)
 
-    def fill_in_categories(self):
+    def fill_in_categories(self) -> None:
         """ Fill in lw_categories from DB. """
         try:
             my_songbook: Songbook = Songbook()  # Create Songbook INSTANCE.
@@ -137,7 +140,7 @@ class MainWindow(QMainWindow):
                 for category in categories:
                     self.ui.lw_categories.addItem(category)
 
-    def fill_in_genres(self):
+    def fill_in_genres(self) -> None:
         """ Fill in lw_genres from DB. """
         try:
             my_songbook: Songbook = Songbook()
@@ -158,12 +161,34 @@ class MainWindow(QMainWindow):
                 for genre in genres:
                     self.ui.lw_genres.addItem(genre)
 
-    def show_songs(self):
+    @Slot()
+    def lw_songs_currentrow_changed(self) -> None:
+        """ Change te_song_text widget text when the item clicked. """
+        # get current song's title.
+        if self.ui.lw_songs.currentRow() != -1:  # avoid empty self.title (= "").
+            text = self.ui.lw_songs.currentItem().text()
+            i = text.find(":\n")  # SongName:\n
+            self.title = text[:i]
+
+        self.ui.te_song_text.setPlainText(
+            self.songs_dict[self.title]["song_text"])
+        # TODO: get song_image and insert it into lbl_song_image!!!
+        song_image: str = self.songs_dict[self.title]["song_image"]
+        if song_image == "":
+            self.ui.lbl_song_image.setText("Нет картинки")
+        else:
+            self.ui.lbl_song_image.setPixmap(QPixmap(song_image))
+
+    def show_songs(self) -> None:
         """ Show all songs records. """
         try:
             # Create Songbook INSTANCE and load data from the db.
             my_songbook: Songbook = Songbook()
             my_songbook_dict: dict = my_songbook.get_data_as_dict()
+            # to get access to Songbook's dict
+            # and not to create an instance of Songbook 
+            # every click on lw_songs_item_clicked.
+            self.songs_dict = my_songbook_dict
         except DatabaseError:
             QMessageBox.critical(
                 self,
@@ -197,8 +222,9 @@ class MainWindow(QMainWindow):
                     desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["comment"]
                     output_str += desc_str  # [:-1]  # Delete last "\n"
                     self.ui.lw_songs.addItem(output_str)
-                    self.ui.te_song_text.setPlainText(
-                        my_songbook_dict[key]["song_text"])
+                    # TODO: Delete!!!
+                    # self.ui.te_song_text.setPlainText(
+                    #     my_songbook_dict[key]["song_text"])
 
                     self.ui.lw_songs.setCurrentRow(current_row)
                     if my_songbook_dict[key]["is_recently"] == 1:
@@ -207,26 +233,27 @@ class MainWindow(QMainWindow):
                         self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Unchecked)
                     current_row += 1
                     self.ui.lw_songs.clearSelection()
+        self.ui.lw_songs.setCurrentRow(0)  # 
             # The INSTANCE of my_songbook, created in the beginning
             # of this method is destroying here!!!
 
     @Slot()
-    def act_add_category_triggered(self):
+    def act_add_category_triggered(self) -> None:
         """  Create the instance of DlgAddCategory Class and show it. """
         dlg_add_category: DlgAddCategory = DlgAddCategory()
         dlg_add_category.exec()
         self.fill_in_categories()
 
     @Slot()
-    def act_add_genre_triggered(self):
+    def act_add_genre_triggered(self) -> None:
         """  Create the instance of DlgAddGenre Class and show it. """
         dlg_add_genre: DlgAddGenre = DlgAddGenre()
         dlg_add_genre.exec()
         self.fill_in_genres()
 
     @Slot()
-    def act_add_song_triggered(self):
-        """  Add song. """
+    def act_add_song_triggered(self) -> None:
+        """  Create the instance of DlgAddSong Class and show it. """
         dlg_add_song: DlgAddSong = DlgAddSong()
 # BUG: check showMaximized on other OS
 # dlg_add_song.setModal(True)
@@ -237,7 +264,7 @@ class MainWindow(QMainWindow):
         self.show_songs()
 
     @Slot()
-    def act_delete_category_triggered(self):
+    def act_delete_category_triggered(self) -> None:
         """ Delete category(ies). """
         total_categories = self.ui.lw_genres.count()
         categories: list = []
@@ -284,7 +311,7 @@ class MainWindow(QMainWindow):
                     self.show_songs()
 
     @Slot()
-    def act_delete_genre_triggered(self):
+    def act_delete_genre_triggered(self) -> None:
         """ Delete genre(s). """
         total_genres = self.ui.lw_genres.count()
         genres: list = []
@@ -332,11 +359,12 @@ class MainWindow(QMainWindow):
 
 
     @Slot()
-    def act_delete_song_triggered(self):
+    def act_delete_song_triggered(self) -> None:
         """ Delete song(s). """
+# TODO: implementation
 
     @Slot()
-    def act_edit_category_triggered(self):
+    def act_edit_category_triggered(self) -> None:
         """ Edit category. """
         # check if there is multiselection in the lw_categories
         if len(self.ui.lw_categories.selectedItems()) > 1:
@@ -374,7 +402,7 @@ class MainWindow(QMainWindow):
                 self.show_songs()
 
     @Slot()
-    def act_edit_genre_triggered(self):
+    def act_edit_genre_triggered(self) -> None:
         """ Edit genre. """
         # check if there is multiselection in the lw_genres
         if len(self.ui.lw_genres.selectedItems()) > 1:
@@ -412,8 +440,9 @@ class MainWindow(QMainWindow):
                 self.show_songs()
 
     @Slot()
-    def act_edit_song_triggered(self):
+    def act_edit_song_triggered(self) -> None:
         """ Edit song. """
+# TODO: implementation
 
 
 if __name__ == "__main__":

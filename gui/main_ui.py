@@ -95,10 +95,6 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.lbl_categories)
 
         self.lw_categories = QListWidget(self.layoutWidget)
-        QListWidgetItem(self.lw_categories)
-        QListWidgetItem(self.lw_categories)
-        QListWidgetItem(self.lw_categories)
-        QListWidgetItem(self.lw_categories)
         self.lw_categories.setObjectName(u"lw_categories")
         self.lw_categories.setFont(font)
         self.lw_categories.setAlternatingRowColors(True)
@@ -121,10 +117,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.lbl_genrs)
 
         self.lw_genres = QListWidget(self.layoutWidget1)
-        QListWidgetItem(self.lw_genres)
-        QListWidgetItem(self.lw_genres)
-        QListWidgetItem(self.lw_genres)
-        QListWidgetItem(self.lw_genres)
         self.lw_genres.setObjectName(u"lw_genres")
         self.lw_genres.setFont(font)
         self.lw_genres.setAlternatingRowColors(True)
@@ -165,10 +157,6 @@ class Ui_MainWindow(object):
         self.spl_songs.setObjectName(u"spl_songs")
         self.spl_songs.setOrientation(Qt.Orientation.Horizontal)
         self.lw_songs = QListWidget(self.spl_songs)
-        QListWidgetItem(self.lw_songs)
-        QListWidgetItem(self.lw_songs)
-        QListWidgetItem(self.lw_songs)
-        QListWidgetItem(self.lw_songs)
         self.lw_songs.setObjectName(u"lw_songs")
         self.lw_songs.setFont(font)
         self.lw_songs.setAlternatingRowColors(True)
@@ -235,7 +223,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.lw_songs.setCurrentRow(0)
+        self.lw_songs.setCurrentRow(-1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -257,50 +245,11 @@ class Ui_MainWindow(object):
         self.act_about_author.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0431 \u0430\u0432\u0442\u043e\u0440\u0435", None))
         self.act_about_qt.setText(QCoreApplication.translate("MainWindow", u"\u041e Qt", None))
         self.lbl_categories.setText(QCoreApplication.translate("MainWindow", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438:", None))
-
-        __sortingEnabled = self.lw_categories.isSortingEnabled()
-        self.lw_categories.setSortingEnabled(False)
-        ___qlistwidgetitem = self.lw_categories.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0435", None));
-        ___qlistwidgetitem1 = self.lw_categories.item(1)
-        ___qlistwidgetitem1.setText(QCoreApplication.translate("MainWindow", u"\u0411\u044b\u0441\u0442\u0440\u044b\u0435", None));
-        ___qlistwidgetitem2 = self.lw_categories.item(2)
-        ___qlistwidgetitem2.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0440\u0435\u0434\u043d\u0438\u0435", None));
-        ___qlistwidgetitem3 = self.lw_categories.item(3)
-        ___qlistwidgetitem3.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0434\u043b\u0435\u043d\u043d\u044b\u0435", None));
-        self.lw_categories.setSortingEnabled(__sortingEnabled)
-
         self.lbl_genrs.setText(QCoreApplication.translate("MainWindow", u"\u0416\u0430\u043d\u0440\u044b:", None))
-
-        __sortingEnabled1 = self.lw_genres.isSortingEnabled()
-        self.lw_genres.setSortingEnabled(False)
-        ___qlistwidgetitem4 = self.lw_genres.item(0)
-        ___qlistwidgetitem4.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0441\u0435", None));
-        ___qlistwidgetitem5 = self.lw_genres.item(1)
-        ___qlistwidgetitem5.setText(QCoreApplication.translate("MainWindow", u"\u0418\u0437 \u043f\u0435\u0441\u0435\u043d\u043d\u0438\u043a\u0430", None));
-        ___qlistwidgetitem6 = self.lw_genres.item(2)
-        ___qlistwidgetitem6.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0435", None));
-        ___qlistwidgetitem7 = self.lw_genres.item(3)
-        ___qlistwidgetitem7.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430 \u0425\u043b\u0435\u0431\u043e\u043f\u0440\u0435\u043b\u043e\u043c\u043b\u0435\u043d\u0438\u0435", None));
-        self.lw_genres.setSortingEnabled(__sortingEnabled1)
-
         self.lbl_sort.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0440\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c:", None))
         self.cb_sort.setItemText(0, QCoreApplication.translate("MainWindow", u"\u041f\u043e \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u044e", None))
         self.cb_sort.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041f\u043e \u0434\u0430\u0442\u0435 \u0438\u0441\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f", None))
         self.cb_sort.setItemText(2, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0434\u0430\u0432\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u043d\u044f\u0432\u0448\u0438\u0435\u0441\u044f", None))
-
-
-        __sortingEnabled2 = self.lw_songs.isSortingEnabled()
-        self.lw_songs.setSortingEnabled(False)
-        ___qlistwidgetitem8 = self.lw_songs.item(0)
-        ___qlistwidgetitem8.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
-        ___qlistwidgetitem9 = self.lw_songs.item(1)
-        ___qlistwidgetitem9.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
-        ___qlistwidgetitem10 = self.lw_songs.item(2)
-        ___qlistwidgetitem10.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
-        ___qlistwidgetitem11 = self.lw_songs.item(3)
-        ___qlistwidgetitem11.setText(QCoreApplication.translate("MainWindow", u"New Item", None));
-        self.lw_songs.setSortingEnabled(__sortingEnabled2)
 
         self.lbl_song_image.setText("")
         self.te_song_text.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -310,7 +259,7 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Lucida Console'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Sans Serif';\">\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438 </span></p></body></html>", None))
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.le_search.setText("")
         self.le_search.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0438\u0441\u043a...", None))
         self.menu_add.setTitle(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))

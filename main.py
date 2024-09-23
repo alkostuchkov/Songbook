@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QPushButton,
+    QListWidgetItem,
 )
 from PySide6.QtCore import (
     Qt,
@@ -28,7 +29,7 @@ from dlg_edit_categories import DlgEditCategory
 from dlg_add_genres import DlgAddGenre
 from dlg_edit_genres import DlgEditGenre
 from dlg_add_songs import DlgAddSong
-# from dlg_add_songs import DlgEditSong
+from dlg_edit_songs import DlgEditSong
 from my_classes.songbook import Songbook
 
 
@@ -38,6 +39,7 @@ class MainWindow(QMainWindow):
     # to pass current (category, genre).
     edit_category_called = Signal(str)
     edit_genre_called = Signal(str)
+    edit_song_called = Signal(str)
 
     # # my SIGNALs when lblZoomIn and lblZoomOut clicked.
     # lblZoomInClicked = QtCore.pyqtSignal()
@@ -61,8 +63,11 @@ class MainWindow(QMainWindow):
         self.font_family = self.ui.lw_genres.font().family()  # Lucida Console
 
         self.total_records: int = 0
+        self.str_total_records = " Количество записей: "
         self.selected_records: int = 0
+        self.str_selected_records = " Выбрано: "
         self.found_records: int = 0
+        self.str_found_records = " Найдено: "
         # self.isLedSearchConnected = False
 
         self.create_statusbar()
@@ -172,7 +177,7 @@ class MainWindow(QMainWindow):
 
         self.ui.te_song_text.setPlainText(
             self.songs_dict[self.title]["song_text"])
-        # TODO: get song_image and insert it into lbl_song_image!!!
+
         song_image: str = self.songs_dict[self.title]["song_image"]
         if song_image == "":
             self.ui.lbl_song_image.setText("Нет картинки")
@@ -197,10 +202,10 @@ class MainWindow(QMainWindow):
         else:
             self.total_records = len(my_songbook_dict)
             self.lbl_total_records.setText(
-                f"{self.lbl_total_records.text()}{str(self.total_records)}")
+                f"{self.str_total_records}{str(self.total_records)}")
             self.found_records = 0
             self.lbl_found_records.setText(
-                f"{self.lbl_found_records.text()}{str(self.found_records)}")
+                f"{self.str_found_records}{str(self.found_records)}")
             # check if the my_songbook.songbook is empty.
             if len(my_songbook_dict) == 0:
                 QMessageBox.warning(
@@ -221,21 +226,20 @@ class MainWindow(QMainWindow):
                     desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["last_performed"] + "\n"
                     desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["comment"]
                     output_str += desc_str  # [:-1]  # Delete last "\n"
-                    self.ui.lw_songs.addItem(output_str)
-                    # TODO: Delete!!!
-                    # self.ui.te_song_text.setPlainText(
-                    #     my_songbook_dict[key]["song_text"])
 
-                    self.ui.lw_songs.setCurrentRow(current_row)
+                    # self.ui.lw_songs.addItem(output_str)
+                    current_item: QListWidgetItem = QListWidgetItem(output_str)
+                    self.ui.lw_songs.addItem(current_item)
+                    # self.ui.lw_songs.setCurrentRow(current_row)
                     if my_songbook_dict[key]["is_recently"] == 1:
-                        self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Checked)
+                        # self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Checked)
+                        current_item.setCheckState(Qt.CheckState.Checked)
                     else:
-                        self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Unchecked)
-                    current_row += 1
+                        current_item.setCheckState(Qt.CheckState.Unchecked)
+                        # self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Unchecked)
+                    # current_row += 1
                     self.ui.lw_songs.clearSelection()
         self.ui.lw_songs.setCurrentRow(0)  # 
-            # The INSTANCE of my_songbook, created in the beginning
-            # of this method is destroying here!!!
 
     @Slot()
     def act_add_category_triggered(self) -> None:
@@ -413,7 +417,7 @@ class MainWindow(QMainWindow):
                 "Выберите один жанр.")
         else:
             total_genres = self.ui.lw_genres.count()
-            if total_genres == 0:  # lw_categories is empty.
+            if total_genres == 0:  # lw_genres is empty.
                 QMessageBox.warning(
                     self,
                     "Редактирование жанра",
@@ -428,7 +432,7 @@ class MainWindow(QMainWindow):
                 self.ui.lw_genres.setFocus()
             else:  # is selected.
                 # create instance of DlgEditGenre.
-                dlg_edit_genre = DlgEditGenre()
+                dlg_edit_genre: DlgEditGenre = DlgEditGenre()
                 # connect edit_genre_called (my SIGNAL).
                 self.edit_genre_called.connect(dlg_edit_genre.get_current_genre)
                 # emit SIGNAL edit_genre_called (pass: current genre).
@@ -441,8 +445,43 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def act_edit_song_triggered(self) -> None:
-        """ Edit song. """
-# TODO: implementation
+        """  Edit selected song. """
+        # check if there is multiselection in the lw_songs
+        if len(self.ui.lw_songs.selectedItems()) > 1:
+            QMessageBox.warning(
+                self,
+                "Редактирование песни",
+                "Вы не можете редактировать несколько песен одновременно.\n"
+                "Выберите одну песню.")
+        else:
+            total_songs = self.ui.lw_songs.count()
+            if total_songs == 0:  # lw_songs is empty.
+                QMessageBox.warning(
+                    self,
+                    "Редактирование песни",
+                    "Нечего редактировать\n"
+                    "Список песен пуст.")
+            elif self.ui.lw_songs.currentRow() == -1:  # or no selection.
+                QMessageBox.warning(
+                    self,
+                    "Редактирование песни",
+                    "Нечего редактировать.\n"
+                    "Для редактирования выберите песню в списке.")
+                self.ui.lw_songs.setFocus()
+            else:  # is selected.
+                # create instance of DlgEditSong.
+                dlg_edit_song: DlgEditSong = DlgEditSong()
+                # connect edit_song_called (my SIGNAL).
+                self.edit_song_called.connect(dlg_edit_song.get_current_song)
+                # emit SIGNAL edit_song_called (pass: current song as dict).
+                self.edit_song_called.emit(self.title)
+# BUG: check showMaximized on other OS
+# dlg_add_song.setModal(True)
+# dlg_add_song.showMaximized()
+                dlg_edit_song.exec()
+                self.fill_in_categories()
+                self.fill_in_genres()
+                self.show_songs()
 
 
 if __name__ == "__main__":

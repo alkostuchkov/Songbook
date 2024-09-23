@@ -215,7 +215,6 @@ class MainWindow(QMainWindow):
                     "Выберите 'Добавить песню' в главном окне.")
             else:
                 self.ui.lw_songs.clear()
-                current_row: int = 0
                 output_str: str = ""
                 for key in sorted(my_songbook_dict):
                     desc_str: str = ""
@@ -226,18 +225,12 @@ class MainWindow(QMainWindow):
                     desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["last_performed"] + "\n"
                     desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["comment"]
                     output_str += desc_str  # [:-1]  # Delete last "\n"
-
-                    # self.ui.lw_songs.addItem(output_str)
                     current_item: QListWidgetItem = QListWidgetItem(output_str)
                     self.ui.lw_songs.addItem(current_item)
-                    # self.ui.lw_songs.setCurrentRow(current_row)
                     if my_songbook_dict[key]["is_recently"] == 1:
-                        # self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Checked)
                         current_item.setCheckState(Qt.CheckState.Checked)
                     else:
                         current_item.setCheckState(Qt.CheckState.Unchecked)
-                        # self.ui.lw_songs.currentItem().setCheckState(Qt.CheckState.Unchecked)
-                    # current_row += 1
                     self.ui.lw_songs.clearSelection()
         self.ui.lw_songs.setCurrentRow(0)  # 
 

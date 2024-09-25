@@ -281,7 +281,6 @@ class DlgEditSong(QDialog):
                 try:
                     my_songbook.update_song(
                                     self._current_title,
-                                    self._current_song_dict,
                                     self.new_song)
                 except DatabaseError as e:
                     QMessageBox.critical(

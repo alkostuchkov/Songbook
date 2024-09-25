@@ -389,15 +389,7 @@ class Songbook:
             cur.close()
             conn.close()
 
-    # TODO: change args for this method to dict!
-    # def update_record(self, old_song: dict, new_song: dict) -> None:
-    # def update_song(
-    #     self, current_title: str, new_title: str, current_genres: list[str],
-    #     new_genres: list[str], current_category: str, new_category: str,
-    #     song_image: str, song_text: str, last_performed: str,
-    #     is_recently: int, comment: str
-    # ) -> None:
-    def update_song(self, current_title: str, current_song: dict, new_song: dict) -> None:
+    def update_song(self, current_title: str, new_song: dict) -> None:
         """ Update song in DB. """
         conn = connect(self._path_to_db + "songbook.db")
         conn.execute("PRAGMA foreign_keys=1")  # enable cascade deleting and updating.

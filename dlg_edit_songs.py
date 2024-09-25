@@ -196,7 +196,6 @@ class DlgEditSong(QDialog):
             # preview an image
             self.ui.lbl_song_image.setPixmap(QPixmap(self.path_to_src_image))
             self.is_image_chosen = True
-
             self.ui.btn_delete_image_file.setEnabled(True)
         else:
             self.is_image_chosen = False

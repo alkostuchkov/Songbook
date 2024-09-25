@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QFileDialog,
 )
-from PySide6.QtCore import Slot
+from PySide6.QtCore import Slot, QDate
 from PySide6.QtGui import QPixmap
 from my_classes.songbook import Songbook
 from gui import dlg_add_songs_ui
@@ -38,6 +38,7 @@ class DlgAddSong(QDialog):
         self.fill_in_genres()
         self.fill_in_categories()
         self.ui.le_song.setFocus()
+        self.ui.de_last_performed.setDate(QDate.currentDate())
 
     def do_connections(self):
         """ Do connections. """
@@ -107,10 +108,11 @@ class DlgAddSong(QDialog):
             filter="Images (*.png *.jpg)")
 
         self.path_to_src_image = image_file_tuple[0]
-        src_image_basename: str = os.path.basename(self.path_to_src_image)
-        self.src_image_ext = src_image_basename.split(".")[-1:][0]
-        # preview an image
-        self.ui.lbl_song_image.setPixmap(QPixmap(self.path_to_src_image))
+        if self.path_to_src_image != "":
+            src_image_basename: str = os.path.basename(self.path_to_src_image)
+            self.src_image_ext = src_image_basename.split(".")[-1:][0]
+            # preview an image
+            self.ui.lbl_song_image.setPixmap(QPixmap(self.path_to_src_image))
 
     def save_image(self, new_image_name: str) -> str:
         """ Save chosen image into images dir. """

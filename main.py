@@ -175,14 +175,15 @@ class MainWindow(QMainWindow):
             i = text.find(":\n")  # SongName:\n
             self.title = text[:i]
 
-        self.ui.te_song_text.setPlainText(
-            self.songs_dict[self.title]["song_text"])
+            # fill in te_song_text and lbl_song_image.
+            self.ui.te_song_text.setPlainText(
+                self.songs_dict[self.title]["song_text"])
 
-        song_image: str = self.songs_dict[self.title]["song_image"]
-        if song_image == "":
-            self.ui.lbl_song_image.setText("Нет картинки")
-        else:
-            self.ui.lbl_song_image.setPixmap(QPixmap(song_image))
+            song_image: str = self.songs_dict[self.title]["song_image"]
+            if song_image == "":
+                self.ui.lbl_song_image.setText("Нет картинки")
+            else:
+                self.ui.lbl_song_image.setPixmap(QPixmap(song_image))
 
     def show_songs(self) -> None:
         """ Show all songs records. """
@@ -210,7 +211,7 @@ class MainWindow(QMainWindow):
             if len(my_songbook_dict) == 0:
                 QMessageBox.warning(
                     self,
-                    "Показать все записи",
+                    "Показать все песни",
                     "Ваш песенник пуст.\n"
                     "Выберите 'Добавить песню' в главном окне.")
             else:
@@ -231,7 +232,6 @@ class MainWindow(QMainWindow):
                         current_item.setCheckState(Qt.CheckState.Checked)
                     else:
                         current_item.setCheckState(Qt.CheckState.Unchecked)
-                    self.ui.lw_songs.clearSelection()
         self.ui.lw_songs.setCurrentRow(0)  # 
 
     @Slot()

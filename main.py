@@ -166,14 +166,24 @@ class MainWindow(QMainWindow):
                 for genre in genres:
                     self.ui.lw_genres.addItem(genre)
 
+    def get_current_song_title(self, row_text: str) -> str:
+        """ Get current song's title. """
+        # get current song's title.
+        i = row_text.find(":\n")  # SongName:\n
+        return row_text[:i]
+
     @Slot()
     def lw_songs_currentrow_changed(self) -> None:
         """ Change te_song_text widget text when the item clicked. """
+        # # get current song's title.
+        # if self.ui.lw_songs.currentRow() != -1:  # avoid empty self.title (= "").
+        #     text = self.ui.lw_songs.currentItem().text()
+        #     i = text.find(":\n")  # SongName:\n
+        #     self.title = text[:i]
         # get current song's title.
         if self.ui.lw_songs.currentRow() != -1:  # avoid empty self.title (= "").
-            text = self.ui.lw_songs.currentItem().text()
-            i = text.find(":\n")  # SongName:\n
-            self.title = text[:i]
+            self.title = self.get_current_song_title(
+                                    self.ui.lw_songs.currentItem().text())
 
             # fill in te_song_text and lbl_song_image.
             self.ui.te_song_text.setPlainText(
@@ -358,6 +368,49 @@ class MainWindow(QMainWindow):
     @Slot()
     def act_delete_song_triggered(self) -> None:
         """ Delete song(s). """
+        total_songs = self.ui.lw_songs.count()
+        titles: list = []
+        if total_songs == 0:  # lw_categories is empty.
+            QMessageBox.warning(
+                self,
+                "Удаление песен",
+                "Нечего удалять.\nСписок песен пуст.")
+        elif self.ui.lw_songs.currentRow() == -1:  #  or no selection.
+            QMessageBox.warning(
+                self,
+                "Удаление песен",
+                "Для удаления выберите песню(и) в списке.")
+        else:  # not empty.
+            btn_reply = QMessageBox.critical(
+                self,
+                "Удаление песен",
+                "Данное действие удалит выбранные ПЕСНИ из песенника безвозвратно.\n"
+                "Вы точно уверены, что хотите этого?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No)
+            if btn_reply == QMessageBox.Yes:
+                for item in self.ui.lw_songs.selectedItems():
+                    categories.append(
+                        self.ui.lw_genres.takeItem(
+                            self.ui.lw_genres.row(item)).text())
+                try:
+                    # Create Songbook INSTANCE and load data from the db.
+                    my_songbook: Songbook = Songbook()
+                    my_songbook.delete_categories_from_db(categories)
+                except DatabaseError:
+                    QMessageBox.critical(
+                        self,
+                        "Открытие базы данных", 
+                        "Ошибка при обращении к базе данных.")
+                else:
+                    QMessageBox.information(
+                        self,
+                        "Удаление категории(ий)",
+                        "Категории успешно удалены из песенника.")
+
+                    self.fill_in_categories()
+                    self.show_songs()
+
 # TODO: implementation
 
     @Slot()

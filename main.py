@@ -562,19 +562,14 @@ class MainWindow(QMainWindow):
                 "Поиск песен",
                 "Ваш песенник пуст.\n"
                 "Выберите 'Добавить песню' в главном окне.")
-        else:  # search in the TODO: in what fields searching???.
+        else:  # search in the titles and last_performed
             what_searching: str = searching_text.strip().lower()
             output_songbook: dict = {}  # dict() will contain all results of searcing.
-# TODO: get searching wider!!!
             for key in sorted(self.songs_dict):
-                if what_searching in key.lower():
+                if (what_searching in key.lower() or
+                        what_searching in self.songs_dict[key]["last_performed"].lower()):
                     output_songbook[key] = self.songs_dict[key]
             self.show_search_results(output_songbook)
-
-            # for key in sorted(myPhoneBook.phoneBook):
-            #     if whatFind in key.lower() or whatFind in (", ".join(myPhoneBook.phoneBook[key])).lower():
-            #         outputPhoneBook[key] = myPhoneBook.phoneBook[key]
-            # self.showSearchResults(outputPhoneBook)
 
     def show_search_results(self, output_songbook: dict) -> None:
         """ Show results of searching. """

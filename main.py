@@ -63,11 +63,11 @@ class MainWindow(QMainWindow):
         self.font_family = self.ui.lw_genres.font().family()  # Lucida Console
 
         self.total_records: int = 0
-        self.str_total_records = " Количество записей: "
+        self.str_total_records = " Количество песен: "
         self.selected_records: int = 0
-        self.str_selected_records = " Выбрано: "
+        self.str_selected_records = " Выбрано песен: "
         self.found_records: int = 0
-        self.str_found_records = " Найдено: "
+        self.str_found_records = " Найдено песен: "
         # self.isLedSearchConnected = False
 
         self.create_statusbar()
@@ -97,16 +97,20 @@ class MainWindow(QMainWindow):
             self.act_edit_song_triggered)
         self.ui.lw_songs.currentRowChanged.connect(
             self.lw_songs_currentrow_changed)
+        self.ui.lw_songs.itemSelectionChanged.connect(
+            self.lw_songs_itemselection_changed)
+        self.ui.le_search.textChanged.connect(
+            self.le_search_text_changed)
         self.ui.act_about_qt.triggered.connect(lambda: QMessageBox.aboutQt(self))
 
     def create_statusbar(self) -> None:
         """ Creates statusbar and components for its. """
         self.stbar = self.ui.statusbar
-        self.lbl_total_records = QLabel(" Количество записей: ")
+        self.lbl_total_records = QLabel(" Количество песен: ")
         self.lbl_total_records.setFont(QFont(self.font_family, self.font_size))
-        self.lbl_selected_records = QLabel(" Выбрано: ")
+        self.lbl_selected_records = QLabel(" Выбрано песен: ")
         self.lbl_selected_records.setFont(QFont(self.font_family, self.font_size))
-        self.lbl_found_records = QLabel(" Найдено: ")
+        self.lbl_found_records = QLabel(" Найдено песен: ")
         self.lbl_found_records.setFont(QFont(self.font_family, self.font_size))
         self.btn_close = QPushButton("Закрыть")
         self.btn_close.setFont(QFont(self.font_family, self.font_size))
@@ -189,6 +193,13 @@ class MainWindow(QMainWindow):
                 self.ui.lbl_song_image.setText("Нет картинки")
             else:
                 self.ui.lbl_song_image.setPixmap(QPixmap(song_image))
+
+    @Slot()
+    def lw_songs_itemselection_changed(self) -> None:
+        """ Shows quantity of selection songs in the lw_songs. """
+        self.selected_records = len(self.ui.lw_songs.selectedItems())
+        self.lbl_selected_records.setText(
+            f"{self.str_selected_records}{str(self.selected_records)}")
 
     def show_songs(self) -> None:
         """ Show all songs records. """
@@ -537,6 +548,62 @@ class MainWindow(QMainWindow):
                 self.fill_in_categories()
                 self.fill_in_genres()
                 self.show_songs()
+
+    @Slot(str)
+    def le_search_text_changed(self, searching_text:str) -> None:
+        """
+        Get searching_text from the le_search signal textChanged
+        and create output_songbook of search's results.
+        """
+        # check if the self.songs_dict (got in show_songs method) is empty.
+        if len(self.songs_dict) == 0:
+            QMessageBox.warning(
+                self,
+                "Поиск песен",
+                "Ваш песенник пуст.\n"
+                "Выберите 'Добавить песню' в главном окне.")
+        else:  # search in the TODO: in what fields searching???.
+            what_searching: str = searching_text.strip().lower()
+            output_songbook: dict = {}  # dict() will contain all results of searcing.
+# TODO: get searching wider!!!
+            for key in sorted(self.songs_dict):
+                if what_searching in key.lower():
+                    output_songbook[key] = self.songs_dict[key]
+            self.show_search_results(output_songbook)
+
+            # for key in sorted(myPhoneBook.phoneBook):
+            #     if whatFind in key.lower() or whatFind in (", ".join(myPhoneBook.phoneBook[key])).lower():
+            #         outputPhoneBook[key] = myPhoneBook.phoneBook[key]
+            # self.showSearchResults(outputPhoneBook)
+
+    def show_search_results(self, output_songbook: dict) -> None:
+        """ Show results of searching. """
+        self.ui.lw_songs.clear()
+        output_str: str = ""
+        for key in sorted(output_songbook):
+            desc_str: str = ""
+            output_str = str(key) + ":\n"
+            genres_str: str = ", ".join(output_songbook[key]["genres"])
+            desc_str = " " * (len(output_str) - 1) + genres_str + "\n"
+            desc_str += " " * (len(output_str) - 1) + output_songbook[key]["category"] + "\n"
+            desc_str += " " * (len(output_str) - 1) + output_songbook[key]["last_performed"] + "\n"
+            desc_str += " " * (len(output_str) - 1) + output_songbook[key]["comment"]
+            output_str += desc_str  # [:-1]  # Delete last "\n"
+            current_item: QListWidgetItem = QListWidgetItem(output_str)
+            self.ui.lw_songs.addItem(current_item)
+            if output_songbook[key]["is_recently"] == 1:
+                current_item.setCheckState(Qt.CheckState.Checked)
+            else:
+                current_item.setCheckState(Qt.CheckState.Unchecked)
+        # show result's quantity.
+        if self.ui.le_search.text().strip() != "":
+            self.found_records = len(output_songbook)
+            self.lbl_found_records.setText(
+                f"{self.str_found_records}{str(self.found_records)}")
+        else:
+            self.found_records = 0
+            self.lbl_found_records.setText(
+                f"{self.str_found_records}{str(self.found_records)}")
 
 
 if __name__ == "__main__":

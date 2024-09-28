@@ -175,11 +175,6 @@ class MainWindow(QMainWindow):
     @Slot()
     def lw_songs_currentrow_changed(self) -> None:
         """ Change te_song_text widget text when the item clicked. """
-        # # get current song's title.
-        # if self.ui.lw_songs.currentRow() != -1:  # avoid empty self.title (= "").
-        #     text = self.ui.lw_songs.currentItem().text()
-        #     i = text.find(":\n")  # SongName:\n
-        #     self.title = text[:i]
         # get current song's title.
         if self.ui.lw_songs.currentRow() != -1:  # avoid empty self.title (= "").
             self.title = self.get_current_song_title(
@@ -390,28 +385,42 @@ class MainWindow(QMainWindow):
                 QMessageBox.No)
             if btn_reply == QMessageBox.Yes:
                 for item in self.ui.lw_songs.selectedItems():
-                    categories.append(
-                        self.ui.lw_genres.takeItem(
-                            self.ui.lw_genres.row(item)).text())
+                    title: str = self.get_current_song_title(item.text())
+                    titles.append(title)
                 try:
                     # Create Songbook INSTANCE and load data from the db.
                     my_songbook: Songbook = Songbook()
-                    my_songbook.delete_categories_from_db(categories)
+                    my_songbook.delete_songs_from_db(titles)
+                    for title in titles:
+                        path_to_image: str = self.songs_dict[title]["song_image"]
+                        if path_to_image != "":
+                            self.delete_image_file(path_to_image)
                 except DatabaseError:
                     QMessageBox.critical(
                         self,
-                        "Открытие базы данных", 
+                        "Открытие базы данных",
                         "Ошибка при обращении к базе данных.")
                 else:
                     QMessageBox.information(
                         self,
-                        "Удаление категории(ий)",
-                        "Категории успешно удалены из песенника.")
+                        "Удаление песен",
+                        "Песни успешно удалены из песенника.")
 
-                    self.fill_in_categories()
                     self.show_songs()
 
-# TODO: implementation
+    def delete_image_file(self, path_to_image: str) -> None:
+        """
+        Delete the song image file (before update data in DB).
+        """
+        if (os.path.exists(path_to_image) and
+                os.path.isfile(path_to_image)):
+            try:
+                os.remove(path_to_image)
+            except FileNotFoundError:
+                QMessageBox.critical(
+                    self,
+                    "Удаление песни",
+                    f"{path_to_image} не найден!")
 
     @Slot()
     def act_edit_category_triggered(self) -> None:

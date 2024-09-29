@@ -335,14 +335,14 @@
                  <second>0</second>
                  <year>1999</year>
                  <month>12</month>
-                 <day>25</day>
+                 <day>24</day>
                 </datetime>
                </property>
                <property name="currentSection">
                 <enum>QDateTimeEdit::Section::DaySection</enum>
                </property>
                <property name="displayFormat">
-                <string>dd MMMM yyyy</string>
+                <string>dd.MM.yyyy</string>
                </property>
                <property name="calendarPopup">
                 <bool>true</bool>

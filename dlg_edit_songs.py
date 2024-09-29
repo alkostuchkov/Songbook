@@ -82,7 +82,7 @@ class DlgEditSong(QDialog):
             self.ui.de_last_performed.setDate(
                 QDate.fromString(
                     self._current_song_dict[self._current_title]["last_performed"],
-                    "dd MMMM yyyy"))
+                    "dd.MM.yyyy"))
             self.ui.te_song_text.setText(
                 self._current_song_dict[self._current_title]["song_text"])
             self.ui.te_comment.setText(
@@ -264,7 +264,9 @@ class DlgEditSong(QDialog):
 
                 self.song_text = self.ui.te_song_text.toPlainText()
                 self.last_performed = self.ui.de_last_performed.date().toString(
-                    "dd MMMM yyyy")
+                    "dd.MM.yyyy")
+                # self.last_performed = self.ui.de_last_performed.date().toString(
+                #     "dd MMMM yyyy")
                 self.is_recently = 1 if self.ui.chb_last_performed.isChecked() else 0
                 self.comment = self.ui.te_comment.toPlainText()
 

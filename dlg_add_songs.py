@@ -188,7 +188,9 @@ class DlgAddSong(QDialog):
                     self.song_image = self.save_image(self.title)
                     self.song_text = self.ui.te_song_text.toPlainText()
                     self.last_performed = self.ui.de_last_performed.date().toString(
-                        "dd MMMM yyyy")
+                        "dd.MM.yyyy")
+                    # self.last_performed = self.ui.de_last_performed.date().toString(
+                    #     "dd MMMM yyyy")
                     self.is_recently = 1 if self.ui.chb_last_performed.isChecked() else 0
                     self.comment = self.ui.te_comment.toPlainText()
 

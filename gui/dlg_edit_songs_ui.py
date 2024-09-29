@@ -214,7 +214,7 @@ class Ui_dlg_edit_songs(object):
         self.de_last_performed.setReadOnly(False)
         self.de_last_performed.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
         self.de_last_performed.setProperty("showGroupSeparator", False)
-        self.de_last_performed.setDateTime(QDateTime(QDate(1999, 12, 25), QTime(0, 0, 0)))
+        self.de_last_performed.setDateTime(QDateTime(QDate(1999, 12, 24), QTime(0, 0, 0)))
         self.de_last_performed.setCurrentSection(QDateTimeEdit.Section.DaySection)
         self.de_last_performed.setCalendarPopup(True)
 
@@ -341,7 +341,7 @@ class Ui_dlg_edit_songs(object):
         self.btn_delete_image_file.setText(QCoreApplication.translate("dlg_edit_songs", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0438\u0437\u043e\u0431\u0440\u0430\u0436\u0435\u043d\u0438\u0435", None))
         self.chb_last_performed.setText(QCoreApplication.translate("dlg_edit_songs", u"\u041d\u0435\u0434\u0430\u0432\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u043d\u044f\u043b\u0430\u0441\u044c", None))
         self.lbl_performed_date.setText(QCoreApplication.translate("dlg_edit_songs", u"\u0414\u0430\u0442\u0430 \u0438\u0441\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f:", None))
-        self.de_last_performed.setDisplayFormat(QCoreApplication.translate("dlg_edit_songs", u"dd MMMM yyyy", None))
+        self.de_last_performed.setDisplayFormat(QCoreApplication.translate("dlg_edit_songs", u"dd.MM.yyyy", None))
         self.lbl_comment.setText(QCoreApplication.translate("dlg_edit_songs", u"\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439:", None))
         self.te_comment.setPlaceholderText(QCoreApplication.translate("dlg_edit_songs", u"\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439", None))
         self.lbl_song_image.setText("")

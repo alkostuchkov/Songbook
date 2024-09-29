@@ -567,7 +567,9 @@ class MainWindow(QMainWindow):
             output_songbook: dict = {}  # dict() will contain all results of searcing.
             for key in sorted(self.songs_dict):
                 if (what_searching in key.lower() or
-                        what_searching in self.songs_dict[key]["last_performed"].lower()):
+                     what_searching in self.songs_dict[key]["last_performed"].lower() or
+                      what_searching in self.songs_dict[key]["category"].lower() or
+                       what_searching in " ".join(self.songs_dict[key]["genres"]).lower()):
                     output_songbook[key] = self.songs_dict[key]
             self.show_search_results(output_songbook)
 

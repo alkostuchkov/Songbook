@@ -243,11 +243,14 @@ class MainWindow(QMainWindow):
                     desc_str += " " * (len(output_str) - 1) + my_songbook_dict[key]["comment"]
                     output_str += desc_str  # [:-1]  # Delete last "\n"
                     current_item: QListWidgetItem = QListWidgetItem(output_str)
+                    current_item.setFlags(current_item.flags() & ~Qt.ItemIsUserCheckable)
                     self.ui.lw_songs.addItem(current_item)
                     if my_songbook_dict[key]["is_recently"] == 1:
                         current_item.setCheckState(Qt.CheckState.Checked)
+                        current_item.setForeground(Qt.red)
                     else:
                         current_item.setCheckState(Qt.CheckState.Unchecked)
+                        current_item.setForeground(Qt.black)
         self.ui.lw_songs.setCurrentRow(0)  # 
 
     @Slot()

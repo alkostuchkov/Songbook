@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QAbstractSpinBox, QApplication
     QHBoxLayout, QLabel, QLineEdit, QListWidget,
     QListWidgetItem, QPushButton, QSizePolicy, QSpacerItem,
     QSplitter, QTextEdit, QVBoxLayout, QWidget)
+import res_rc
 
 class Ui_dlg_edit_songs(object):
     def setupUi(self, dlg_edit_songs):
@@ -31,6 +32,9 @@ class Ui_dlg_edit_songs(object):
         font.setPointSize(12)
         font.setBold(False)
         dlg_edit_songs.setFont(font)
+        icon = QIcon()
+        icon.addFile(u":/icons/songbook.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        dlg_edit_songs.setWindowIcon(icon)
         self.verticalLayout_6 = QVBoxLayout(dlg_edit_songs)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.splitter_5 = QSplitter(dlg_edit_songs)
@@ -214,7 +218,7 @@ class Ui_dlg_edit_songs(object):
         self.de_last_performed.setReadOnly(False)
         self.de_last_performed.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
         self.de_last_performed.setProperty("showGroupSeparator", False)
-        self.de_last_performed.setDateTime(QDateTime(QDate(1999, 12, 24), QTime(0, 0, 0)))
+        self.de_last_performed.setDateTime(QDateTime(QDate(1999, 12, 22), QTime(0, 0, 0)))
         self.de_last_performed.setCurrentSection(QDateTimeEdit.Section.DaySection)
         self.de_last_performed.setCalendarPopup(True)
 
@@ -299,6 +303,9 @@ class Ui_dlg_edit_songs(object):
         self.btn_finish_and_save.setSizePolicy(sizePolicy2)
         self.btn_finish_and_save.setFont(font)
         self.btn_finish_and_save.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/save_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_finish_and_save.setIcon(icon1)
         self.btn_finish_and_save.setIconSize(QSize(32, 32))
 
         self.verticalLayout_5.addWidget(self.btn_finish_and_save)
@@ -309,6 +316,9 @@ class Ui_dlg_edit_songs(object):
         self.btn_cancel.setSizePolicy(sizePolicy2)
         self.btn_cancel.setFont(font)
         self.btn_cancel.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/cancel.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_cancel.setIcon(icon2)
         self.btn_cancel.setIconSize(QSize(32, 32))
 
         self.verticalLayout_5.addWidget(self.btn_cancel)

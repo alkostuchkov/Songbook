@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Песенник</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../res.qrc">
+    <normaloff>:/icons/songbook.ico</normaloff>:/icons/songbook.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
@@ -304,6 +308,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="act_add_category">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+   </property>
    <property name="text">
     <string>Категорию(ии)</string>
    </property>
@@ -315,6 +323,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_add_genre">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+   </property>
    <property name="text">
     <string>Жанр(ы)</string>
    </property>
@@ -326,6 +338,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_add_song">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+   </property>
    <property name="text">
     <string>Песню</string>
    </property>
@@ -337,6 +353,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_edit_category">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+   </property>
    <property name="text">
     <string>Категорию</string>
    </property>
@@ -348,6 +368,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_edit_genre">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+   </property>
    <property name="text">
     <string>Жанр</string>
    </property>
@@ -359,6 +383,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_edit_song">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+   </property>
    <property name="text">
     <string>Песню</string>
    </property>
@@ -370,6 +398,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_delete_category">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+   </property>
    <property name="text">
     <string>Категорию(ии)</string>
    </property>
@@ -381,6 +413,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_delete_genre">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+   </property>
    <property name="text">
     <string>Жанр(ы)</string>
    </property>
@@ -392,6 +428,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_delete_song">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+   </property>
    <property name="text">
     <string>Песню(и)</string>
    </property>
@@ -403,6 +443,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_clear_db">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/cancel_2.png</normaloff>:/icons/cancel_2.png</iconset>
+   </property>
    <property name="text">
     <string>Все данные</string>
    </property>
@@ -414,6 +458,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_abput_program">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/songbook.ico</normaloff>:/icons/songbook.ico</iconset>
+   </property>
    <property name="text">
     <string>О программе</string>
    </property>
@@ -425,6 +473,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_about_author">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/author.png</normaloff>:/icons/author.png</iconset>
+   </property>
    <property name="text">
     <string>Об авторе</string>
    </property>
@@ -436,6 +488,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
   <action name="act_about_qt">
+   <property name="icon">
+    <iconset resource="../res.qrc">
+     <normaloff>:/icons/qt.png</normaloff>:/icons/qt.png</iconset>
+   </property>
    <property name="text">
     <string>О Qt</string>
    </property>
@@ -447,6 +503,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../res.qrc"/>
+ </resources>
  <connections/>
 </ui>

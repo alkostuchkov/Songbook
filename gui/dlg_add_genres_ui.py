@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QDialog, QHBoxLa
     QLabel, QLineEdit, QListWidget, QListWidgetItem,
     QPushButton, QSizePolicy, QSpacerItem, QSplitter,
     QVBoxLayout, QWidget)
+import res_rc
 
 class Ui_dlg_add_genres(object):
     def setupUi(self, dlg_add_genres):
@@ -30,6 +31,9 @@ class Ui_dlg_add_genres(object):
         font.setPointSize(12)
         font.setBold(False)
         dlg_add_genres.setFont(font)
+        icon = QIcon()
+        icon.addFile(u":/icons/songbook.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        dlg_add_genres.setWindowIcon(icon)
         dlg_add_genres.setModal(False)
         self.verticalLayout_3 = QVBoxLayout(dlg_add_genres)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -98,6 +102,9 @@ class Ui_dlg_add_genres(object):
         self.btn_add_genre_to_list.setObjectName(u"btn_add_genre_to_list")
         self.btn_add_genre_to_list.setFont(font)
         self.btn_add_genre_to_list.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/add.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_add_genre_to_list.setIcon(icon1)
         self.btn_add_genre_to_list.setIconSize(QSize(32, 32))
 
         self.verticalLayout.addWidget(self.btn_add_genre_to_list)
@@ -106,6 +113,9 @@ class Ui_dlg_add_genres(object):
         self.btn_del_genre_from_list.setObjectName(u"btn_del_genre_from_list")
         self.btn_del_genre_from_list.setFont(font)
         self.btn_del_genre_from_list.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/delete.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_del_genre_from_list.setIcon(icon2)
         self.btn_del_genre_from_list.setIconSize(QSize(32, 32))
 
         self.verticalLayout.addWidget(self.btn_del_genre_from_list)
@@ -114,6 +124,9 @@ class Ui_dlg_add_genres(object):
         self.btn_finish_and_save.setObjectName(u"btn_finish_and_save")
         self.btn_finish_and_save.setFont(font)
         self.btn_finish_and_save.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon3 = QIcon()
+        icon3.addFile(u":/icons/save_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_finish_and_save.setIcon(icon3)
         self.btn_finish_and_save.setIconSize(QSize(32, 32))
 
         self.verticalLayout.addWidget(self.btn_finish_and_save)
@@ -122,6 +135,9 @@ class Ui_dlg_add_genres(object):
         self.btn_cancel.setObjectName(u"btn_cancel")
         self.btn_cancel.setFont(font)
         self.btn_cancel.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon4 = QIcon()
+        icon4.addFile(u":/icons/cancel.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_cancel.setIcon(icon4)
         self.btn_cancel.setIconSize(QSize(32, 32))
 
         self.verticalLayout.addWidget(self.btn_cancel)
@@ -150,9 +166,9 @@ class Ui_dlg_add_genres(object):
         self.lbl_genre.setText(QCoreApplication.translate("dlg_add_genres", u"\u0416\u0430\u043d\u0440: ", None))
         self.le_genre.setPlaceholderText(QCoreApplication.translate("dlg_add_genres", u"\u0416\u0430\u043d\u0440", None))
         self.lbl_adding_genres.setText(QCoreApplication.translate("dlg_add_genres", u"\u0421\u043f\u0438\u0441\u043e\u043a \u0434\u043e\u0431\u0430\u0432\u043b\u044f\u0435\u043c\u044b\u0445 \u0436\u0430\u043d\u0440\u043e\u0432:", None))
-        self.btn_add_genre_to_list.setText(QCoreApplication.translate("dlg_add_genres", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c\n"
-"\u0436\u0430\u043d\u0440", None))
-        self.btn_del_genre_from_list.setText(QCoreApplication.translate("dlg_add_genres", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c\n"
+        self.btn_add_genre_to_list.setText(QCoreApplication.translate("dlg_add_genres", u" \u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c\n"
+"  \u0436\u0430\u043d\u0440", None))
+        self.btn_del_genre_from_list.setText(QCoreApplication.translate("dlg_add_genres", u"   \u0423\u0434\u0430\u043b\u0438\u0442\u044c\n"
 "\u0432\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0435 \u0436\u0430\u043d\u0440\u044b", None))
         self.btn_finish_and_save.setText(QCoreApplication.translate("dlg_add_genres", u"  \u0417\u0430\u043a\u043e\u043d\u0447\u0438\u0442\u044c\n"
 " \u0438 \u0441\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))

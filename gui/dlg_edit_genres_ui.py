@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDialog, QHBoxLayout, QLabel,
     QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
     QVBoxLayout, QWidget)
+import res_rc
 
 class Ui_dlg_edit_genres(object):
     def setupUi(self, dlg_edit_genres):
@@ -29,6 +30,9 @@ class Ui_dlg_edit_genres(object):
         font.setPointSize(12)
         font.setBold(False)
         dlg_edit_genres.setFont(font)
+        icon = QIcon()
+        icon.addFile(u":/icons/songbook.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        dlg_edit_genres.setWindowIcon(icon)
         dlg_edit_genres.setModal(False)
         self.verticalLayout_3 = QVBoxLayout(dlg_edit_genres)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -62,6 +66,9 @@ class Ui_dlg_edit_genres(object):
         self.btn_finish_and_save.setObjectName(u"btn_finish_and_save")
         self.btn_finish_and_save.setFont(font)
         self.btn_finish_and_save.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/save_black.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_finish_and_save.setIcon(icon1)
         self.btn_finish_and_save.setIconSize(QSize(32, 32))
 
         self.verticalLayout.addWidget(self.btn_finish_and_save)
@@ -70,6 +77,9 @@ class Ui_dlg_edit_genres(object):
         self.btn_cancel.setObjectName(u"btn_cancel")
         self.btn_cancel.setFont(font)
         self.btn_cancel.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/cancel.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_cancel.setIcon(icon2)
         self.btn_cancel.setIconSize(QSize(32, 32))
 
         self.verticalLayout.addWidget(self.btn_cancel)

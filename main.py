@@ -22,6 +22,7 @@ from PySide6.QtCore import (
 from PySide6.QtGui import (
     QFont,
     QPixmap,
+    QIcon,
 )
 from gui import main_ui
 from dlg_add_categories import DlgAddCategory
@@ -112,7 +113,7 @@ class MainWindow(QMainWindow):
         self.lbl_selected_records.setFont(QFont(self.font_family, self.font_size))
         self.lbl_found_records = QLabel(" Найдено песен: ")
         self.lbl_found_records.setFont(QFont(self.font_family, self.font_size))
-        self.btn_close = QPushButton("Закрыть")
+        self.btn_close = QPushButton(QIcon(":/icons/cancel.png"), "Закрыть")
         self.btn_close.setFont(QFont(self.font_family, self.font_size))
 
         widget = QWidget(self)

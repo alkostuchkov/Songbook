@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QAbstractSpinBox, QApplication
     QHBoxLayout, QLabel, QLineEdit, QListWidget,
     QListWidgetItem, QPushButton, QSizePolicy, QSpacerItem,
     QSplitter, QTextEdit, QVBoxLayout, QWidget)
+import res_rc
 
 class Ui_dlg_add_songs(object):
     def setupUi(self, dlg_add_songs):
@@ -31,6 +32,9 @@ class Ui_dlg_add_songs(object):
         font.setPointSize(12)
         font.setBold(False)
         dlg_add_songs.setFont(font)
+        icon = QIcon()
+        icon.addFile(u":/icons/songbook.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        dlg_add_songs.setWindowIcon(icon)
         self.verticalLayout_6 = QVBoxLayout(dlg_add_songs)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.splitter_5 = QSplitter(dlg_add_songs)
@@ -211,7 +215,7 @@ class Ui_dlg_add_songs(object):
         self.de_last_performed.setReadOnly(False)
         self.de_last_performed.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.UpDownArrows)
         self.de_last_performed.setProperty("showGroupSeparator", False)
-        self.de_last_performed.setDateTime(QDateTime(QDate(1999, 12, 27), QTime(0, 0, 0)))
+        self.de_last_performed.setDateTime(QDateTime(QDate(1999, 12, 24), QTime(0, 0, 0)))
         self.de_last_performed.setCurrentSection(QDateTimeEdit.Section.DaySection)
         self.de_last_performed.setCalendarPopup(True)
 
@@ -296,6 +300,9 @@ class Ui_dlg_add_songs(object):
         self.btn_add_song.setSizePolicy(sizePolicy2)
         self.btn_add_song.setFont(font)
         self.btn_add_song.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/ok.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_add_song.setIcon(icon1)
         self.btn_add_song.setIconSize(QSize(32, 32))
 
         self.verticalLayout_5.addWidget(self.btn_add_song)
@@ -306,6 +313,9 @@ class Ui_dlg_add_songs(object):
         self.btn_cancel.setSizePolicy(sizePolicy2)
         self.btn_cancel.setFont(font)
         self.btn_cancel.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/cancel.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_cancel.setIcon(icon2)
         self.btn_cancel.setIconSize(QSize(32, 32))
 
         self.verticalLayout_5.addWidget(self.btn_cancel)
@@ -343,8 +353,8 @@ class Ui_dlg_add_songs(object):
         self.lbl_song_image.setText("")
         self.lbl_song_text.setText(QCoreApplication.translate("dlg_add_songs", u"\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438:", None))
         self.te_song_text.setPlaceholderText(QCoreApplication.translate("dlg_add_songs", u"\u0422\u0435\u043a\u0441\u0442 \u043f\u0435\u0441\u043d\u0438", None))
-        self.btn_add_song.setText(QCoreApplication.translate("dlg_add_songs", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c\n"
-"\u043f\u0435\u0441\u043d\u044e", None))
+        self.btn_add_song.setText(QCoreApplication.translate("dlg_add_songs", u" \u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c\n"
+"  \u043f\u0435\u0441\u043d\u044e", None))
         self.btn_cancel.setText(QCoreApplication.translate("dlg_add_songs", u" \u041e\u0442\u043c\u0435\u043d\u0430\n"
 " (\u0412\u044b\u0445\u043e\u0434)", None))
     # retranslateUi

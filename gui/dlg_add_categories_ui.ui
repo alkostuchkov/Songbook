@@ -20,6 +20,10 @@
   <property name="windowTitle">
    <string>Добавление категории</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../res.qrc">
+    <normaloff>:/icons/songbook.ico</normaloff>:/icons/songbook.ico</iconset>
+  </property>
   <property name="modal">
    <bool>false</bool>
   </property>
@@ -161,8 +165,12 @@
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="text">
-          <string>Добавить
-категорию</string>
+          <string> Добавить
+ категорию</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../res.qrc">
+           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -185,8 +193,12 @@
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="text">
-          <string>Удалить
+          <string>     Удалить
 выбранные категории</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../res.qrc">
+           <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -212,6 +224,10 @@
           <string>  Закончить
  и сохранить</string>
          </property>
+         <property name="icon">
+          <iconset resource="../res.qrc">
+           <normaloff>:/icons/save_black.png</normaloff>:/icons/save_black.png</iconset>
+         </property>
          <property name="iconSize">
           <size>
            <width>32</width>
@@ -235,6 +251,10 @@
          <property name="text">
           <string> Отмена
  (Выход)</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../res.qrc">
+           <normaloff>:/icons/cancel.png</normaloff>:/icons/cancel.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -278,6 +298,8 @@
   <tabstop>btn_cancel</tabstop>
   <tabstop>lw_adding_categiries</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../res.qrc"/>
+ </resources>
  <connections/>
 </ui>

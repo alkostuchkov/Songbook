@@ -1,0 +1,14 @@
+<RCC>
+  <qresource>
+    <file>icons/add.png</file>
+    <file>icons/author.png</file>
+    <file>icons/cancel.png</file>
+    <file>icons/cancel_2.png</file>
+    <file>icons/delete.png</file>
+    <file>icons/edit.png</file>
+    <file>icons/ok.png</file>
+    <file>icons/qt.png</file>
+    <file>icons/save_black.png</file>
+    <file>icons/songbook.ico</file>
+  </qresource>
+</RCC>

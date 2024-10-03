@@ -20,6 +20,10 @@
   <property name="windowTitle">
    <string>Редактирование категории</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../res.qrc">
+    <normaloff>:/icons/songbook.ico</normaloff>:/icons/songbook.ico</iconset>
+  </property>
   <property name="modal">
    <bool>false</bool>
   </property>
@@ -95,6 +99,10 @@
           <string>  Закончить
  и сохранить</string>
          </property>
+         <property name="icon">
+          <iconset resource="../res.qrc">
+           <normaloff>:/icons/save_black.png</normaloff>:/icons/save_black.png</iconset>
+         </property>
          <property name="iconSize">
           <size>
            <width>32</width>
@@ -119,6 +127,10 @@
           <string> Отмена
  (Выход)</string>
          </property>
+         <property name="icon">
+          <iconset resource="../res.qrc">
+           <normaloff>:/icons/cancel.png</normaloff>:/icons/cancel.png</iconset>
+         </property>
          <property name="iconSize">
           <size>
            <width>32</width>
@@ -138,6 +150,8 @@
   <tabstop>btn_finish_and_save</tabstop>
   <tabstop>btn_cancel</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../res.qrc"/>
+ </resources>
  <connections/>
 </ui>

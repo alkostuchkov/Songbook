@@ -20,6 +20,10 @@
   <property name="windowTitle">
    <string>Редактирование песни</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../res.qrc">
+    <normaloff>:/icons/songbook.ico</normaloff>:/icons/songbook.ico</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <item>
     <widget class="QSplitter" name="splitter_5">
@@ -335,7 +339,7 @@
                  <second>0</second>
                  <year>1999</year>
                  <month>12</month>
-                 <day>24</day>
+                 <day>22</day>
                 </datetime>
                </property>
                <property name="currentSection">
@@ -477,6 +481,10 @@
             <string>  Закончить
  и сохранить</string>
            </property>
+           <property name="icon">
+            <iconset resource="../res.qrc">
+             <normaloff>:/icons/save_black.png</normaloff>:/icons/save_black.png</iconset>
+           </property>
            <property name="iconSize">
             <size>
              <width>32</width>
@@ -506,6 +514,10 @@
            <property name="text">
             <string> Отмена
  (Выход)</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../res.qrc">
+             <normaloff>:/icons/cancel.png</normaloff>:/icons/cancel.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -540,6 +552,8 @@
   <tabstop>le_song</tabstop>
   <tabstop>lw_genres</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../res.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -106,64 +106,6 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QLabel" name="lbl_sort">
-           <property name="font">
-            <font>
-             <family>Lucida Console</family>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Сортировать:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="cb_sort">
-           <property name="font">
-            <font>
-             <family>Lucida Console</family>
-             <pointsize>14</pointsize>
-            </font>
-           </property>
-           <item>
-            <property name="text">
-             <string>По названию</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>По дате исполнения</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Недавно исполнявшиеся</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Orientation::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
       </widget>
       <widget class="QSplitter" name="spl_songs">
        <property name="orientation">
@@ -298,7 +240,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>Помощь</string>
     </property>
     <addaction name="act_abput_program"/>
-    <addaction name="act_about_author"/>
     <addaction name="act_about_qt"/>
    </widget>
    <addaction name="menu_add"/>

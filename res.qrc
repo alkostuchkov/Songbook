@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>icons/gpl_v3.png</file>
     <file>icons/add.png</file>
     <file>icons/author.png</file>
     <file>icons/cancel.png</file>

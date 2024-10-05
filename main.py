@@ -31,6 +31,7 @@ from dlg_add_genres import DlgAddGenre
 from dlg_edit_genres import DlgEditGenre
 from dlg_add_songs import DlgAddSong
 from dlg_edit_songs import DlgEditSong
+from dlg_about import DlgAbout
 from my_classes.songbook import Songbook
 
 
@@ -102,6 +103,8 @@ class MainWindow(QMainWindow):
             self.lw_songs_itemselection_changed)
         self.ui.le_search.textChanged.connect(
             self.le_search_text_changed)
+        self.ui.act_abput_program.triggered.connect(
+            self.act_about_program_triggered)
         self.ui.act_about_qt.triggered.connect(lambda: QMessageBox.aboutQt(self))
 
     def create_statusbar(self) -> None:
@@ -605,6 +608,13 @@ class MainWindow(QMainWindow):
             self.found_records = 0
             self.lbl_found_records.setText(
                 f"{self.str_found_records}{str(self.found_records)}")
+
+    @Slot()
+    def act_about_program_triggered(self) -> None:
+        """ Show dialog about program, author and thanks. """
+        # create instance of DlgAbout.
+        dlg_about: DlgAbout = DlgAbout()
+        dlg_about.exec()
 
 
 if __name__ == "__main__":

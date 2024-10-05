@@ -16,11 +16,10 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QFrame,
-    QLabel, QLineEdit, QListWidget, QListWidgetItem,
-    QMainWindow, QMenu, QMenuBar, QSizePolicy,
-    QSpacerItem, QSplitter, QStatusBar, QTextEdit,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QLabel,
+    QLineEdit, QListWidget, QListWidgetItem, QMainWindow,
+    QMenu, QMenuBar, QSizePolicy, QSplitter,
+    QStatusBar, QTextEdit, QVBoxLayout, QWidget)
 import res_rc
 
 class Ui_MainWindow(object):
@@ -155,32 +154,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.lw_genres)
 
         self.spl_filter_sort.addWidget(self.layoutWidget1)
-        self.layoutWidget2 = QWidget(self.spl_filter_sort)
-        self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.verticalLayout_3 = QVBoxLayout(self.layoutWidget2)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.lbl_sort = QLabel(self.layoutWidget2)
-        self.lbl_sort.setObjectName(u"lbl_sort")
-        self.lbl_sort.setFont(font1)
-        self.lbl_sort.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.verticalLayout_3.addWidget(self.lbl_sort)
-
-        self.cb_sort = QComboBox(self.layoutWidget2)
-        self.cb_sort.addItem("")
-        self.cb_sort.addItem("")
-        self.cb_sort.addItem("")
-        self.cb_sort.setObjectName(u"cb_sort")
-        self.cb_sort.setFont(font1)
-
-        self.verticalLayout_3.addWidget(self.cb_sort)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_3.addItem(self.verticalSpacer)
-
-        self.spl_filter_sort.addWidget(self.layoutWidget2)
         self.splitter.addWidget(self.spl_filter_sort)
         self.spl_songs = QSplitter(self.splitter)
         self.spl_songs.setObjectName(u"spl_songs")
@@ -247,7 +220,6 @@ class Ui_MainWindow(object):
         self.menu_delete.addSeparator()
         self.menu_delete.addAction(self.act_clear_db)
         self.menu_help.addAction(self.act_abput_program)
-        self.menu_help.addAction(self.act_about_author)
         self.menu_help.addAction(self.act_about_qt)
 
         self.retranslateUi(MainWindow)
@@ -275,11 +247,6 @@ class Ui_MainWindow(object):
         self.act_about_qt.setText(QCoreApplication.translate("MainWindow", u"\u041e Qt", None))
         self.lbl_categories.setText(QCoreApplication.translate("MainWindow", u"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438:", None))
         self.lbl_genrs.setText(QCoreApplication.translate("MainWindow", u"\u0416\u0430\u043d\u0440\u044b:", None))
-        self.lbl_sort.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0440\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c:", None))
-        self.cb_sort.setItemText(0, QCoreApplication.translate("MainWindow", u"\u041f\u043e \u043d\u0430\u0437\u0432\u0430\u043d\u0438\u044e", None))
-        self.cb_sort.setItemText(1, QCoreApplication.translate("MainWindow", u"\u041f\u043e \u0434\u0430\u0442\u0435 \u0438\u0441\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f", None))
-        self.cb_sort.setItemText(2, QCoreApplication.translate("MainWindow", u"\u041d\u0435\u0434\u0430\u0432\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u043d\u044f\u0432\u0448\u0438\u0435\u0441\u044f", None))
-
         self.lbl_song_image.setText("")
         self.te_song_text.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"

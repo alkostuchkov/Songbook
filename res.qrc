@@ -1,5 +1,22 @@
 <RCC>
   <qresource>
+    <file>icons/category_1.png</file>
+    <file>icons/category_2.png</file>
+    <file>icons/category_3.png</file>
+    <file>icons/genre_3.png</file>
+    <file>icons/genre_4.png</file>
+    <file>icons/song_favourite_2.png</file>
+    <file>icons/song_6.png</file>
+    <file>icons/song_5.png</file>
+    <file>icons/song_3.png</file>
+    <file>icons/genre_1.png</file>
+    <file>icons/genre_2.png</file>
+    <file>icons/music_1.png</file>
+    <file>icons/song_1.png</file>
+    <file>icons/song_2.png</file>
+    <file>icons/song_3.png</file>
+    <file>icons/song_4.png</file>
+    <file>icons/song_favourite_1.png</file>
     <file>icons/gpl_v3.png</file>
     <file>icons/add.png</file>
     <file>icons/author.png</file>

@@ -251,7 +251,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_add_category">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+     <normaloff>:/icons/category_1.png</normaloff>:/icons/category_1.png</iconset>
    </property>
    <property name="text">
     <string>Категорию(ии)</string>
@@ -266,7 +266,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_add_genre">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+     <normaloff>:/icons/genre_1.png</normaloff>:/icons/genre_1.png</iconset>
    </property>
    <property name="text">
     <string>Жанр(ы)</string>
@@ -281,7 +281,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_add_song">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
+     <normaloff>:/icons/song_4.png</normaloff>:/icons/song_4.png</iconset>
    </property>
    <property name="text">
     <string>Песню</string>
@@ -296,7 +296,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_edit_category">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+     <normaloff>:/icons/category_1.png</normaloff>:/icons/category_1.png</iconset>
    </property>
    <property name="text">
     <string>Категорию</string>
@@ -311,7 +311,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_edit_genre">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+     <normaloff>:/icons/genre_1.png</normaloff>:/icons/genre_1.png</iconset>
    </property>
    <property name="text">
     <string>Жанр</string>
@@ -326,7 +326,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_edit_song">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+     <normaloff>:/icons/song_4.png</normaloff>:/icons/song_4.png</iconset>
    </property>
    <property name="text">
     <string>Песню</string>
@@ -341,7 +341,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_delete_category">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+     <normaloff>:/icons/category_1.png</normaloff>:/icons/category_1.png</iconset>
    </property>
    <property name="text">
     <string>Категорию(ии)</string>
@@ -356,7 +356,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_delete_genre">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+     <normaloff>:/icons/genre_1.png</normaloff>:/icons/genre_1.png</iconset>
    </property>
    <property name="text">
     <string>Жанр(ы)</string>
@@ -371,7 +371,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="act_delete_song">
    <property name="icon">
     <iconset resource="../res.qrc">
-     <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+     <normaloff>:/icons/song_4.png</normaloff>:/icons/song_4.png</iconset>
    </property>
    <property name="text">
     <string>Песню(и)</string>

@@ -64,17 +64,17 @@ class Ui_dlg_about(object):
         self.tw_about.setFont(font)
         self.tw_about.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
         self.tw_about.setTabPosition(QTabWidget.TabPosition.North)
-        self.tabAboutProgram = QWidget()
-        self.tabAboutProgram.setObjectName(u"tabAboutProgram")
-        self.horizontalLayout_3 = QHBoxLayout(self.tabAboutProgram)
+        self.tab_about_program = QWidget()
+        self.tab_about_program.setObjectName(u"tab_about_program")
+        self.horizontalLayout_3 = QHBoxLayout(self.tab_about_program)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.tbr_about_program = QTextBrowser(self.tabAboutProgram)
+        self.tbr_about_program = QTextBrowser(self.tab_about_program)
         self.tbr_about_program.setObjectName(u"tbr_about_program")
         self.tbr_about_program.viewport().setProperty("cursor", QCursor(Qt.CursorShape.ArrowCursor))
 
         self.horizontalLayout_3.addWidget(self.tbr_about_program)
 
-        self.tw_about.addTab(self.tabAboutProgram, "")
+        self.tw_about.addTab(self.tab_about_program, "")
         self.tab_about_author = QWidget()
         self.tab_about_author.setObjectName(u"tab_about_author")
         self.horizontalLayout_4 = QHBoxLayout(self.tab_about_author)
@@ -87,21 +87,21 @@ class Ui_dlg_about(object):
         self.horizontalLayout_4.addWidget(self.tbrAboutAuthor)
 
         self.tw_about.addTab(self.tab_about_author, "")
-        self.tabThanks = QWidget()
-        self.tabThanks.setObjectName(u"tabThanks")
-        self.horizontalLayout_5 = QHBoxLayout(self.tabThanks)
+        self.tab_thanks = QWidget()
+        self.tab_thanks.setObjectName(u"tab_thanks")
+        self.horizontalLayout_5 = QHBoxLayout(self.tab_thanks)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.tbrThanks = QTextBrowser(self.tabThanks)
+        self.tbrThanks = QTextBrowser(self.tab_thanks)
         self.tbrThanks.setObjectName(u"tbrThanks")
         self.tbrThanks.viewport().setProperty("cursor", QCursor(Qt.CursorShape.ArrowCursor))
         self.tbrThanks.setOpenExternalLinks(True)
 
         self.horizontalLayout_5.addWidget(self.tbrThanks)
 
-        self.tw_about.addTab(self.tabThanks, "")
-        self.tabLicence = QWidget()
-        self.tabLicence.setObjectName(u"tabLicence")
-        self.verticalLayout_4 = QVBoxLayout(self.tabLicence)
+        self.tw_about.addTab(self.tab_thanks, "")
+        self.tab_licence = QWidget()
+        self.tab_licence.setObjectName(u"tab_licence")
+        self.verticalLayout_4 = QVBoxLayout(self.tab_licence)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
@@ -115,7 +115,7 @@ class Ui_dlg_about(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_3)
 
-        self.lbl_licence = QLabel(self.tabLicence)
+        self.lbl_licence = QLabel(self.tab_licence)
         self.lbl_licence.setObjectName(u"lbl_licence")
         font1 = QFont()
         font1.setFamilies([u"Arial"])
@@ -126,7 +126,7 @@ class Ui_dlg_about(object):
 
         self.verticalLayout.addWidget(self.lbl_licence)
 
-        self.lbl_licence_pic = QLabel(self.tabLicence)
+        self.lbl_licence_pic = QLabel(self.tab_licence)
         self.lbl_licence_pic.setObjectName(u"lbl_licence_pic")
         self.lbl_licence_pic.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.lbl_licence_pic.setPixmap(QPixmap(u":/icons/gpl_v3.png"))
@@ -148,7 +148,7 @@ class Ui_dlg_about(object):
 
         self.verticalLayout_4.addLayout(self.horizontalLayout_6)
 
-        self.tw_about.addTab(self.tabLicence, "")
+        self.tw_about.addTab(self.tab_licence, "")
 
         self.verticalLayout_3.addWidget(self.tw_about)
 
@@ -197,7 +197,7 @@ class Ui_dlg_about(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Arial'; font-size:13pt;\">\u0412\u0435\u0440\u0441\u0438\u044f 0.0.1</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px;"
                         " margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Arial'; font-size:13pt;\">\u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430-\u043f\u0435\u0441\u0435\u043d\u043d\u0438\u043a \u0434\u043b\u044f \u043c\u043e\u0435\u0439 \u0434\u043e\u0447\u0435\u0440\u0438 \u041e\u043b\u044c\u0433\u0438</span></p></body></html>", None))
-        self.tw_about.setTabText(self.tw_about.indexOf(self.tabAboutProgram), QCoreApplication.translate("dlg_about", u"\u041e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0435", None))
+        self.tw_about.setTabText(self.tw_about.indexOf(self.tab_about_program), QCoreApplication.translate("dlg_about", u"\u041e \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0435", None))
         self.tbrAboutAuthor.setHtml(QCoreApplication.translate("dlg_about", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -217,10 +217,10 @@ class Ui_dlg_about(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Lucida Console'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Arial'; font-size:13pt;\">\u0421\u043b\u0430\u0432\u0430 \u0413\u043e\u0441\u043f\u043e\u0434\u0443 \u0418\u0438\u0441\u0443\u0441\u0443 \u0425\u0440\u0438\u0441\u0442\u0443</span></p></body></html>", None))
-        self.tw_about.setTabText(self.tw_about.indexOf(self.tabThanks), QCoreApplication.translate("dlg_about", u"\u0411\u043b\u0430\u0433\u043e\u0434\u0430\u0440\u043d\u043e\u0441\u0442\u044c", None))
+        self.tw_about.setTabText(self.tw_about.indexOf(self.tab_thanks), QCoreApplication.translate("dlg_about", u"\u0411\u043b\u0430\u0433\u043e\u0434\u0430\u0440\u043d\u043e\u0441\u0442\u0438", None))
         self.lbl_licence.setText(QCoreApplication.translate("dlg_about", u"GNU GENERAL PUBLIC LICENSE", None))
         self.lbl_licence_pic.setText("")
-        self.tw_about.setTabText(self.tw_about.indexOf(self.tabLicence), QCoreApplication.translate("dlg_about", u"\u041b\u0438\u0446\u0435\u043d\u0437\u0438\u044f", None))
+        self.tw_about.setTabText(self.tw_about.indexOf(self.tab_licence), QCoreApplication.translate("dlg_about", u"\u041b\u0438\u0446\u0435\u043d\u0437\u0438\u044f", None))
         self.btn_close.setText(QCoreApplication.translate("dlg_about", u"\u0417\u0430\u043a\u0440\u044b\u0442\u044c", None))
     # retranslateUi
 

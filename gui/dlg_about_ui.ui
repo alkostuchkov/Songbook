@@ -91,7 +91,7 @@
        <property name="currentIndex">
         <number>0</number>
        </property>
-       <widget class="QWidget" name="tabAboutProgram">
+       <widget class="QWidget" name="tab_about_program">
         <attribute name="title">
          <string>О программе</string>
         </attribute>
@@ -145,9 +145,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tabThanks">
+       <widget class="QWidget" name="tab_thanks">
         <attribute name="title">
-         <string>Благодарность</string>
+         <string>Благодарности</string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
@@ -172,7 +172,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tabLicence">
+       <widget class="QWidget" name="tab_licence">
         <attribute name="title">
          <string>Лицензия</string>
         </attribute>

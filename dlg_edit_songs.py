@@ -143,7 +143,8 @@ class DlgEditSong(QDialog):
                 for category in categories:
                     self.ui.cb_categories.addItem(category)
                 # set category for current song in cb_categories.
-                self.ui.cb_categories.setCurrentText(self._current_song_dict[self._current_title]["category"])
+                self.ui.cb_categories.setCurrentText(
+                    self._current_song_dict[self._current_title]["category"])
 
     @Slot()
     def btn_delete_image_file_clicked(self):

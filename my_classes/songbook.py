@@ -107,6 +107,7 @@ class Songbook:
         except DatabaseError as err:
             raise DatabaseError("get_data_as_dict", err)
         else:
+            self._songbook.clear()
             for (
                 title, genre, category, song_image, song_text,
                 last_performed, is_recently, comment

@@ -13,6 +13,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QPushButton,
     QListWidgetItem,
+    QSplashScreen,
 )
 from PySide6.QtCore import (
     Qt,
@@ -549,15 +550,15 @@ class MainWindow(QMainWindow):
                 # emit SIGNAL edit_song_called (pass: current song as dict).
                 self.edit_song_called.emit(self.title)
 # BUG: check showMaximized on other OS
-# dlg_add_song.setModal(True)
-# dlg_add_song.showMaximized()
+# dlg_edit_song.setModal(True)
+# dlg_edit_song.showMaximized()
                 dlg_edit_song.exec()
                 self.fill_in_categories()
                 self.fill_in_genres()
                 self.show_songs()
 
     @Slot(str)
-    def le_search_text_changed(self, searching_text:str) -> None:
+    def le_search_text_changed(self, searching_text: str) -> None:
         """
         Get searching_text from the le_search signal textChanged
         and create output_songbook of search's results.
@@ -619,10 +620,18 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     import sys
+    import time
 
     app = QApplication(sys.argv)
+    splash_pix = QPixmap(":/icons/splash_screen.jpg")
+    splash_screen = QSplashScreen(splash_pix)
+    splash_screen.show()
+
+    app.processEvents()  # deliver accumulated events.
+    time.sleep(1.0)
 
     window = MainWindow()
     window.showMaximized()
 
+    splash_screen.finish(window)
     sys.exit(app.exec())

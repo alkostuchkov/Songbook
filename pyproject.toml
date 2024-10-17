@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "Songbook"
-version = "0.1.0"
+version = "0.0.1"
 description = "Catalog of songs (songbook)"
 authors = ["alkostuchkov <alkostuchkov@gmail.com>"]
-license = "GPL"
+license = "GPL v3"
 readme = "README.md"
 package-mode = false
 

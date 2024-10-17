@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>icons/splash_screen.jpg</file>
     <file>icons/category_1.png</file>
     <file>icons/category_2.png</file>
     <file>icons/category_3.png</file>

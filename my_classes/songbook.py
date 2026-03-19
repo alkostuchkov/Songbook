@@ -4,8 +4,8 @@
 # = Example how my Songbook looks like. =
 # songbook = {
 #     "Song 1": {
-#         genre: "genre 1",
-#         categories: ["category 1", "category 2"],
+#         category: "category 1",
+#         genres: ["genre 1", "genre 2"],
 #         song_image: "path to Song 1 image",
 #         song_text: "path to Song 1 text",
 #         last_performed: "01.01.2024",
@@ -13,8 +13,8 @@
 #         comment: "Comment for Song 1"
 #     },
 #     "Song 2": {
-#         genre: "genre 2",
-#         categories: ["category 1", "category 2"],
+#         category: "category 2",
+#         genres: ["genre 1", "genre 2"],
 #         song_image: "path to Song 2 image",
 #         song_text: "path to Song 2 text",
 #         last_performed: "01.02.2024",
